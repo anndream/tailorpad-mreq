@@ -600,7 +600,7 @@ frappe.WOForm = Class.extend({
 			});
 
 			if(key == 'Style Transactions')
-				columns = [["Field Name",50], ["Name", 100], ["Abbreviation", 100], ["View", 100]];
+				columns = [["Field Name",50], ["Name", 100], ["Abbreviation", 100], ['Image', 100],["View", 100]];
 			if(key == 'Measurement Transactions')
 				columns = [["Parameter",50], ["Abbreviation", 100], ["Value", 100]];
 
@@ -625,8 +625,91 @@ frappe.WOForm = Class.extend({
 			args:{'tab': key, 'woname': this.woname},
 			callback: function(r){
 				console.log(r.message)
+				$.each(r.message, function(i, d) {	
+					var row = $("<tr>").appendTo(me[key].find("tbody"));
+					$("<td>").html(d['field_name']).appendTo(row);
+					$("<td>").html('<input type="Textbox" class="text_box">').appendTo(row);
+					$("<td>").html(d['abbreviation']).appendTo(row);
+					$("<td>").appendTo(row);
+					$('<button  class="remove">View</button>').appendTo($("<td>")).appendTo(row)
+						.click(function(){
+							me.view_style($(this).closest("tr").find('td'), me[key].find("tbody"))
+						});
+				});
 			}
 		})
+	},
+    
+	view_style:function(col_id, tab){
+		// var e =locals[cdt][cdn]
+		var style_name = $(col_id[0]).text();
+		var image_data;
+		var dialog = new frappe.ui.Dialog({
+				title:__(style_name+' Styles'),
+				fields: [
+					{fieldtype:'HTML', fieldname:'styles_name', label:__('Styles'), reqd:false,
+						description: __("")},
+						{fieldtype:'Button', fieldname:'create_new', label:__('Ok') }
+				]
+			})
+		var fd = dialog.fields_dict;
+
+	        // $(fd.styles_name.wrapper).append('<div id="style">Welcome</div>')
+	        return frappe.call({
+				type: "GET",
+				method: "tools.tools_management.custom_methods.get_styles_details",
+				args: {
+					"item": $('[data-fieldname="item_code"]').val(),
+					"style": style_name 
+				},
+				callback: function(r) {
+					if(r.message) {
+						
+						var result_set = r.message;
+						this.table = $("<table class='table table-bordered'>\
+	                       <thead><tr></tr></thead>\
+	                       <tbody></tbody>\
+	                       </table>").appendTo($(fd.styles_name.wrapper))
+
+						columns =[['Style','10'],['Image','40'],['Value','40']]
+						var me = this;
+						$.each(columns, 
+	                       function(i, col) {                  
+	                       $("<th>").html(col[0]).css("width", col[1]+"%")
+	                               .appendTo(me.table.find("thead tr"));
+	                  }	);
+						
+						$.each(result_set, function(i, d) {
+							var row = $("<tr>").appendTo(me.table.find("tbody"));
+	                       $("<td>").html('<input type="radio" name="sp" value="'+d[0]+'">')
+	                       		   .attr("style", d[0])
+	                               .attr("image", d[1])
+	                               .attr("value", d[2])
+	                               .attr("abbr", d[3])
+	                               .attr("customer_cost", d[4])
+	                               .attr("tailor_cost", d[5])
+	                               .attr("extra_cost", d[6])
+	                               .appendTo(row)
+	                               .click(function() {
+	                               		  $(col_id[3]).html($(this).attr('image'))
+	                                      // e.default_value = $(this).attr('value')
+	                                      // e.abbreviation = $(this).attr('abbr')
+	                                      // e.cost_to_customer = $(this).attr('customer_cost')
+	                                      // e.cost_to_tailor = $(this).attr('tailor_cost')                           
+	                               });
+	                     
+	                       $("<td>").html($(d[1]).find('img')).appendTo(row);
+	                       $("<td>").html(d[2]).appendTo(row);                    
+	               });
+						
+						dialog.show();
+						$(fd.create_new.input).click(function() {						
+							refresh_field('wo_style')	
+							dialog.hide()
+						})
+					}
+				}
+			})	
 	}
 })
 

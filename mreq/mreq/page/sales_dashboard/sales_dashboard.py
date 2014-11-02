@@ -156,7 +156,7 @@ def get_accounting_details():
 	return ((len(acc_details[0]) > 1) and acc_details[0] or acc_details[0][0]) if acc_details else None
 
 mapper ={
-	'Style Transactions':['field_name', 'abbreviation', "'' as image", "'view' as button" ]
+	'Style Transactions':['field_name', "'' as text", 'abbreviation', "'' as image", "'view' as button" ]
 }
 
 @frappe.whitelist()
