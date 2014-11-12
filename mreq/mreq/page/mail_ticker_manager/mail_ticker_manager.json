@@ -1,0 +1,21 @@
+{
+ "content": null, 
+ "creation": "2014-11-07 22:05:54.873067", 
+ "docstatus": 0, 
+ "doctype": "Page", 
+ "modified": "2014-11-07 22:05:58.442747", 
+ "modified_by": "Administrator", 
+ "module": "Mreq", 
+ "name": "mail-ticker-manager", 
+ "owner": "Administrator", 
+ "page_name": "Mail Ticker Manager", 
+ "roles": [
+  {
+   "role": "Administrator"
+  }
+ ], 
+ "script": null, 
+ "standard": "Yes", 
+ "style": null, 
+ "title": "Mail & Ticker Manager"
+}

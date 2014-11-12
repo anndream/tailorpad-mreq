@@ -18,14 +18,28 @@ def get_si_list(search_key=None):
 	return frappe.db.sql("""select name from `tabSales Invoice` %s"""%cond, as_list=1)
 
 @frappe.whitelist()
+def get_images(name):
+	return frappe.db.sql("""select file_name from `tabFile Data` 
+			where attached_to_doctype = 'Customer' 
+				and attached_to_name = '%s'"""%(name),as_list=1, debug=1)
+
+@frappe.whitelist()
 def create_customer(cust_details):
 	cust_details = eval(cust_details)
+	frappe.errprint(cust_details)
 	cust = frappe.new_doc("Customer")
 	cust.customer_name = cust_details.get('customer_name')
 	cust.customer_type = cust_details.get('customer_type')
 	cust.customer_group = cust_details.get('customer_group')
 	cust.territory = cust_details.get('territory')
 	cust.date_of_birth = cust_details.get('date_of_birth')
+
+	cust.set('body_measurements', [])
+	for measurement_details in cust_details.get('Full Body Measurement Details'):
+		e = cust.append('body_measurements', {})
+		e.parameter = measurement_details.get('parameter')
+		e.value = measurement_details.get('value')
+
 	cust.save()
 
 	create_contact(cust.name, cust_details)
@@ -89,6 +103,7 @@ def get_size_and_rate(price_list, item_code, fabric_code, branch, size):
 
 @frappe.whitelist()
 def get_work_orders(si_num):
+	frappe.errprint(si_num)
 	return frappe.db.sql("""select tailor_work_order from `tabWork Order Distribution` where parent = '%s'"""%si_num.split('\t')[0])
 
 @frappe.whitelist()
@@ -126,6 +141,7 @@ def create_si(si_details, fields):
 		e.tailoring_amount = flt(tailoring_item[6]) * flt(tailoring_item[7])
 		e.tailoring_income_account = accounting_details[0]
 		e.tailoring_cost_center = accounting_details[1]
+		e.tailoring_branch = cust[4]
 
 	si.set('merchandise_item', [])
 	for merchandise_item in si_details.get('Merchandise Item Details'):
@@ -141,9 +157,38 @@ def create_si(si_details, fields):
 		e.merchandise_amount = flt(merchandise_item[2]) * flt(merchandise_item[3])
 		e.merchandise_income_account = accounting_details[0]
 		e.merchandise_cost_center = accounting_details[1]
+		e.merchandise_branch = cust[4]
+
+	si.taxes_and_charges = 'Test'
 
 	si.save()
 	frappe.msgprint(si.name)
+
+@frappe.whitelist()
+def get_si_details(name):
+	si = frappe.db.sql("""select si.name,si.customer, si.currency, 
+								si.delivery_date, si.posting_date, 
+								sii.tailoring_branch, si.authenticated 
+						from `tabSales Invoice` si , `tabSales Invoice Items` sii 
+						where si.name = '%s' and sii.parent=si.name"""%(name),as_dict=1, debug=1)
+
+	tailoring_item = frappe.db.sql("""select tailoring_price_list, tailoring_item_code, 
+											fabric_code, tailoring_size, 
+											width, fabric_qty, tailoring_qty, 
+											tailoring_rate 
+									from `tabSales Invoice Items` 
+									where parent = '%s' """%(name), as_list=1)
+
+	merchandise_item = frappe.db.sql("""select merchandise_price_list, merchandise_item_code, 
+											merchandise_qty, merchandise_rate 
+										from `tabMerchandise Items` 
+										where parent = '%s'"""%(name), as_list=1)
+
+	return {
+		'si': si,
+		'tailoring_item': tailoring_item,
+		'merchandise_item': merchandise_item
+	}
 
 def get_item_details(item):
 	return frappe.db.sql("select item_name, description from tabItem where name = '%s'"%item, as_list=1)[0][0]
@@ -156,12 +201,57 @@ def get_accounting_details():
 	return ((len(acc_details[0]) > 1) and acc_details[0] or acc_details[0][0]) if acc_details else None
 
 mapper ={
-	'Style Transactions':['field_name', "'' as text", 'abbreviation', "'' as image", "'view' as button" ]
+	'Style Transactions':['field_name', "'' as text", 'abbreviation', "'' as image", "'view' as button" ],
+	'Measurement Item': ['parameter', 'abbreviation', 'value']
+}
+
+tab_mapper = {
+	'Style Transactions': '`tabWO Style`',
+	'Measurement Item': '`tabMeasurement Item`'
 }
 
 @frappe.whitelist()
 def get_wo_details(tab, woname):
 	
 	if tab in mapper:
-		return frappe.db.sql("""select %s from `tabWO Style` where parent = '%s'"""%(','.join(mapper.get(tab)),
+		return frappe.db.sql("""select %s from %s where parent = '%s'"""%(','.join(mapper.get(tab)), tab_mapper.get(tab),
 			 woname.split('\t')[-1].strip()), debug=1, as_dict=1)
+
+	else:
+		return frappe.db.sql(""" select sales_invoice_no, item_code, customer, serial_no_data from `tabWork Order` 
+					where name = '%s' """%(woname.split('\t')[-1].strip()), as_dict=1, debug=1)
+
+@frappe.whitelist()
+def update_wo(wo_details, fields, woname, style_details):
+	from frappe.utils import cstr
+	frappe.errprint([wo_details, fields, woname, style_details])
+
+	wo = frappe.get_doc('Work Order', woname)
+	style_details =  eval(style_details)
+
+	for d in wo.get('wo_style'):
+		for style in style_details:
+			if d.field_name == style:
+				frappe.db.sql("""update `tabWO Style` 
+									set image_viewer ='%s', default_value = '%s', 
+										abbreviation = '%s'
+									where parent = '%s' and  field_name = '%s'
+							"""%( cstr(style_details[style].get('image')), cstr(style_details[style].get('value')),
+									cstr(style_details[style].get('abbr')),
+									woname, style
+								), debug=1)
+				frappe.db.sql("commit")
+
+	wo_details = eval(wo_details)
+	for d in wo.get('measurement_item'):
+		for style in wo_details['Measurement Item']:
+			frappe.errprint(style)
+			if d.parameter == style[0]:				
+				frappe.db.sql("""update `tabMeasurement Item` 
+									set value ='%s'
+									where parent = '%s' and  name = '%s'
+							"""%(style[2], woname, d.name), debug=1)
+				frappe.db.commit()
+
+	wo.save(1)
+	frappe.msgprint("Updated.....")

@@ -2,7 +2,6 @@ cur_frm.cscript.create_material_receipt = function(doc, dt, dn) {
 	var se = frappe.model.make_new_doc_and_get_name('Stock Entry');
 	se = locals['Stock Entry'][se];
 	se.purpose = 'Material Receipt'
-	console.log(doc.raised_by)
 	for (row in doc.raised_by){
 		if(doc.raised_by[row].rs_checked == 1){
 			var d1 = frappe.model.add_child(se, 'Stock Entry Detail', 'mtn_details');
@@ -14,7 +13,6 @@ cur_frm.cscript.create_material_receipt = function(doc, dt, dn) {
 			d1.material_request = doc.raised_by[row].material_request
 			d1.material_request_item = doc.raised_by[row].mri_name
 			d1.qty = doc.raised_by[row].qty
-			console.log(d1)
 		}
 	}
 	loaddoc('Stock Entry', se.name);

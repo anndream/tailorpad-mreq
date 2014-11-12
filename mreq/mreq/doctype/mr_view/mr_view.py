@@ -12,6 +12,7 @@ class MRView(Document):
 		self.get_req_by()
 
 	def get_raised_by(self):
+		frappe.errprint(['Print ', frappe.session.user])
 		raised_by = frappe.db.sql("""select mr.name,  mri.name as mri_name, mri.item_code, mri.item_name, mri.description, mri.uom, mri.qty, mri.warehouse, mri.from_warehouse 
 			from `tabMaterial Request` mr, `tabMaterial Request Item` mri
 			where mr.name = mri.parent and mri.warehouse in (select warehouse from tabBranch 
