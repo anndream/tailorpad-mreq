@@ -463,7 +463,7 @@ frappe.SalesForm = Class.extend({
 				['Currency', 'Link', 'Currency', 'currency'], 
 				['Delivery Date','Date','','delivery_date'], 
 				['Book Date', 'Date', '', 'posting_date'], 
-				['Delivery Branch', 'Link', 'Branches', 'branch'],
+				['Branch', 'Link', 'Branches', 'branch'],
 				['Paased to Work Order', 'Select', '\nYes\nNo', 'authenticated']],
 			'Tailoring Item Details':[
 				['Price List', 'Link', 'Price List','tailoring_price_list'], 
@@ -474,12 +474,15 @@ frappe.SalesForm = Class.extend({
 				['Fabric Qty', 'Data', '','fabric_qty'],
 				['Qty', 'Data', '','tailoring_qty'],
 				['Rate', 'Data', '','tailoring_rate'],
-				['Split Qty', 'Button', '', 'split_qty']],
+				['Tailoring Branch', 'Link', 'Branches', 'tailoring_branch']],
 			'Merchandise Item Details':[
 				['Price List', 'Link', 'Price List','merchandise_price_list'], 
 				['Item Code', 'Link', 'Item','merchandise_item_code'], 
 				['Qty', 'Data', '','merchandise_qty'],
-				['Rate', 'Data', '','merchandise_rate']]
+				['Rate', 'Data', '','merchandise_rate'],
+				['Merchandise Branch', 'Link', 'Branches', 'merchandise_branch']],
+			'Taxes and Charges':
+				[['Taxes and Charges', 'Link', 'Sales Taxes and Charges Master', 'taxes_and_charges']]
 		};
 		
 		if(form_type == 'new')
@@ -566,6 +569,20 @@ frappe.SalesForm = Class.extend({
 					}
 				})
 		}
+		if(key == 'Tailoring Item Details'){
+			var row1 = $("<tr>").appendTo(me.table1.find("tbody"));
+			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Slipt Qty </button>")
+			.appendTo($("<td align='center'>").appendTo(row1))
+			.click(function() {
+				me.reserve_fabric()
+			});
+			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Reserve Fabric </button>")
+			.appendTo($("<td align='center'>").appendTo(row1))
+			.click(function() {
+				me.reserve_fabric()
+			});
+		}
+
 		$( "label" ).remove( ".col-xs-4" );
 		$( "div.col-xs-8" ).addClass( "col-xs-12" )
 		$( "div" ).removeClass( "col-xs-8" );
@@ -588,89 +605,13 @@ frappe.SalesForm = Class.extend({
 			})
 		})
 
-		$('[data-fieldname="split_qty"]').click(function(){
-			var me1 = me;
-			console.log($('[data-fieldname="fabric_qty"]').val())
-			// console.log(e)
-			var image_data;
-			var dialog = new frappe.ui.Dialog({
-					title:__('Fabric Details'),
-					fields: [
-						{fieldtype:'HTML', fieldname:'styles_name', label:__('Styles'), reqd:false,
-							description: __("")},
-							{fieldtype:'Button', fieldname:'create_new', label:__('Ok') }
-					]
-				})
-			var fd = dialog.fields_dict;
-
-		        // $(fd.styles_name.wrapper).append('<div id="style">Welcome</div>')
-		        return frappe.call({
-					type: "GET",
-					method: "tools.tools_management.custom_methods.get_warehouse_wise_stock_balance",
-					args: {
-						"item": $('[data-fieldname="fabric_code"]').val(),
-						"qty": $('[data-fieldname="fabric_qty"]').val()
-					},
-					callback: function(r) {
-						console.log([r.message])
-						if(r.message) {
-							
-							var result_set = r.message;
-							this.table = $("<table class='table table-bordered'>\
-		                       <thead><tr></tr></thead>\
-		                       <tbody></tbody>\
-		                       </table>").appendTo($(fd.styles_name.wrapper))
-
-							columns =[['','10'],['Warehouse','40'],['Qty','40']]
-							var me = this;
-							$.each(columns, 
-		                       function(i, col) {                  
-		                       $("<th>").html(col[0]).css("width", col[1]+"%")
-		                               .appendTo(me.table.find("thead tr"));
-		                  }	);
-							
-							$.each(result_set, function(i, d) {
-								console.log(d)
-								var row = $("<tr>").appendTo(me.table.find("tbody"));
-		                       $("<td>").html('<input type="radio" name="sp" value="'+d[0]+'">')
-		                       		   .attr("style", d[0])
-		                               .attr("image", d[1])
-		                               .appendTo(row)
-		                               .click(function() {
-		                                      if(me1.fabric_detail[d[2]]){
-		                                      	me1.fabric_detail[d[2]].push([$('[data-fieldname="fabric_code"]').val(), $('[data-fieldname="fabric_qty"]').val(),$('[data-fieldname="tailoring_item_code"]').val()])
-		                                      }
-		                                      else{
-		                                      	me1.fabric_detail[d[2]] = []
-		                                       	me1.fabric_detail[d[2]].push([$('[data-fieldname="fabric_code"]').val(), $('[data-fieldname="fabric_qty"]').val(),$('[data-fieldname="tailoring_item_code"]').val()])
-		                                       }
-		                               });
-		                     
-		                       $("<td>").html(d[2]).appendTo(row);
-		                       $("<td>").html(d[1]).appendTo(row);                    
-		               });
-							
-							dialog.show();
-							$(fd.create_new.input).click(function() {
-								// doc.fabric_details = JSON.stringify(fabric_detail)
-								me1.reservation_details[$('[data-fieldname="tailoring_item_code"]').val()] = JSON.stringify(me1.fabric_detail)
-								// refresh_field('fabric_details')
-								// e.reservation_status = 'Reserved';
-								// refresh_field('reservation_status', e.name, 'sales_invoice_items_one')	
-								console.log(me1.reservation_details)
-								dialog.hide()
-							})
-						}
-					}
-				})	
-		})
-
-
 		if(key!='Basic Info'){
 			if(key == 'Tailoring Item Details')
-				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Width", 100], ["Fabric Qty", 100], ["Qty", 100], ['Rate', 100]];
+				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Width", 100], ["Fabric Qty", 100], ["Qty", 100], ['Rate', 100],['Tailoring Branch', 100]];
 			if(key == 'Merchandise Item Details')
-				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100]];
+				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100]];
+			if(key == 'Taxes and Charges')
+				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100]];
 
 			if(form_type == 'new'){
 				$("<button class='btn btn-small btn-primary' style='margin-bottom:2%' id='"+key+"'><i class='icon-plus'></i></button>")
@@ -713,14 +654,83 @@ frappe.SalesForm = Class.extend({
 		$.each(this.tailoring_item_details, function(i, d) {	
 			$("<td>").html(d).appendTo(row);
 		});
-		console.log(me)
-		$("<td>").html(me.reservation_details).appendTo(row);
+		
 	},
 	retrive_data: function(fields){
 		var me = this;
 		$.each(fields, function(i, field) {
 			me.tailoring_item_details[field[3]] = $('[data-fieldname="'+field[3]+'"]').val()
 		})	
+	},
+	reserve_fabric: function(){
+		var me1 = this;
+		console.log($('[data-fieldname="fabric_qty"]').val())
+		// console.log(e)
+		var image_data;
+		var dialog = new frappe.ui.Dialog({
+				title:__('Fabric Details'),
+				fields: [
+					{fieldtype:'HTML', fieldname:'styles_name', label:__('Styles'), reqd:false,
+						description: __("")},
+						{fieldtype:'Button', fieldname:'create_new', label:__('Ok') }
+				]
+			})
+		var fd = dialog.fields_dict;
+
+	        // $(fd.styles_name.wrapper).append('<div id="style">Welcome</div>')
+	        return frappe.call({
+				type: "GET",
+				method: "tools.tools_management.custom_methods.get_warehouse_wise_stock_balance",
+				args: {
+					"item": $('[data-fieldname="fabric_code"]').val(),
+					"qty": $('[data-fieldname="fabric_qty"]').val()
+				},
+				callback: function(r) {
+					if(r.message) {
+						var result_set = r.message;
+						this.table = $("<table class='table table-bordered'>\
+	                       <thead><tr></tr></thead>\
+	                       <tbody></tbody>\
+	                       </table>").appendTo($(fd.styles_name.wrapper))
+
+						columns =[['Branch','40'],['Qty','40'], ['Reserv Qty', 50], ['','10'],]
+						var me = this;
+						$.each(columns, 
+	                       function(i, col) {                  
+	                       $("<th>").html(col[0]).css("width", col[1]+"%")
+	                               .appendTo(me.table.find("thead tr"));
+	                  }	);
+						
+						$.each(result_set, function(i, d) {
+							console.log(d)
+							var row = $("<tr>").appendTo(me.table.find("tbody"));
+	                       $("<td>").html(d[2]).appendTo(row);
+	                       $("<td>").html(d[1]).appendTo(row); 
+	                       $("<td>").html('<input type="Textbox" class="text_box">').appendTo(row);    
+	                       $("<td>").html('<input type="checkbox" name="sp" value="'+d[0]+'">')
+	                       		   .attr("style", d[0])
+	                               .attr("image", d[1])
+	                               .appendTo(row)
+	                               .click(function() {
+	                               			console.log()
+	                                      if(me1.fabric_detail[d[2]]){
+	                                      	me1.fabric_detail[d[2]].push([$('[data-fieldname="fabric_code"]').val(), $(this).closest("tr").find('.text_box').val(), $('[data-fieldname="tailoring_item_code"]').val()])
+	                                      }
+	                                      else{
+	                                      	me1.fabric_detail[d[2]] = []
+	                                       	me1.fabric_detail[d[2]].push([$('[data-fieldname="fabric_code"]').val(), $(this).closest("tr").find('.text_box').val(), $('[data-fieldname="tailoring_item_code"]').val()])
+	                                       }
+	                               });               
+	               });
+						
+						dialog.show();
+						$(fd.create_new.input).click(function() {
+							me1.reservation_details[$('[data-fieldname="tailoring_item_code"]').val()] = JSON.stringify(me1.fabric_detail)
+							dialog.hide()
+						})
+					}
+				}
+			})	
 	},
 	create_si: function(){
 		var me = this;
@@ -750,7 +760,7 @@ frappe.SalesForm = Class.extend({
 		})
 		frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_si",
-			args:{'si_details': me.invoce_details, 'fields':me.field_list},
+			args:{'si_details': me.invoce_details, 'fields':me.field_list, 'reservation_details': me.reservation_details},
 			callback: function(r){
 				new frappe.SalesInvoce(me.wrapper)
 			}

@@ -16,7 +16,7 @@ class MRView(Document):
 		raised_by = frappe.db.sql("""select mr.name,  mri.name as mri_name, mri.item_code, mri.item_name, mri.description, mri.uom, mri.qty, mri.warehouse, mri.from_warehouse 
 			from `tabMaterial Request` mr, `tabMaterial Request Item` mri
 			where mr.name = mri.parent and mri.warehouse in (select warehouse from tabBranch 
-				where branch = (select branch from tabEmployee where user_id = 'rohitw1991@gmail.com')) """, as_dict=1)
+				where branch = (select branch from tabEmployee where user_id = 'Administrator')) """, as_dict=1, debug=1)
 		frappe.errprint(raised_by)
 		self.set('raised_by', [])	
 		
@@ -36,7 +36,7 @@ class MRView(Document):
 		req_by = frappe.db.sql("""select mr.name, mri.item_code,  mri.item_name, mri.description, mri.uom, mri.qty, mri.warehouse, mri.from_warehouse 
 			from `tabMaterial Request` mr, `tabMaterial Request Item` mri
 			where mr.name = mri.parent and mri.from_warehouse in (select warehouse from tabBranch 
-				where branch = (select branch from tabEmployee where user_id = 'rohitw1991@gmail.com')) """, as_dict=1)
+				where branch = (select branch from tabEmployee where user_id = 'Administrator')) """, as_dict=1, debug=1)
 
 		self.set('request_for', [])
 		for mr in req_by:

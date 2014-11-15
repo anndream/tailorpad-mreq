@@ -107,7 +107,7 @@ def get_work_orders(si_num):
 	return frappe.db.sql("""select tailor_work_order from `tabWork Order Distribution` where parent = '%s'"""%si_num.split('\t')[0])
 
 @frappe.whitelist()
-def create_si(si_details, fields):
+def create_si(si_details, fields, reservation_details):
 	from datetime import datetime
 
 	si_details = eval(si_details)
@@ -125,11 +125,11 @@ def create_si(si_details, fields):
 
 	si.set('sales_invoice_items_one', [])
 	for tailoring_item in si_details.get('Tailoring Item Details'):
-		item_details = get_item_details(tailoring_item[1])
-
+		item_details = get_item_details('ITEM-00002')
+		frappe.errprint(['tailoring_item',tailoring_item])
 		e = si.append('sales_invoice_items_one', {})
 		e.tailoring_price_list = tailoring_item[0]
-		e.tailoring_item_code = tailoring_item[1]
+		e.tailoring_item_code = "ITEM-00002" #tailoring_item[1]
 		e.tailoring_item_name = item_details[0]
 		e.tailoring_description = item_details[1]
 		e.fabric_code = tailoring_item[2]
@@ -141,7 +141,7 @@ def create_si(si_details, fields):
 		e.tailoring_amount = flt(tailoring_item[6]) * flt(tailoring_item[7])
 		e.tailoring_income_account = accounting_details[0]
 		e.tailoring_cost_center = accounting_details[1]
-		e.tailoring_branch = cust[4]
+		e.tailoring_branch = tailoring_item[8]
 
 	si.set('merchandise_item', [])
 	for merchandise_item in si_details.get('Merchandise Item Details'):
@@ -159,7 +159,8 @@ def create_si(si_details, fields):
 		e.merchandise_cost_center = accounting_details[1]
 		e.merchandise_branch = cust[4]
 
-	si.taxes_and_charges = 'Test'
+	# si.taxes_and_charges = 'Test'
+	si.fabric_details = reservation_details
 
 	si.save()
 	frappe.msgprint(si.name)

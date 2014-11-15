@@ -7,7 +7,10 @@ frappe.pages['account-dashboard'].onload = function(wrapper) {
 	$('<div class="auto_overflow" style="width:100%; float:left"><h4>Branch Wise Details</h4><table id="account_dashboard" class="table table-bordered" style="width:100%;min-height:100px;"><tr><td id="column_chart">\
 		</td></tr></table></div><div class="auto_overflow" style="width:100%; float:left"><h4 class="tailoring_class">Tailoring Details</h4><table class="table table-bordered"><tr><td class="tailoring_class" id="pie_chart_tailoring"></td></tr></table></div>\
 		<div class="auto_overflow" style="width:100%; float:left"><h4 class="merchandise_class">Merchandise Details</h4>\
-		<table class="table table-bordered"><tr><td class="merchandise_class" id="pie_chart_merchandise"></td></tr></table></div><div class="auto_overflow" style="width:100%; float:left"><h4 >Attendance Details</h4>\
+		<table class="table table-bordered"><tr><td class="merchandise_class" id="pie_chart_merchandise"></td></tr></table></div>\
+		<div class="auto_overflow" style="width:100%; float:left"><h4 class="supplier_class">Supplier Details</h4>\
+		<table class="table table-bordered"><tr><td class="supplier_class" id="supplier_details"></td></tr></table></div>\
+		<div class="auto_overflow" style="width:100%; float:left"><h4 >Attendance Details</h4>\
 		<table id="attendance_table" class="table table-bordered"><tr><td  id="attendance_filtter"></td></tr><tr><td class="attendance_class" id="attendance_data"></td></tr></table></div>').appendTo($(wrapper).find('.layout-main'))
 	new frappe.AccountDashboard(wrapper)
 }
@@ -17,9 +20,11 @@ frappe.AccountDashboard = Class.extend({
 		this.wrapper = wrapper
 		this.make_controller()
 		this.render_data()
+		this.supplier_details()
 		this.attendance()
 		this.auto_overflow()
 	},
+
 	make_controller: function(){
 		var me = this;
 		
@@ -50,6 +55,7 @@ frappe.AccountDashboard = Class.extend({
 			me.attendance()
 		})
 	},
+
 	render_data : function(){
 		var me = this
 		args = {'type_of_group':this.type_of_group.$input.val(), 'from_date':this.from_date.val(), 'to_date':this.to_date.val(), 'branch':this.branch.$input.val(), 'fiscal_year':this.fiscal_year.$input.val()}
@@ -75,12 +81,14 @@ frappe.AccountDashboard = Class.extend({
 			}
 		})
 	},
+
 	make_design_for_all : function(obj){
 		var me = this;
 		this.column_chart_method(obj[0])
 		this.pie_chart_tailoring(obj[1])
 		this.pie_chart_merchandise(obj[2])
 	},
+
 	column_chart_method : function(args){
 		var me = this;
 		var options = {packages: ['corechart'], callback : drawChart};
@@ -101,16 +109,17 @@ frappe.AccountDashboard = Class.extend({
 	    	chart.draw(data, options);
         }
 	},
+
 	pie_chart_tailoring : function(args){
 		var me = this;
 		$(this.wrapper).find('.tailoring_class').css('display','block');
-		if (args) {
+		if (args.length > 1) {
+
 			if (me.type_of_group.$input.val() == 'Tailoring'){
 				$(this.wrapper).find('.merchandise_class').css('display','none');
 			}
 			var options = {packages: ['corechart'], callback : drawChart};
-			$(this.wrapper).find('#pie_chart_merchandise')
-		    google.load('visualization', '1', options);
+			google.load('visualization', '1', options);
 		    function drawChart()
 		    {				 
 		    	var data = google.visualization.arrayToDataTable(args);
@@ -127,12 +136,13 @@ frappe.AccountDashboard = Class.extend({
 	        }
     	}else{
     		$(this.wrapper).find('.merchandise_class').css('display','none');
-    }
+    	}
 	},
+
 	pie_chart_merchandise : function(args){
 		var me = this;
 		$(this.wrapper).find('.merchandise_class').css('display','block');
-		if (args) {
+		if (args.length > 1) {
 			if (me.type_of_group.$input.val() == 'Merchandise'){
 				$(this.wrapper).find('.tailoring_class').css('display','none');
 			}
@@ -156,6 +166,42 @@ frappe.AccountDashboard = Class.extend({
         	$(me.wrapper).find('.merchandise_class').css('display','none');
         }
 	},
+
+	supplier_details : function(){
+		var me = this;
+		frappe.call({
+			method:'mreq.mreq.page.account_dashboard.account_dashboard.get_supplier_details',
+			callback : function(r){
+				if(r.message.length > 1)
+					{					
+						$('.supplier_class').css('visibility','display')
+						var options = {packages: ['corechart'], callback : drawChart};
+					    google.load('visualization', '1', options);
+					    function drawChart()
+					    {				 
+					    	var data = google.visualization.arrayToDataTable(r.message);
+					    	var options = {
+					      				title: 'Branch Wise	Merchandise Sales Details',
+					      				width: 400,
+				        				height: 200,				        	
+				        				legend: { position: 'top', maxLines: 3 },
+				       					bar: { groupWidth: '25%' },
+				       					isStacked: true,
+					    	};
+						    var chart = new google.visualization.ColumnChart(document.getElementById('supplier_details'));
+						    chart.draw(data, options);
+						    google.visualization.events.addListener(chart, 'select', selectHandler);
+			    			function selectHandler() {
+								window.open('#query-report/Accounts Payable','_self')
+							}
+				        }
+					}else{
+							$('.supplier_class').css('visibility','hidden')
+					}
+			}
+		})
+	},
+
 	attendance : function(){
 		var me = this;
 		frappe.call({
