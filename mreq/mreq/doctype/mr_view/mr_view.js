@@ -56,3 +56,9 @@ cur_frm.cscript.material_request = function(doc, dt, dn) {
 	}
 	loaddoc('Material Request', mr.name);
 }
+
+cur_frm.cscript.cut_order = function(doc, cdt, cdn){
+	return get_server_fields('create_co', '', '', doc, cdt, cdn, 1, function(){
+		refresh_field('request_for')
+	});
+}

@@ -113,6 +113,19 @@
    "precision": ""
   }, 
   {
+   "fieldname": "cut_order", 
+   "fieldtype": "Button", 
+   "label": "Cut Order", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "column_break_10", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "fieldname": "material_request", 
    "fieldtype": "Button", 
    "label": "Material Request", 
@@ -127,7 +140,7 @@
  "is_submittable": 0, 
  "issingle": 1, 
  "istable": 0, 
- "modified": "2014-10-04 17:42:08.265925", 
+ "modified": "2014-11-15 12:45:00.654389", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "MR View", 

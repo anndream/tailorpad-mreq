@@ -15,7 +15,7 @@ class CashierDashboard(Document):
 		self.validate_authentication(args)
 
 	def check_measurement_noted(self, args):
-		if not args.measurement =='Noted':
+		if args.measurement != 'Noted':
 			frappe.throw(_("For Order {0} at row {1} Measurement is not noted").format(args.sales_invoice_no, args.idx))
 
 	def mandatory_fields_validation(self, args):
@@ -37,8 +37,8 @@ class CashierDashboard(Document):
 				self.validate_methods(d)
 				jv = self.create_jv(d)
 				self.authenticate_for_production(d)
-			elif d.status == 'Rejected':
-				frappe.throw(_('You have to pay minimum amount {0}').format(min_payment))
+			# elif d.status == 'Rejected':
+			# 	frappe.throw(_('You have to pay minimum amount {0}').format(min_payment))
 		self.show_pending_balance_invoices()
 		return "Successfully received amount"
 
@@ -62,7 +62,7 @@ class CashierDashboard(Document):
 			jvd.parent = parent
 			jvd.parenttype = 'Journal Voucher'
 			jvd.parentfield = 'entries'
-			jvd.cost_center = get_branch_cost_center()
+			jvd.cost_center = get_branch_cost_center(get_user_branch())
 			jvd.account = s.get('account')
 			if s.get('account_type') == 'credit':
 				jvd.credit = cstr(amount)

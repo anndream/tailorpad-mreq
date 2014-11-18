@@ -458,12 +458,14 @@ frappe.SalesForm = Class.extend({
 		this.search_key = search_key;
 		this.reservation_details = {}
 		this.fabric_detail = {}
+		this.split_qty_dict = {}
+
 		this.field_list = {
 			'Basic Info':[['Customer', 'Link', 'Customer','customer'],
 				['Currency', 'Link', 'Currency', 'currency'], 
 				['Delivery Date','Date','','delivery_date'], 
 				['Book Date', 'Date', '', 'posting_date'], 
-				['Branch', 'Link', 'Branches', 'branch'],
+				['Branch', 'Link', 'Branch', 'branch'],
 				['Paased to Work Order', 'Select', '\nYes\nNo', 'authenticated']],
 			'Tailoring Item Details':[
 				['Price List', 'Link', 'Price List','tailoring_price_list'], 
@@ -482,7 +484,9 @@ frappe.SalesForm = Class.extend({
 				['Rate', 'Data', '','merchandise_rate'],
 				['Merchandise Branch', 'Link', 'Branches', 'merchandise_branch']],
 			'Taxes and Charges':
-				[['Taxes and Charges', 'Link', 'Sales Taxes and Charges Master', 'taxes_and_charges']]
+				[['Taxes and Charges', 'Link', 'Sales Taxes and Charges Master', 'taxes_and_charges']],
+			'Total':
+				[['Total', 'Data', '', 'total']]
 		};
 		
 		if(form_type == 'new')
@@ -574,9 +578,9 @@ frappe.SalesForm = Class.extend({
 			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Slipt Qty </button>")
 			.appendTo($("<td align='center'>").appendTo(row1))
 			.click(function() {
-				me.reserve_fabric()
+				new frappe.SplitQty(me.wrapper, me)
 			});
-			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Reserve Fabric </button>")
+			$("<button class='btn btn-small btn-primary' id = 'reserve_fabric' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Reserve Fabric </button>")
 			.appendTo($("<td align='center'>").appendTo(row1))
 			.click(function() {
 				me.reserve_fabric()
@@ -605,13 +609,30 @@ frappe.SalesForm = Class.extend({
 			})
 		})
 
-		if(key!='Basic Info'){
+		$('[data-fieldname="fabric_code"]').change(function(){
+			frappe.call({
+				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.check_swatch_group",
+				args:{'fabric_code':$('[data-fieldname="fabric_code"]').val()},
+				callback: function(r){
+					if(r.message == 1){
+						$('#reserve_fabric').hide()
+					}
+					else{
+						$('#reserve_fabric').show()	
+					}
+				}
+			})
+		})
+
+		if(key!='Basic Info' && key != 'Total' && key != 'Taxes and Charges'){
 			if(key == 'Tailoring Item Details')
-				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Width", 100], ["Fabric Qty", 100], ["Qty", 100], ['Rate', 100],['Tailoring Branch', 100]];
+				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Width", 100], ["Fabric Qty", 100], ["Qty", 100], ['Rate', 100],['Tailoring Branch', 100], ['', 50]];
+			
 			if(key == 'Merchandise Item Details')
-				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100]];
-			if(key == 'Taxes and Charges')
-				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100]];
+				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100],['', 50]];
+			
+			// if(key == 'Taxes and Charges')
+			// 	columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100]];
 
 			if(form_type == 'new'){
 				$("<button class='btn btn-small btn-primary' style='margin-bottom:2%' id='"+key+"'><i class='icon-plus'></i></button>")
@@ -654,7 +675,15 @@ frappe.SalesForm = Class.extend({
 		$.each(this.tailoring_item_details, function(i, d) {	
 			$("<td>").html(d).appendTo(row);
 		});
-		
+		// if(key == 'Tailoring Item Details')
+		// 	$("<td>").html(me.split_qty_dict).appendTo(row)
+
+		$('<button  class="remove"><i class="icon-trash"></i></button>').appendTo($("<td>")).appendTo(row)
+				.click(function(){
+					$(this).parent().remove()
+					me.calc_total_amt()
+				});
+		me.calc_total_amt()
 	},
 	retrive_data: function(fields){
 		var me = this;
@@ -736,8 +765,9 @@ frappe.SalesForm = Class.extend({
 		var me = this;
 		this.invoce_details = {};
 		$.each(this.field_list, function(tab_name, fields){
-			if(tab_name != 'Basic Info'){
+			if(tab_name != 'Basic Info' && tab_name != 'Total' && tab_name != 'Taxes and Charges'){
 				var si_details_list = []
+				console.log(tab_name)
 				me[tab_name].find('tr').each(function (tr_id, tr_val) {
 					if(tr_id != 0){
 						var $tds = $(this).find('td')
@@ -807,9 +837,135 @@ frappe.SalesForm = Class.extend({
 				});
 			});
 
+	},
+	calc_total_amt: function(){
+		var total = 0.0;
+		var me = this ;
+		me['Tailoring Item Details'].find('tr').each(function (tr_id, tr_val) {
+			if(tr_id != 0){
+				var $tds = $(this).find('td')
+				sub_tot = flt($tds.eq(6).text()) * flt($tds.eq(7).text())
+				total += sub_tot
+			}	
+		})
+
+		me['Merchandise Item Details'].find('tr').each(function (tr_id, tr_val) {
+			if(tr_id != 0){
+				var $tds = $(this).find('td')
+				sub_tot = flt($tds.eq(2).text()) * flt($tds.eq(3).text())
+				total += sub_tot
+			}	
+		})
+		
+		$('[data-fieldname="total"]').attr("disabled","disabled")
+		$('[data-fieldname="total"]').val(total)
 	}
 
 })
+
+
+frappe.SplitQty =  Class.extend({
+    init : function(wrapper, si){
+        // this.data = locals[cdt][cdn]
+        this.split_init()
+        this.si = si
+    },
+
+    split_init: function(){
+        this.make_structure()
+        // this.render_split_data()
+        this.add_new_split_data()
+        this.save_data()
+        this.remove_qty()
+    },
+
+    make_structure: function(){
+            this.dialog = new frappe.ui.Dialog({
+                title:__(' Styles'),
+                fields: [
+                {fieldtype:'Int', fieldname:'qty', label:__('Qty'), reqd:false,
+                        description: __("")},
+                        {fieldtype:'Button', fieldname:'add_qty', label:__('Add'), reqd:false,
+                        description: __("")},
+                    {fieldtype:'HTML', fieldname:'styles_name', label:__('Styles'), reqd:false,
+                        description: __("")},
+                        {fieldtype:'Button', fieldname:'create_new', label:__('Ok') }
+                ]
+            })
+            this.fd = this.dialog.fields_dict;
+            this.div = $('<div id="myGrid" style="width:100%;height:200px;margin:10px;overflow-y:scroll">\
+                        <table class="table table-bordered" style="background-color: #f9f9f9;height:10px" id="mytable">\
+                        <thead><tr><td>Item</td><td>Qty</td><td>Remove</td></tr>\
+                        </thead><tbody></tbody></table></div>').appendTo($(this.fd.styles_name.wrapper))
+            this.dialog.show()
+    },
+
+    render_split_data: function(){
+        var me = this;
+        if(this.si.split_qty_dict){
+            column = JSON.parse(this.si.split_qty_dict)
+            $.each(column, function(i){
+                this.table = $(me.div).find('#mytable tbody').append('<tr><td style="background-color:#FFF">'+column[i].tailoring_item_code+'</td><td style="background-color:#FFF"><input type="Textbox" class="text_box" value="'+column[i].qty+'"></td><td>&nbsp;<button  class="remove">X</button></td></tr>')
+            })
+        }
+    },
+
+    add_new_split_data: function(){
+        var me = this;
+        $(this.fd.add_qty.input).click(function(){
+            if(me.fd.qty.last_value){
+                this.table = $(me.div).find('#mytable tbody').append('<tr><td style="background-color:#FFF">'+$('[data-fieldname="tailoring_item_code"]').val()+'</td><td style="background-color:#FFF"><input type="Textbox" class="text_box" value="'+me.fd.qty.last_value+'"></td><td>&nbsp;<button  class="remove">X</button></td></tr>')
+                me.remove_qty()                
+            }    
+        })
+        
+    },
+
+    save_data: function(){
+        var me =this;
+        $(this.fd.create_new.input).click(function(){
+            me.split_dict={}
+            var sum = 0
+            $(me.div).find('#mytable tbody tr').each(function(i){
+                var key = ['tailoring_item_code', 'qty', 'cancel'];
+                var qty_data={}
+                cells = $(this).find('td')
+                $(cells).each(function(i){
+                    qty_data[key[i]] = $(this).find('.text_box').val() || $(this).text();
+                    val = parseInt($(this).find('.text_box').val())
+                    if(val){
+                        sum += val;
+                    }
+                })
+                me.split_dict[i] = qty_data
+            })
+            me.validate_data(sum)
+        })
+    },
+
+    validate_data: function(qty){
+        var me = this;
+        if(parseInt(qty)==parseInt($('[data-fieldname="tailoring_qty"]').val())) {
+            this.si.split_qty_dict = JSON.stringify(me.split_dict)
+            refresh_field('sales_invoice_items_one')
+            console.log(this.si.split_qty_dict)
+            me.dialog.hide()
+        }else{
+            alert("Split qty should be equal to Taiiloring Product Qty")
+            me.dialog.show()
+        }
+    },
+
+    remove_qty: function(){
+        var me = this;
+        $(this.div).find('.remove').click(function(){
+            $(this).parent().parent().remove()
+        })
+    }
+})
+
+
+
 
 frappe.WOForm = Class.extend({
 	init: function(wrapper, woname){

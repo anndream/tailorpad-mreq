@@ -38,6 +38,7 @@ class CutOrderDashboard(Document):
 				self.submit_cut_order(item)
 		self.make_stock_transfer(out_list)
 		self.update_fabric_stock(issue_list)
+		frappe.msgprint("Stock Entry for cutted fabric has drafted")
 
 	def make_material_issue_list(self, item, issue_list):
 		frappe.errprint(item.invoice_no)

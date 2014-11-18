@@ -1,5 +1,5 @@
 import frappe
-from frappe.utils import getdate, flt, cint
+from frappe.utils import getdate, flt, cint, nowdate
 
 @frappe.whitelist()
 def get_customer_list(search_key=None):
@@ -125,11 +125,11 @@ def create_si(si_details, fields, reservation_details):
 
 	si.set('sales_invoice_items_one', [])
 	for tailoring_item in si_details.get('Tailoring Item Details'):
-		item_details = get_item_details('ITEM-00002')
+		item_details = get_item_details(tailoring_item[1])
 		frappe.errprint(['tailoring_item',tailoring_item])
 		e = si.append('sales_invoice_items_one', {})
 		e.tailoring_price_list = tailoring_item[0]
-		e.tailoring_item_code = "ITEM-00002" #tailoring_item[1]
+		e.tailoring_item_code = tailoring_item[1]
 		e.tailoring_item_name = item_details[0]
 		e.tailoring_description = item_details[1]
 		e.fabric_code = tailoring_item[2]
@@ -256,3 +256,42 @@ def update_wo(wo_details, fields, woname, style_details):
 
 	wo.save(1)
 	frappe.msgprint("Updated.....")
+
+@frappe.whitelist()
+def check_swatch_group(fabric_code):
+	if frappe.db.get_value('Item', fabric_code, 'item_group') == 'Fabric Swatch Item':
+		return 1
+	return 0
+
+def create_swatch_item_po(doc, method):
+	supp_dic = {}
+	for item in doc.get('sales_invoice_items_one'):
+		if check_swatch_group(item.fabric_code) == 1:
+			get_supplier_weise_po_details(item, supp_dic)
+	make_po(supp_dic)
+
+def get_supplier_weise_po_details(item, supp_dic):
+	"""
+		1. get supplier from item master
+		2. add supplier to dict and push fabric code and qty
+		3. if supplier exist push list 
+
+	"""
+	supplier = frappe.db.get_value('Item', item.fabric_code, 'supplier_code')
+	supp_dic[supplier] = [] if not supp_dic.get(supplier) else supp_dic.get(supplier)
+	supp_dic[supplier].append([item.fabric_code, item.fabric_qty, frappe.db.get_value('Item', item.fabric_code, 'supplier_item_code')])
+
+
+def make_po(supp_dic):
+	for supplier in supp_dic:
+		po = frappe.new_doc("Purchase Order")
+		po.supplier = supplier
+
+		po.set('po_details', [])
+		for item in supp_dic[supplier]:
+			e = po.append('po_details', {})
+			e.item_code = item[0]
+			e.qty = item[1]
+			e.supplier_item_code = item[2]
+			e.schedule_date = nowdate()
+		po.save()
