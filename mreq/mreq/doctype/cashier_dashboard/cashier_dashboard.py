@@ -10,7 +10,7 @@ from tools.custom_data_methods import get_user_branch, get_branch_cost_center
 
 class CashierDashboard(Document):
 	def validate_methods(self, args):
-		self.check_measurement_noted(args)
+		# self.check_measurement_noted(args)
 		self.mandatory_fields_validation(args)
 		self.validate_authentication(args)
 
@@ -28,6 +28,9 @@ class CashierDashboard(Document):
 	def validate_authentication(self, args):
 		if frappe.db.get_value('Sales Invoice', args.sales_invoice_no, 'authenticated') == 'Approved' and args.status in ['Pending', 'Rejected', 'Remove'] : 
 			frappe.throw(_('This order is already approved'))
+		amt = flt(args.paid_amount) + flt(args.amount)
+		if args.status == 'Approved' and amt < args.min_payment_amount and not frappe.db.get_value('Sales Invoice', args.sales_invoice_no, 'authenticated') == 'Approved':
+			frappe.throw(_('To approved the order you have to pay min amt {0} at row {1}').format(args.min_payment_amount, args.idx))
 
 	def make_payment(self):
 		branch = get_user_branch()
@@ -36,11 +39,15 @@ class CashierDashboard(Document):
 			if cint(d.select) == 1 and cint(d.outstanding) > 0:
 				self.validate_methods(d)
 				jv = self.create_jv(d)
-				self.authenticate_for_production(d)
-			# elif d.status == 'Rejected':
-			# 	frappe.throw(_('You have to pay minimum amount {0}').format(min_payment))
-		self.show_pending_balance_invoices()
+				# self.authenticate_for_production(d)
+			if cint(d.select) == 1:
+				self.update_status(d)
+		self.show_pending_balance_invoices()		
 		return "Successfully received amount"
+
+	def update_status(self, args):
+		frappe.db.sql("""update `tabSales Invoice` set authenticated = '%s' 
+			where name = '%s'"""%(args.status, args.sales_invoice_no))
 
 	def create_jv(self, args):
 		jv = frappe.new_doc('Journal Voucher')
@@ -86,7 +93,7 @@ class CashierDashboard(Document):
 		
 		data = frappe.db.sql("""select * from `tabSales Invoice` where 
 			docstatus= 1 and ifnull(outstanding_amount, 0)>0 
-			and %s"""%(cond), as_dict=1)
+			and %s order by name desc"""%(cond), as_dict=1)
 		
 		for r in data:
 			pmt = self.append('payment',{})
@@ -95,6 +102,9 @@ class CashierDashboard(Document):
 			pmt.outstanding = r.outstanding_amount
 			pmt.status = 'Pending' if not r.authenticated else r.authenticated
 			pmt.measurement = self.get_remaining_measurement_list(r.name)
+			pmt.min_payment_percentage = frappe.db.get_value('Branch', get_user_branch(), 'min_advance_payment')
+			pmt.min_payment_amount  = cstr(flt(pmt.min_payment_percentage) * flt(frappe.db.get_value('Sales Invoice', r.name, 'grand_total_export')) / flt(100))
+			pmt.paid_amount = self.get_paid_amount(r)
 
 	def authenticate_for_production(self, args):
 		branch = get_user_branch()
@@ -103,9 +113,6 @@ class CashierDashboard(Document):
 			if cint(args.select) == 1 and frappe.db.get_value('Sales Invoice', args.sales_invoice_no, 'authenticated')!='Approved':
 				if flt(args.amount) < flt(min_payment) and args.status=='Approved':
 					frappe.throw(_('Must pay minimum amount {0}').format(min_payment))
-				else:
-					frappe.db.sql("""update `tabSales Invoice` set authenticated = '%s' 
-						where name = '%s'"""%(args.status, args.sales_invoice_no))
 
 	def calculate_status(self, idx):
 		for d in self.get('payment'):
@@ -124,3 +131,8 @@ class CashierDashboard(Document):
 		if wo_name:
 			return "Pending"
 		return "Noted"
+
+	def get_paid_amount(self, args):
+		amt = frappe.db.sql(""" select sum(credit) from `tabJournal Voucher Detail` where 
+			against_invoice = '%s' and docstatus=1"""%(args.name), as_list=1) 
+		return amt[0][0] if amt else 0

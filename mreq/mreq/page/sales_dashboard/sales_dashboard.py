@@ -102,6 +102,11 @@ def get_size_and_rate(price_list, item_code, fabric_code, branch, size):
 	return flt(item_price) + flt(fabric_price)
 
 @frappe.whitelist()
+def get_fabric_qty(item_code, width, size):
+	width = frappe.db.sql("""select ifnull(fabric_qty, 1) from `tabSize Item` where parent = '%s' and width = '%s' and size='%s'"""%(item_code, width, size),as_list=1, debug=1)
+	return	((len(width[0]) > 1) and width[0] or width[0][0]) if width else None
+
+@frappe.whitelist()
 def get_work_orders(si_num):
 	frappe.errprint(si_num)
 	return frappe.db.sql("""select tailor_work_order from `tabWork Order Distribution` where parent = '%s'"""%si_num.split('\t')[0])
@@ -109,7 +114,7 @@ def get_work_orders(si_num):
 @frappe.whitelist()
 def create_si(si_details, fields, reservation_details):
 	from datetime import datetime
-
+	frappe.errprint(si_details)
 	si_details = eval(si_details)
 	fields = eval(fields)
 	accounting_details = get_accounting_details()
@@ -159,36 +164,57 @@ def create_si(si_details, fields, reservation_details):
 		e.merchandise_cost_center = accounting_details[1]
 		e.merchandise_branch = cust[4]
 
-	# si.taxes_and_charges = 'Test'
+	for tax in si_details.get('Taxes and Charges'):
+		si.taxes_and_charges = tax[0]
+	
 	si.fabric_details = reservation_details
 
 	si.save()
 	frappe.msgprint(si.name)
 
+	si = frappe.get_doc('Sales Invoice', si.name)
+	si.save()
+
+	return si.name
+
+def get_tax_details(si):
+	tax_details = frappe.db.sql("""select description, tax_amount, item_wise_tax_detail 
+			from `tabSales Taxes and Charges` 
+			where parent = '%s'"""%si,as_list=1)
+	
+	tab = """<table class='table table-bordered'>"""
+	for tax in tax_details:
+		tab += """<tr><td>%s</td><td>%s</td></tr>"""%(tax[0], tax[1])
+		
+
+	return tab
+
 @frappe.whitelist()
 def get_si_details(name):
 	si = frappe.db.sql("""select si.name,si.customer, si.currency, 
 								si.delivery_date, si.posting_date, 
-								sii.tailoring_branch, si.authenticated 
-						from `tabSales Invoice` si , `tabSales Invoice Items` sii 
-						where si.name = '%s' and sii.parent=si.name"""%(name),as_dict=1, debug=1)
+								si.branch, si.authenticated 
+						from `tabSales Invoice` si 
+						where si.name = '%s' """%(name),as_dict=1, debug=1)
 
 	tailoring_item = frappe.db.sql("""select tailoring_price_list, tailoring_item_code, 
 											fabric_code, tailoring_size, 
 											width, fabric_qty, tailoring_qty, 
-											tailoring_rate 
+											tailoring_rate, tailoring_branch 
 									from `tabSales Invoice Items` 
 									where parent = '%s' """%(name), as_list=1)
 
 	merchandise_item = frappe.db.sql("""select merchandise_price_list, merchandise_item_code, 
-											merchandise_qty, merchandise_rate 
+											merchandise_qty, merchandise_rate, merchandise_branch 
 										from `tabMerchandise Items` 
 										where parent = '%s'"""%(name), as_list=1)
 
 	return {
 		'si': si,
 		'tailoring_item': tailoring_item,
-		'merchandise_item': merchandise_item
+		'merchandise_item': merchandise_item,
+		"tax_details" : get_tax_details(name),
+		"tot":frappe.db.get_value('Sales Invoice', name, 'rounded_total_export')
 	}
 
 def get_item_details(item):
@@ -223,9 +249,8 @@ def get_wo_details(tab, woname):
 					where name = '%s' """%(woname.split('\t')[-1].strip()), as_dict=1, debug=1)
 
 @frappe.whitelist()
-def update_wo(wo_details, fields, woname, style_details):
+def update_wo(wo_details, fields, woname, style_details, args=None, type_of_wo=None):
 	from frappe.utils import cstr
-	frappe.errprint([wo_details, fields, woname, style_details])
 
 	wo = frappe.get_doc('Work Order', woname)
 	style_details =  eval(style_details)
@@ -256,6 +281,15 @@ def update_wo(wo_details, fields, woname, style_details):
 
 	wo.save(1)
 	frappe.msgprint("Updated.....")
+
+@frappe.whitelist()
+def get_amended_name(work_order):
+	if '-' in work_order:
+		woname = cstr(work_order).split('-')
+		amend_no = cint(woname[len(woname) - 1]) + 1
+		return work_order +'-'+ amend_no
+	else:
+		return work_order + '-1'
 
 @frappe.whitelist()
 def check_swatch_group(fabric_code):
@@ -295,3 +329,60 @@ def make_po(supp_dic):
 			e.supplier_item_code = item[2]
 			e.schedule_date = nowdate()
 		po.save()
+
+
+@frappe.whitelist()
+def create_work_order(wo_details, fields, woname, style_details, args=None, type_of_wo=None):
+	frappe.errprint([style_details, wo_details])
+	# work_order = frappe.db.sql("select * from `tabWork Order` where name ='%s'"%(woname), as_dict=1)
+	# for w in work_order:
+	# 	wo = frappe.new_doc('Work Order')
+	# 	wo.item_code = w.item_code
+	# 	wo.work_order_no = get_amended_name(woname)
+	# 	wo.customer = w.customer
+	# 	wo.sales_invoice_no = w.name
+	# 	wo.customer_name = w.customer_name
+	# 	wo.item_qty = w.item_qty
+	# 	wo.serial_no_data = w.serial_no_data
+	# 	create_work_order_style(wo, eval(style_details))
+	# 	create_work_order_measurement(wo, eval(wo_details))
+	# 	# wo.branch = data.tailoring_warehouse
+	# 	# wo.submit()
+	# 	# return wo.name
+ 
+def create_work_order_style(obj, args):
+	for s in args:
+		frappe.errprint(args)
+ # 	if wo_name and item_code:
+	#  	styles = frappe.db.sql(""" select distinct style, abbreviation from `tabStyle Item` where parent = '%s'
+	#  		"""%(item_code),as_dict=1)
+	#  	if styles:
+	#  		for s in styles:
+	#  			ws = frappe.new_doc('WO Style')
+	#  			ws.field_name = s.style
+	#  			ws.abbreviation  = s.abbreviation
+	#  			ws.parent = wo_name
+	#  			ws.parentfield = 'wo_style'
+	#  			ws.parenttype = 'Work Order'
+	#  			ws.table_view = 'Right'
+	#  			ws.save(ignore_permissions =True)
+	# return True
+
+def create_work_order_measurement(obj, args):
+	pass
+	# style_parm=[]
+ # 	if wo_name and item_code:
+	#  	measurements = frappe.db.sql(""" select * from `tabMeasurement Item` where parent = '%s'
+	#  		"""%(item_code),as_dict=1)
+	#  	if measurements:
+	#  		for s in measurements:
+	#  			if not s.parameter in style_parm:
+	# 	 			mi = frappe.new_doc('Measurement Item')
+	# 	 			mi.parameter = s.parameter
+	# 	 			mi.abbreviation = s.abbreviation
+	# 	 			mi.parent = wo_name
+	# 	 			mi.parentfield = 'measurement_item'
+	# 	 			mi.parenttype = 'Work Order'
+	# 	 			mi.save(ignore_permissions =True)
+	# 	 			style_parm.append(s.parameter)
+	# return True

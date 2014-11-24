@@ -473,8 +473,8 @@ frappe.SalesForm = Class.extend({
 				['Fabric Code', 'Link', 'Item','fabric_code'],
 				['Size', 'Link', 'Size','tailoring_size'],
 				['Width', 'Link', 'Width','width'],
-				['Fabric Qty', 'Data', '','fabric_qty'],
 				['Qty', 'Data', '','tailoring_qty'],
+				['Fabric Qty', 'Data', '','fabric_qty'],
 				['Rate', 'Data', '','tailoring_rate'],
 				['Tailoring Branch', 'Link', 'Branches', 'tailoring_branch']],
 			'Merchandise Item Details':[
@@ -486,7 +486,8 @@ frappe.SalesForm = Class.extend({
 			'Taxes and Charges':
 				[['Taxes and Charges', 'Link', 'Sales Taxes and Charges Master', 'taxes_and_charges']],
 			'Total':
-				[['Total', 'Data', '', 'total']]
+				[['Total', 'Data', '', 'total'],
+				 ['Grand Total', 'Data', '', 'grand_total']]
 		};
 		
 		if(form_type == 'new')
@@ -503,7 +504,7 @@ frappe.SalesForm = Class.extend({
 
 		$.each(this.field_list, 
 			function(i, field) {
-				me.table1 = $("<table>\
+				me[i+'_1'] = $("<table>\
 						<tbody style='display: block;width:500px;'></tbody>\
 						</table>").appendTo(me.field_area);
 				me.render_child(field, form_type, i)
@@ -533,16 +534,16 @@ frappe.SalesForm = Class.extend({
 
 		$('<h4 class="col-md-12" style="margin: 0px 0px 15px;">\
 			<i class="icon-in-circle icon-user"></i>\
-			<span class="section-count-label"></span>.'+key+'. </h4>').prependTo(me.table1)
+			<span class="section-count-label"></span>.'+key+'. </h4>').prependTo(me[key+'_1'])
 
-		var row = $("<tr>").appendTo(me.table1.find("tbody"));
+		var row = $("<tr>").appendTo(me[key+'_1'].find("tbody"));
 		if(me.type_checker(form_type, key)){
 			$.each(fields, 
 				function(i, field) {
 					$('<td>').html('<label class="control-label" style="align:center;margin-top:2%;margin-left:10%">'+field[0]+'</label>').appendTo(row);
 					
 					if(i%2 == 1){
-						row = $("<tr>").appendTo(me.table1.find("tbody"));
+						row = $("<tr>").appendTo(me[key+'_1'].find("tbody"));
 						for(j=i-1; j<=(i); j++){
 							var td = $("<td>").appendTo(row)
 							frappe.ui.form.make_control({
@@ -556,10 +557,10 @@ frappe.SalesForm = Class.extend({
 							}).make_input();
 
 						}
-						row = $("<tr>").appendTo(me.table1.find("tbody"));
+						row = $("<tr>").appendTo(me[key+'_1'].find("tbody"));
 					}
 					else if(i == fields.length-1){
-						row = $("<tr>").appendTo(me.table1.find("tbody"));
+						row = $("<tr>").appendTo(me[key+'_1'].find("tbody"));
 						var td = $("<td>").appendTo(row)
 						frappe.ui.form.make_control({
 								df: {
@@ -574,7 +575,7 @@ frappe.SalesForm = Class.extend({
 				})
 		}
 		if(key == 'Tailoring Item Details'){
-			var row1 = $("<tr>").appendTo(me.table1.find("tbody"));
+			var row1 = $("<tr>").appendTo(me[key+'_1'].find("tbody"));
 			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Slipt Qty </button>")
 			.appendTo($("<td align='center'>").appendTo(row1))
 			.click(function() {
@@ -607,6 +608,25 @@ frappe.SalesForm = Class.extend({
 					$('[data-fieldname="tailoring_rate"]').attr('value', r.message)
 				}
 			})
+		})
+
+		$('[data-fieldname="tailoring_qty"]').change(function(){
+			frappe.call({
+				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_fabric_qty",
+				args:{'item_code':$('[data-fieldname="tailoring_item_code"]').val(),
+					'width': $('[data-fieldname="width"]').val(),
+					'size': $('[data-fieldname="tailoring_size"]').val()
+					},
+				callback: function(r){
+					$('[data-fieldname="fabric_qty"]').attr('value', flt(r.message) * flt($('[data-fieldname="tailoring_qty"]').val()))
+				}
+			})
+		})
+
+
+
+		$('[data-fieldname="tailoring_qty"]').change(function(){
+			
 		})
 
 		$('[data-fieldname="fabric_code"]').change(function(){
@@ -659,7 +679,7 @@ frappe.SalesForm = Class.extend({
 		if(form_type == 'new')
 			return true;
 		else if(form_type == 'open'){
-			if(key == 'Basic Info')
+			if(key == 'Basic Info' || key == 'Total')
 				return	 true;
 			else
 				return false;
@@ -792,9 +812,17 @@ frappe.SalesForm = Class.extend({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_si",
 			args:{'si_details': me.invoce_details, 'fields':me.field_list, 'reservation_details': me.reservation_details},
 			callback: function(r){
-				new frappe.SalesInvoce(me.wrapper)
+				console.log(r.message)
+				// new frappe.SalesInvoce(me.wrapper)
+				me.open_record(r.message, 'open')
 			}
 		})
+	},
+	render_tax_struct:function(tax_struct){
+		var me = this;
+		console.log(me['Taxes and Charges_1'])
+		console.log(me['Taxes and Charges_1'].find('tbody'))
+		me['Taxes and Charges_1'].append(tax_struct)
 	},
 	open_record:function(si_no, form_type){
 		var me = this;
@@ -802,8 +830,11 @@ frappe.SalesForm = Class.extend({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_si_details",
 			args:{'name': si_no},
 			callback: function(r){
+				me.si_no = si_no
 				me.render_sales_form(form_type)
 				me.add_values(r.message)
+				me.render_tax_struct(r.message['tax_details'])
+				me.calc_total_amt(r.message['tot'])
 			}
 		})
 	},
@@ -838,7 +869,8 @@ frappe.SalesForm = Class.extend({
 			});
 
 	},
-	calc_total_amt: function(){
+	calc_total_amt: function(grand_total){
+		console.log('test')
 		var total = 0.0;
 		var me = this ;
 		me['Tailoring Item Details'].find('tr').each(function (tr_id, tr_val) {
@@ -859,6 +891,9 @@ frappe.SalesForm = Class.extend({
 		
 		$('[data-fieldname="total"]').attr("disabled","disabled")
 		$('[data-fieldname="total"]').val(total)
+
+		$('[data-fieldname="grand_total"]').attr("disabled","disabled")
+		$('[data-fieldname="grand_total"]').val(grand_total?grand_total:total)
 	}
 
 })
