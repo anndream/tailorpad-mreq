@@ -140,8 +140,8 @@ def create_si(si_details, fields, reservation_details):
 		e.fabric_code = tailoring_item[2]
 		e.tailoring_size = tailoring_item[3]
 		e.width = tailoring_item[4]
-		e.fabric_qty = cint(tailoring_item[5])
-		e.tailoring_qty = cint(tailoring_item[6])
+		e.fabric_qty = flt(tailoring_item[6])
+		e.tailoring_qty = cint(tailoring_item[5])
 		e.tailoring_rate = tailoring_item[7]
 		e.tailoring_amount = flt(tailoring_item[6]) * flt(tailoring_item[7])
 		e.tailoring_income_account = accounting_details[0]

@@ -75,11 +75,12 @@ cur_frm.cscript.apply_status = function(doc, cdt, cdn){
 cur_frm.cscript.work_order_status = function(doc, cdt, cdn){
 	var d;
 	d = locals[cdt][cdn]
-    if(d.status == 'Approved'){
-        new frappe.WorkOrderAction(d)    
-    }else{
-        alert("You have not paid min amount")
-    }
+    new frappe.WorkOrderAction(d)    
+    // if(d.status == 'Approved'){
+    //     new frappe.WorkOrderAction(d)    
+    // }else{
+    //     alert("You have not paid min amount")
+    // }
 }
 
 frappe.WorkOrderAction = Class.extend({
@@ -125,7 +126,7 @@ frappe.WorkOrderAction = Class.extend({
     make_structure: function(){
         var me = this;
         $.each(me.args, function(i){
-        	this.div = $(me.div).find('#mytable tbody').append(' <tr style="background-color:#fff"> <td>'+me.args[i].tailor_work_order+'</td>\
+        	this.div = $(me.div).find('#mytable tbody').append(' <tr style="background-color:#fff"> <td><a href="#Form/Work Order/'+me.args[i].tailor_work_order+'">'+me.args[i].tailor_work_order+'</td>\
         		<td>'+me.args[i].tailoring_item+'</td><td><select class="input-with-feedback form-control"><option id="Pending" value="Pending">Pending</option>\
         		<option id="Hold" value="Hold">Hold</option><option id="Release" value="Release">Release</option></select></td>')
             var me_div = this;
