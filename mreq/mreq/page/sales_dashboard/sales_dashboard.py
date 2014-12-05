@@ -1,5 +1,6 @@
 import frappe
 from frappe.utils import getdate, flt, cint, nowdate
+from tools.custom_data_methods import get_user_branch
 
 @frappe.whitelist()
 def get_customer_list(search_key=None):
@@ -80,22 +81,25 @@ def get_cust_details(customer):
 				and co.is_primary_contact 
 				and c.name = '%s'"""%customer,as_dict=1, debug=1)[0]
 
+@frappe.whitelist()
+def get_fabric_width(fabric_code):
+	return frappe.db.get_value('Item', fabric_code, 'fabric_width')
 
 @frappe.whitelist()
-def get_size_and_rate(price_list, item_code, fabric_code, branch, size):
-	item_price = frappe.db.sql("""select rate from `tabCustomer Rate` cr join `tabItem Price` ip  on cr.parent = ip.name 
+def get_size_and_rate(price_list, item_code, fabric_code, size):
+	item_price = frappe.db.sql("""select ifnull(rate, 0.0) from `tabCustomer Rate` cr join `tabItem Price` ip  on cr.parent = ip.name 
 					where cr.branch = '%(branch)s' and cr.size = '%(size)s' 
 						and ip.price_list = '%(price_list)s' 
 						and ip.item_code = '%(item_code)s'
-				"""%{'branch': branch, 'size': size, 'price_list': price_list, 'item_code': item_code})
+				"""%{'branch': get_user_branch(), 'size': size, 'price_list': price_list, 'item_code': item_code})
 
 	item_price = ((len(item_price[0]) > 1) and item_price[0] or item_price[0][0]) if item_price else None
 
-	fabric_price = frappe.db.sql("""select rate from `tabCustomer Rate` cr join `tabItem Price` ip  on cr.parent = ip.name 
+	fabric_price = frappe.db.sql("""select ifnull(rate, 0.0) from `tabCustomer Rate` cr join `tabItem Price` ip  on cr.parent = ip.name 
 					where cr.branch = '%(branch)s' and cr.size = '%(size)s' 
 						and ip.price_list = '%(price_list)s' 
 						and ip.item_code = '%(item_code)s'
-				"""%{'branch': branch, 'size': size, 'price_list': price_list, 'item_code': fabric_code})
+				"""%{'branch': get_user_branch(), 'size': size, 'price_list': price_list, 'item_code': fabric_code})
 
 	fabric_price = ((len(fabric_price[0]) > 1) and fabric_price[0] or fabric_price[0][0]) if fabric_price else None
 
@@ -103,8 +107,15 @@ def get_size_and_rate(price_list, item_code, fabric_code, branch, size):
 
 @frappe.whitelist()
 def get_fabric_qty(item_code, width, size):
-	width = frappe.db.sql("""select ifnull(fabric_qty, 1) from `tabSize Item` where parent = '%s' and width = '%s' and size='%s'"""%(item_code, width, size),as_list=1, debug=1)
-	return	((len(width[0]) > 1) and width[0] or width[0][0]) if width else None
+	width = frappe.db.sql("""select ifnull(fabric_qty, 1) from `tabSize Item` where parent = '%s' and width = '%s' and size='%s'"""%(item_code, width, size),as_list=1)
+	return	((len(width[0]) > 1) and width[0] or width[0][0]) if width else 1
+
+@frappe.whitelist()
+def get_merchandise_item_price(price_list, item_code):
+	if price_list and item_code:
+		return frappe.db.get_value('Item Price', {'price_list': price_list, 'item_code': item_code}, 'price_list_rate')
+	else:
+		return ''
 
 @frappe.whitelist()
 def get_work_orders(si_num):
@@ -123,10 +134,11 @@ def create_si(si_details, fields, reservation_details):
 
 	for cust in si_details.get('Basic Info'):
 		si.customer = cust[0]
-		si.currency = cust[1]
-		si.delivery_date = datetime.strptime(cust[2] , '%d-%m-%Y').strftime('%Y-%m-%d')
-		si.posting_date = datetime.strptime(cust[3] , '%d-%m-%Y').strftime('%Y-%m-%d')
-		si.branch = cust[4]
+		si.currency = frappe.db.get_value('Global Details', None, 'default_currency')
+		si.delivery_date = datetime.strptime(cust[1] , '%d-%m-%Y').strftime('%Y-%m-%d')
+		si.posting_date = datetime.strptime(cust[2] , '%d-%m-%Y').strftime('%Y-%m-%d')
+		si.branch = get_user_branch()
+		si.release = 1 if cust[3] == 'Yes' else 0
 
 	si.set('sales_invoice_items_one', [])
 	for tailoring_item in si_details.get('Tailoring Item Details'):
@@ -162,7 +174,7 @@ def create_si(si_details, fields, reservation_details):
 		e.merchandise_amount = flt(merchandise_item[2]) * flt(merchandise_item[3])
 		e.merchandise_income_account = accounting_details[0]
 		e.merchandise_cost_center = accounting_details[1]
-		e.merchandise_branch = cust[4]
+		e.merchandise_branch = merchandise_item[4]
 
 	for tax in si_details.get('Taxes and Charges'):
 		si.taxes_and_charges = tax[0]
@@ -173,7 +185,7 @@ def create_si(si_details, fields, reservation_details):
 	frappe.msgprint(si.name)
 
 	si = frappe.get_doc('Sales Invoice', si.name)
-	si.save()
+	si.submit()
 
 	return si.name
 
@@ -195,7 +207,7 @@ def get_si_details(name):
 								si.delivery_date, si.posting_date, 
 								si.branch, si.authenticated 
 						from `tabSales Invoice` si 
-						where si.name = '%s' """%(name),as_dict=1, debug=1)
+						where si.name = '%s' """%(name),as_dict=1)
 
 	tailoring_item = frappe.db.sql("""select tailoring_price_list, tailoring_item_code, 
 											fabric_code, tailoring_size, 
@@ -246,7 +258,7 @@ def get_wo_details(tab, woname):
 
 	else:
 		return frappe.db.sql(""" select sales_invoice_no, item_code, customer, serial_no_data from `tabWork Order` 
-					where name = '%s' """%(woname.split('\t')[-1].strip()), as_dict=1, debug=1)
+					where name = '%s' """%(woname.split('\t')[-1].strip()), as_dict=1)
 
 @frappe.whitelist()
 def update_wo(wo_details, fields, woname, style_details, args=None, type_of_wo=None):

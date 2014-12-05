@@ -462,13 +462,11 @@ frappe.SalesForm = Class.extend({
 
 		this.field_list = {
 			'Basic Info':[['Customer', 'Link', 'Customer','customer'],
-				['Currency', 'Link', 'Currency', 'currency'], 
 				['Delivery Date','Date','','delivery_date'], 
 				['Book Date', 'Date', '', 'posting_date'], 
-				['Branch', 'Link', 'Branch', 'branch'],
-				['Paased to Work Order', 'Select', '\nYes\nNo', 'authenticated']],
+				['Release', 'Select', 'No\nYes', 'release']],
 			'Tailoring Item Details':[
-				['Price List', 'Link', 'Price List','tailoring_price_list'], 
+				['Process', 'Link', 'Price List','tailoring_price_list'], 
 				['Item Code', 'Link', 'Item','tailoring_item_code'], 
 				['Fabric Code', 'Link', 'Item','fabric_code'],
 				['Size', 'Link', 'Size','tailoring_size'],
@@ -476,13 +474,13 @@ frappe.SalesForm = Class.extend({
 				['Qty', 'Data', '','tailoring_qty'],
 				['Fabric Qty', 'Data', '','fabric_qty'],
 				['Rate', 'Data', '','tailoring_rate'],
-				['Tailoring Branch', 'Link', 'Branches', 'tailoring_branch']],
+				['Delivery Branch (Tailoring)', 'Link', 'Branches', 'tailoring_branch']],
 			'Merchandise Item Details':[
 				['Price List', 'Link', 'Price List','merchandise_price_list'], 
 				['Item Code', 'Link', 'Item','merchandise_item_code'], 
 				['Qty', 'Data', '','merchandise_qty'],
 				['Rate', 'Data', '','merchandise_rate'],
-				['Merchandise Branch', 'Link', 'Branches', 'merchandise_branch']],
+				['Delivery Branch (Merchandise)', 'Link', 'Branches', 'merchandise_branch']],
 			'Taxes and Charges':
 				[['Taxes and Charges', 'Link', 'Sales Taxes and Charges Master', 'taxes_and_charges']],
 			'Total':
@@ -595,6 +593,17 @@ frappe.SalesForm = Class.extend({
 
 		$('[data-fieldname="customer"]').val(this.search_key)
 
+		$('[data-fieldname="fabric_code"]').change(function(){
+			frappe.call({
+				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_fabric_width",
+				args:{'fabric_code':$('[data-fieldname="fabric_code"]').val()},
+				callback: function(r){
+					$('[data-fieldname="width"]').attr('value', r.message)
+				}
+			})
+		})
+
+
 		$('[data-fieldname="tailoring_size"]').change(function(){
 			frappe.call({
 				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_size_and_rate",
@@ -623,12 +632,6 @@ frappe.SalesForm = Class.extend({
 			})
 		})
 
-
-
-		$('[data-fieldname="tailoring_qty"]').change(function(){
-			
-		})
-
 		$('[data-fieldname="fabric_code"]').change(function(){
 			frappe.call({
 				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.check_swatch_group",
@@ -644,9 +647,21 @@ frappe.SalesForm = Class.extend({
 			})
 		})
 
+
+		$('[data-fieldname="merchandise_item_code"]').change(function(){
+			frappe.call({
+				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_merchandise_item_price",
+				args:{'price_list': $('[data-fieldname="merchandise_price_list"]').val(), 
+					'item_code':$('[data-fieldname="merchandise_item_code"]').val()},
+				callback: function(r){
+					$('[data-fieldname="merchandise_rate"]').attr('value', r.message)
+				}
+			})
+		})
+
 		if(key!='Basic Info' && key != 'Total' && key != 'Taxes and Charges'){
 			if(key == 'Tailoring Item Details')
-				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Width", 100], ["Fabric Qty", 100], ["Qty", 100], ['Rate', 100],['Tailoring Branch', 100], ['', 50]];
+				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Width", 100], ["Qty", 100], ["Fabric Qty", 100], ['Rate', 100],['Tailoring Branch', 100], ['', 50]];
 			
 			if(key == 'Merchandise Item Details')
 				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100],['', 50]];
