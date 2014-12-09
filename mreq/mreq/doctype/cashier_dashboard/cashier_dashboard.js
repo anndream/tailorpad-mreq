@@ -127,8 +127,8 @@ frappe.WorkOrderAction = Class.extend({
         var me = this;
         console.log(me.args)
         $.each(me.args, function(i){
-        	this.div = $(me.div).find('#mytable tbody').append(' <tr style="background-color:#fff"> <td><a href="#Form/Work Order/'+me.args[i].tailor_work_order+'">'+me.args[i].tailor_work_order+'</td>\
-        		<td>'+me.args[i].tailoring_item+'</td><td><select class="input-with-feedback form-control"><option id="Pending" value="Pending">Pending</option>\
+        	this.div = $(me.div).find('#mytable tbody').append(' <tr style="background-color:#fff"> <td><a href="#Form/Work Order/'+me.args[i].name+'">'+me.args[i].name+'</td>\
+        		<td>'+me.args[i].item_code+'</td><td><select class="input-with-feedback form-control"><option id="Pending" value="Pending">Pending</option>\
         		<option id="Hold" value="Hold">Hold</option><option id="Release" value="Release">Release</option></select></td>')
             var me_div = this;
             if(me.args[i].release_status == ''){
