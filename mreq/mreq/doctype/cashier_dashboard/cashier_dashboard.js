@@ -34,6 +34,7 @@ cur_frm.cscript.make_payment = function(doc, cdt, cdn){
 }
 
 cur_frm.cscript.refresh = function(doc, cdt, cdn){
+    alert("hii")
 	get_server_fields('show_pending_balance_invoices','','', doc, cdt, cdn, 1, function(r){
 		refresh_field('payment')
 	})
@@ -75,7 +76,7 @@ cur_frm.cscript.apply_status = function(doc, cdt, cdn){
 cur_frm.cscript.work_order_status = function(doc, cdt, cdn){
 	var d;
 	d = locals[cdt][cdn]
-    new frappe.WorkOrderAction(d)    
+    new frappe.WorkOrderAction(d, doc, cdt, cdn)    
     // if(d.status == 'Approved'){
     //     new frappe.WorkOrderAction(d)    
     // }else{
@@ -84,8 +85,11 @@ cur_frm.cscript.work_order_status = function(doc, cdt, cdn){
 }
 
 frappe.WorkOrderAction = Class.extend({
-    init: function(data){
+    init: function(data, doc, cdt, cdn){
         this.data = data
+        this.doc = doc
+        this.cdt = cdt
+        this.cdn = cdn
         this.make()
         this.render_data()
         this.change_all_status()
@@ -152,7 +156,6 @@ frappe.WorkOrderAction = Class.extend({
         var me = this;
         $(me.controller.ok.input).click(function(){
             var $rate_dict = []
-            alert("hii")
             $(me.div).find('#mytable tbody tr').each(function(i) {
                 var key = ['work_order', 'item','status']
                 var cells = $(this).find('td')
@@ -177,6 +180,9 @@ frappe.WorkOrderAction = Class.extend({
     		},
     		callback: function(){
     			me.dialog.hide()
+                get_server_fields('show_pending_balance_invoices','','', me.doc, me.cdt, me.cdn, 1, function(r){
+                  refresh_field('payment')
+                })
     		}
     	})
     }

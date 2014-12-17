@@ -92,8 +92,8 @@ class CashierDashboard(Document):
 		if frappe.session.user !='Administrator':
 			cond = "branch='%s'"%(get_user_branch())
 		
-		data = frappe.db.sql("""select * from `tabSales Invoice` where 
-			docstatus= 1 and ifnull(outstanding_amount, 0)>0 
+		data = frappe.db.sql("""select * from `tabSales Invoice` b where 
+			docstatus= 1 and (ifnull(outstanding_amount, 0)>0 or name not in (select a.sales_invoice_no from `tabWork Order` a where a.sales_invoice_no = b.name and ifnull(a.status, '')='Release'))
 			and %s order by name desc"""%(cond), as_dict=1)
 		
 		for r in data:
