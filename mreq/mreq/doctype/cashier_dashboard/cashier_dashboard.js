@@ -34,7 +34,6 @@ cur_frm.cscript.make_payment = function(doc, cdt, cdn){
 }
 
 cur_frm.cscript.refresh = function(doc, cdt, cdn){
-    alert("hii")
 	get_server_fields('show_pending_balance_invoices','','', doc, cdt, cdn, 1, function(r){
 		refresh_field('payment')
 	})
