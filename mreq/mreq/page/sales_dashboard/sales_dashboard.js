@@ -239,7 +239,7 @@ frappe.CustomerForm = Class.extend({
 		$.each(this.field_list, 
 			function(i, field) {
 				me.table = $("<table>\
-						<tbody style='display: block;width:500px;'></tbody>\
+						<tbody></tbody>\
 						</table>").appendTo(me.field_area);
 				me.render_child(field, form_type, i)
 
@@ -503,7 +503,7 @@ frappe.SalesForm = Class.extend({
 		$.each(this.field_list, 
 			function(i, field) {
 				me[i+'_1'] = $("<table>\
-						<tbody style='display: block;width:500px;'></tbody>\
+						<tbody style=''></tbody>\
 						</table>").appendTo(me.field_area);
 				me.render_child(field, form_type, i)
 
@@ -1051,7 +1051,7 @@ frappe.WOForm = Class.extend({
 			function(i, field) {
 				console.log([i, field])
 				me.table1 = $("<table>\
-						<tbody style='display: block;width:500px;'></tbody>\
+						<tbody style=''></tbody>\
 						</table>").appendTo(me.field_area);
 				me.render_child(field, i)
 
