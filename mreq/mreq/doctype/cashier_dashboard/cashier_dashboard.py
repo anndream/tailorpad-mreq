@@ -37,7 +37,7 @@ class CashierDashboard(Document):
 		branch = get_user_branch()
 		min_payment = frappe.db.get_value('Branch', branch, 'min_advance_payment')
 		for d in self.get('payment'):
-			if cint(d.select) == 1 and cint(d.outstanding) > 0:
+			if cint(d.select) == 1 and flt(d.outstanding) > 0.0 and flt(d.amount) > 0.0:
 				self.validate_methods(d)
 				jv = self.create_jv(d)
 				# self.authenticate_for_production(d)
