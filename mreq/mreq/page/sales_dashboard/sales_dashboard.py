@@ -539,7 +539,7 @@ def get_fabric_width(fabric_code):
 	return frappe.db.get_value('Item', fabric_code, 'fabric_width')
 
 @frappe.whitelist()
-def get_size_and_rate(price_list, item_code, fabric_code, size):
+def get_size_and_rate(price_list, item_code, fabric_code, size, width, fabric_qty, fabric_rate):
 	item_price = frappe.db.sql("""select ifnull(rate, 0.0) from `tabCustomer Rate` cr join `tabItem Price` ip  on cr.parent = ip.name 
 					where cr.branch = '%(branch)s' and cr.size = '%(size)s' 
 						and ip.price_list = '%(price_list)s' 
@@ -547,6 +547,9 @@ def get_size_and_rate(price_list, item_code, fabric_code, size):
 				"""%{'branch': get_user_branch(), 'size': size, 'price_list': price_list, 'item_code': item_code})
 
 	item_price = ((len(item_price[0]) > 1) and item_price[0] or item_price[0][0]) if item_price else None
+	fabric_qty = get_fabric_qty(item_code, width, size)
+	item_price = flt(item_price) + flt(fabric_qty) * flt(fabric_rate)
+
 
 	# fabric_price = frappe.db.sql("""select ifnull(rate, 0.0) from `tabCustomer Rate` cr join `tabItem Price` ip  on cr.parent = ip.name 
 	# 				where cr.branch = '%(branch)s' and cr.size = '%(size)s' 

@@ -2003,7 +2003,10 @@ frappe.SalesForm = Class.extend({
 					'item_code':$('[data-fieldname="tailoring_item_code"]').val(),
 					'fabric_code':$('[data-fieldname="fabric_code"]').val(),
 					'branch':$('[data-fieldname="branch"]').val(),
-					'size': $('[data-fieldname="tailoring_size"]').val()
+					'size': $('[data-fieldname="tailoring_size"]').val(),
+					'width':$('[data-fieldname="width"]').val(),
+					'fabric_qty':$('[data-fieldname="fabric_qty"]').val(),
+					'fabric_rate':$('[data-fieldname="fabric_rate"]').val()
 					},
 				callback: function(r){
 					$('[data-fieldname="tailoring_rate"]').attr('value', r.message)
@@ -2011,6 +2014,7 @@ frappe.SalesForm = Class.extend({
 			})
 		})
 
+		
 		$('[data-fieldname="tailoring_qty"]').change(function(){
 			frappe.call({
 				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_fabric_qty",
