@@ -2014,7 +2014,7 @@ frappe.SalesForm = Class.extend({
 			})
 		})
 
-		
+
 		$('[data-fieldname="tailoring_qty"]').change(function(){
 			frappe.call({
 				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_fabric_qty",
@@ -2087,6 +2087,8 @@ frappe.SalesForm = Class.extend({
 							'rate': $('[data-fieldname="fabric_rate"]').val(),
 							'branch': $('[data-fieldname="tailoring_branch"]').val()
 						}
+
+						$('[data-fieldname="tailoring_rate"]').val( flt($('[data-fieldname="tailoring_rate"]').val()) - flt($('[data-fieldname="fabric_rate"]').val()) * flt($('[data-fieldname="fabric_qty"]').val()) / flt($('[data-fieldname="tailoring_qty"]').val()))
 
 						$('[data-fieldname="tot_amt"]').val(flt($('[data-fieldname="tailoring_qty"]').val()) * flt($('[data-fieldname="tailoring_rate"]').val()))
 						
