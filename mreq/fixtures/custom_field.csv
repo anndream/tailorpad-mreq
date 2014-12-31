@@ -18,7 +18,8 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
-"","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","Self
+"","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","
+Self
 Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Employee-skills_html""","Employee","HTML","Skills HTML","skills","","","Hello","skills_html",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Employee-employeeskills""","Employee","Table","EmployeeSkills","","","EmployeeSkill","","employeeskills",0,0,0,0,"","",0,"",0,0,0,0,0,0
