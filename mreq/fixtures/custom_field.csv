@@ -18,6 +18,13 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","Self
+Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Employee-skills_html""","Employee","HTML","Skills HTML","skills","","","Hello","skills_html",0,0,0,0,"","",1,"",0,0,0,0,0,0
+"","""Employee-employeeskills""","Employee","Table","EmployeeSkills","","","EmployeeSkill","","employeeskills",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Employee-skills""","Employee","Section Break","Skills","profile_type","","","Check / Uncheck skills  to assign the Employee.","skills",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Employee-profile_type""","Employee","Select","Profile Type","date_of_retirement","","Tailoring
+Regular","","profile_type",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-series""","Item","Link","Naming Series","item_sub_group","","Series","","series",0,0,0,0,"","",0,"eval:doc.item_group!='Tailoring'",0,0,0,0,0,0
 "","""Item-late_work_cost""","Item","Currency","Late Work Cost","items_image","","","cost/min","late_work_cost",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
 "","""Item-default_branch""","Item","Link","Default Branch","is_stock_item","","Branch","","default_branch",0,1,0,0,"","",0,"eval:doc.is_stock_item=='Yes'",0,0,0,0,0,0
@@ -61,11 +68,6 @@
 "","""Stock Entry-sales_invoice""","Stock Entry","Link","Sales Invoice","select_print_heading","","Sales Invoice","","sales_invoice",0,0,0,0,"","",1,"",1,1,0,0,0,0
 "","""Sales Invoice Items-cut_fabric_status""","Sales Invoice Items","Select","Cut Fabric Status","fabric_owner","","Completed
 Pending","","cut_fabric_status",0,0,0,0,"","Pending",0,"",0,0,0,0,0,0
-"","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","trials","","Self
-Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Employee-profile_type""","Employee","Select","Profile Type","date_of_retirement","","Tailoring
-Regular","","profile_type",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Employee-skills""","Employee","Section Break","Skills","profile_type","","","Check / Uncheck skills  to assign the Employee.","skills",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice Item-tailoring_size""","Sales Invoice Item","Link","Tailoring Size","fabric_qty","","Size","","tailoring_size",0,0,1,0,"","",1,"",0,0,0,0,0,0
 "","""Task-item_code""","Task","Link","Item Code","process_name","","Item","","item_code",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Task-sales_order_number""","Task","Data","Sales Invoice Number","priority","","","","sales_order_number",0,0,1,0,"","",0,"",0,0,0,0,0,0
@@ -146,8 +148,6 @@ Remove","","authenticated",0,0,1,0,"","",0,"",0,1,0,0,0,0
 "","""Branch-fax_no""","Branch","Data","Fax No","mobile_no","2","","","fax_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Branch-cost_center""","Branch","Link","Cost Center","fax_no","","Cost Center","","cost_center",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Branch-drawing_acc""","Branch","Link","Default Drawing Account","cost_center","","Account","","drawing_acc",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Employee-employeeskills""","Employee","Table","EmployeeSkills","","","EmployeeSkill","","employeeskills",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Employee-skills_html""","Employee","HTML","Skills HTML","skills","","","Hello","skills_html",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Material Request Item-from_branch""","Material Request Item","Link","From Branch","for_branch","","Branches","","from_branch",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Material Request Item-for_branch""","Material Request Item","Link","For Branch","uom","","Branches","","for_branch",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Material Request Item-from_warehouse""","Material Request Item","Link","From Warehouse","warehouse","","Warehouse","","from_warehouse",0,0,0,0,"","",1,"",0,0,0,0,0,0
