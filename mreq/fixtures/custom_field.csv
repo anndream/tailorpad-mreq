@@ -18,6 +18,7 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Item-series""","Item","Link","Naming Series","item_sub_group","","Series","","series",0,0,0,0,"","",0,"eval:doc.item_group!='Tailoring'",0,0,0,0,0,0
 "","""Item-late_work_cost""","Item","Currency","Late Work Cost","items_image","","","cost/min","late_work_cost",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
 "","""Item-default_branch""","Item","Link","Default Branch","is_stock_item","","Branch","","default_branch",0,1,0,0,"","",0,"eval:doc.is_stock_item=='Yes'",0,0,0,0,0,0
 "","""Item-item_group_details""","Item","Section Break","Item Group Details","column_break0","","","","item_group_details",0,0,0,0,"","",1,"",0,0,0,0,0,0
@@ -52,7 +53,6 @@
 "","""Item-barcode_image""","Item","Small Text","Barcode Image","barcode_image","","","","barcode_image",0,0,1,0,"","",0,"",0,1,0,0,0,0
 "","""Item-supplier_code""","Item","Link","Supplier Code","brand","","Supplier","","supplier_code",0,0,0,0,"","",0,"eval:doc.item_group=='Fabric' || doc.item_group=='Swatch Fabric Item' || doc.item_group=='Merchandise' || doc.item_group=='Raw Material' || doc.item_group == 'Stationary' || doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
 "","""Item-swatch_id""","Item","Link","Swatch Id","item_sub_group","","Swatch","","swatch_id",0,0,0,0,"","",0,"eval:doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
-"","""Item-series""","Item","Link","Series","item_sub_group","","Series","","series",0,0,0,0,"","",0,"eval:doc.item_group!='Tailoring'",0,0,0,0,0,0
 "","""Item-barcode_img""","Item","Data","Barcode IMG","column_break0","","","","barcode_img",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Company-registered_email_id""","Company","Data","Registered email id","email","","","","registered_email_id",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-item_sub_group""","Item","Link","Item Sub Group","item_group","","Sub Groups","","item_sub_group",0,0,0,0,"","",0,"",0,0,0,0,0,0
