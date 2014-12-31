@@ -18,6 +18,8 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Sales Invoice Item-fabric_qty""","Sales Invoice Item","Int","Fabric Qty","fabric_code","","","","fabric_qty",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice Item-fabric_code""","Sales Invoice Item","Link","Fabric Code","page_break","","Item","","fabric_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","
 Self
 Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -72,8 +74,6 @@ Pending","","cut_fabric_status",0,0,0,0,"","Pending",0,"",0,0,0,0,0,0
 "","""Sales Invoice Item-tailoring_size""","Sales Invoice Item","Link","Tailoring Size","fabric_qty","","Size","","tailoring_size",0,0,1,0,"","",1,"",0,0,0,0,0,0
 "","""Task-item_code""","Task","Link","Item Code","process_name","","Item","","item_code",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Task-sales_order_number""","Task","Data","Sales Invoice Number","priority","","","","sales_order_number",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice Item-fabric_code""","Sales Invoice Item","Link","Fabric Code","process_allotment","","Item","","fabric_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice Item-fabric_qty""","Sales Invoice Item","Int","Fabric Qty","process_allotment","","","","fabric_qty",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Event-appointment_list""","Event","Table","Appointment List","individuals","","Event Users","","appointment_list",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Company-website2""","Company","Data","Website","business_id_","","","","website2",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Company-business_id_""","Company","Data","Business id","fax_no","","","","business_id_",0,0,0,0,"","",0,"",0,0,0,0,0,0
