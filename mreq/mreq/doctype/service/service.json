@@ -27,6 +27,14 @@
    "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0
+  }, 
+  {
+   "fieldname": "currency", 
+   "fieldtype": "Link", 
+   "label": "Currency", 
+   "options": "Currency", 
+   "permlevel": 0, 
+   "precision": ""
   }
  ], 
  "hide_heading": 0, 
@@ -37,7 +45,7 @@
  "is_submittable": 0, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2014-12-29 14:28:12.113845", 
+ "modified": "2015-01-12 22:26:33.357003", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "Service", 

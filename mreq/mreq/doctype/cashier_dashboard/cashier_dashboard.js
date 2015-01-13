@@ -76,10 +76,14 @@ cur_frm.cscript.work_order_status = function(doc, cdt, cdn){
 	var d;
 	d = locals[cdt][cdn]
     // new frappe.WorkOrderAction(d, doc, cdt, cdn)    
-    if(parseFloat(d.paid_amount) >= parseFloat(d.min_payment_amount)){
-        new frappe.WorkOrderAction(d)    
+    if(d.min_payment_percentage){
+        if(parseFloat(d.paid_amount) >= parseFloat(d.min_payment_amount)){
+            new frappe.WorkOrderAction(d)    
+        }else{
+            alert("You have not paid min amount")
+        }    
     }else{
-        alert("You have not paid min amount")
+        new frappe.WorkOrderAction(d)    
     }
 }
 

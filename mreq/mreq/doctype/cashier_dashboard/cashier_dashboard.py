@@ -54,7 +54,8 @@ class CashierDashboard(Document):
 		jv = frappe.new_doc('Journal Voucher')
 		jv.voucher_type = 'Bank Voucher'
 		jv.cheque_no = args.reference_number
-		jv.posting_date = '2014-12-11-'
+		jv.posting_date = nowdate()
+		jv.fiscal_year = frappe.db.get_value('Global Defaults', None, 'current_fiscal_year')
 		jv.cheque_date = args.reference_date
 		jv.save(ignore_permissions=True)
 		other_details = [{'account':frappe.db.get_value('Sales Invoice', args.sales_invoice_no,'debit_to'),'account_type':'credit', 'payment':args.amount, 'invoice': args.sales_invoice_no},{'account':args.payment_account,'account_type':'debit', 'payment':args.amount,'invoice':''}]
