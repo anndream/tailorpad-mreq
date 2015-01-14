@@ -36,6 +36,14 @@
    "permlevel": 0, 
    "precision": "", 
    "read_only": 0
+  }, 
+  {
+   "fieldname": "test_data", 
+   "fieldtype": "Data", 
+   "hidden": 1, 
+   "label": "Test Data", 
+   "permlevel": 0, 
+   "precision": ""
   }
  ], 
  "hide_heading": 0, 
@@ -46,7 +54,7 @@
  "is_submittable": 0, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-01-14 20:46:51.234293", 
+ "modified": "2015-01-14 21:03:20.460481", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "Service", 
