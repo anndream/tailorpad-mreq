@@ -1847,7 +1847,7 @@ frappe.SalesForm = Class.extend({
 				['Release', 'Select', 'No\nYes', 'release']],
 			'Tailoring Item Details':[
 				['Delivery Date','Date','','tailoring_delivery_date',1],
-				['Service', 'Link', 'Price List','tailoring_price_list',1], 
+				['Service', 'Link', 'Service','tailoring_price_list',1], 
 				['Item Code', 'Link', 'Item','tailoring_item_code',1], 
 				['Fabric Code', 'Link', 'Item','fabric_code',1],
 				['Size', 'Link', 'Size','tailoring_size',1],

@@ -12,12 +12,13 @@ class Service(Document):
 
 	def validate(self):
 		if self.get("__islocal"):
-			pl = frappe.new_doc('Price List')
-			pl.price_list_name = self.service
-			pl.selling = 1
-			pl.currency = self.currency
-			self.add_value_for_territory(pl)
-			pl.save(ignore_permissions = True)
+			if not frappe.db.get_value('Price List', self.service, 'name'):
+				pl = frappe.new_doc('Price List')
+				pl.price_list_name = self.service
+				pl.selling = 1
+				pl.currency = self.currency
+				self.add_value_for_territory(pl)
+				pl.save(ignore_permissions = True)
 
 	def add_value_for_territory(self, obj):
 		tr = obj.append('valid_for_territories',{})
