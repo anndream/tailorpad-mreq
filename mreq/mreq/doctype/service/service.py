@@ -11,6 +11,7 @@ class Service(Document):
 			pl = frappe.new_doc('Price List')
 			pl.price_list_name = self.service
 			pl.selling = 1
+			pl.currency = self.currency
 			self.add_value_for_territory(pl)
 			pl.save(ignore_permissions = True)
 
