@@ -34,7 +34,8 @@
    "label": "Currency", 
    "options": "Currency", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "", 
+   "read_only": 0
   }
  ], 
  "hide_heading": 0, 
@@ -45,7 +46,7 @@
  "is_submittable": 0, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-01-12 22:26:33.357003", 
+ "modified": "2015-01-14 20:46:51.234293", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "Service", 

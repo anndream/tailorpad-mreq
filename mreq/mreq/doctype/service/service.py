@@ -6,6 +6,10 @@ import frappe
 from frappe.model.document import Document
 
 class Service(Document):
+	def onload(self):
+		if not self.currency:
+			self.currency = frappe.db.get_value('Global Defaults', None, 'default_currency')
+
 	def validate(self):
 		if self.get("__islocal"):
 			pl = frappe.new_doc('Price List')
