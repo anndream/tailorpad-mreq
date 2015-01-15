@@ -17,9 +17,13 @@ cur_frm.cscript.make_payment_inv = function(doc, cdt, cdn){
     var d = locals[cdt][cdn]
     if(parseInt(d.select) == 1)
     {
-        get_server_fields('make_payment','','', doc, cdt, cdn, 1, function(){
-            refresh_field('payment')
-        })    
+        if(parseFloat(d.outstanding)>0.0){
+            get_server_fields('make_payment','','', doc, cdt, cdn, 1, function(){
+                refresh_field('payment')
+            })    
+        }else{
+            alert("Already Payment received")    
+        }    
     }else{
         alert("Click on select check box")
     }
@@ -139,8 +143,11 @@ frappe.WorkOrderAction = Class.extend({
         		<td>'+me.args[i].item_code+'</td><td><select class="input-with-feedback form-control"><option id="Pending" value="Pending">Pending</option>\
         		<option id="Hold" value="Hold">Hold</option><option id="Release" value="Release">Release</option></select></td>').appendTo($sub_div)
             // var me_div = this;
-            console.log([$div, me.args[i].release_status])
-        	$div.find('select').val(me.args[i].release_status);
+            value = me.args[i].release_status
+            if(value==''){
+                value = 'Pending'
+            }
+            $div.find('select').val(value);
         })
     },
 
@@ -182,9 +189,7 @@ frappe.WorkOrderAction = Class.extend({
     		},
     		callback: function(){
     			me.dialog.hide()
-                get_server_fields('show_pending_balance_invoices','','', me.doc, me.cdt, me.cdn, 1, function(r){
-                  refresh_field('payment')
-                })
+                window.location.reload()
     		}
     	})
     }

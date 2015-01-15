@@ -2511,14 +2511,6 @@ frappe.WOForm = Class.extend({
 			// me.update_wo()
 			window.open("#Form/Work Order/"+me.woname, "_self");
 		});
-
-		$("<button class='btn btn-small btn-primary' style='margin-bottom:2%;margin-left:5%'><i class='icon-folder-open'></i> Draw Canvas </button>")
-		.appendTo(me.field_area)
-		.click(function() {
-			frappe.route_options = { work_order: me.woname};
-			frappe.set_route("imgcanvas");
-		});
-	
 	
 
 		$('#result_area').css('margin-left','2%').css('padding-right','2%').css('border','2px solid').css('border-color','#F2F0F0').css("padding-top","2%")

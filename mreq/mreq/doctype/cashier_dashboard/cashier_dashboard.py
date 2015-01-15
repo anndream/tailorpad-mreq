@@ -94,19 +94,21 @@ class CashierDashboard(Document):
 			cond = "branch='%s'"%(get_user_branch())
 		
 		data = frappe.db.sql("""select * from `tabSales Invoice` b where 
-			docstatus= 1 and (ifnull(outstanding_amount, 0)>0 or name not in (select a.sales_invoice_no from `tabWork Order` a where a.sales_invoice_no = b.name and ifnull(a.status, '')='Release'))
+			docstatus= 1 and (ifnull(outstanding_amount, 0)>0 or name in (select a.sales_invoice_no from `tabWork Order` a where a.sales_invoice_no = b.name and ifnull(a.status, '')<>'Release'))
 			and %s order by name desc"""%(cond), as_dict=1)
-		
-		for r in data:
-			pmt = self.append('payment',{})
-			pmt.sales_invoice_no = r.name
-			pmt.customer = r.customer
-			pmt.outstanding = r.outstanding_amount
-			pmt.status = 'Pending' if not r.authenticated else r.authenticated
-			pmt.measurement = self.get_remaining_measurement_list(r.name)
-			pmt.min_payment_percentage = frappe.db.get_value('Branch', get_user_branch(), 'min_advance_payment')
-			pmt.min_payment_amount  = cstr(flt(pmt.min_payment_percentage) * flt(frappe.db.get_value('Sales Invoice', r.name, 'grand_total_export')) / flt(100))
-			pmt.paid_amount = self.get_paid_amount(r)
+
+		if data:
+			for r in data:
+				pmt = self.append('payment',{})
+				pmt.sales_invoice_no = r.name
+				pmt.customer = r.customer
+				pmt.outstanding = r.outstanding_amount
+				pmt.status = 'Pending' if not r.authenticated else r.authenticated
+				pmt.measurement = self.get_remaining_measurement_list(r.name)
+				pmt.min_payment_percentage = frappe.db.get_value('Branch', get_user_branch(), 'min_advance_payment')
+				pmt.min_payment_amount  = cstr(flt(pmt.min_payment_percentage) * flt(frappe.db.get_value('Sales Invoice', r.name, 'grand_total_export')) / flt(100))
+				pmt.paid_amount = self.get_paid_amount(r)
+			return True
 
 	def authenticate_for_production(self, args):
 		branch = get_user_branch()

@@ -18,6 +18,13 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Item-fabric_costing""","Item","Table","Merchandise Costing","item_costing","","Fabric Costing","","fabric_costing",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group!='Tailoring')",0,0,0,0,0,0
+"","""Sales Invoice-authenticated""","Sales Invoice","Select","Authenticated","delivery_date","","
+Pending
+Approved
+Rejected
+Remove","","authenticated",0,0,1,0,"","Pending",0,"",0,1,0,0,0,0
+"","""Item-series""","Item","Link","Naming Series","item_sub_group","","Item Series","","series",0,0,0,0,"","",0,"eval:doc.item_group!='Tailoring'",0,0,0,0,0,0
 "","""Employee-skills_html""","Employee","HTML","Skills HTML","skills","","","Hello","skills_html",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Employee-employeeskills""","Employee","Table","EmployeeSkills","","","EmployeeSkill","","employeeskills",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Employee-skills""","Employee","Section Break","Skills","profile_type","","","Check / Uncheck skills  to assign the Employee.","skills",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -37,7 +44,6 @@ true","","flag",0,0,0,0,"","false
 "","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","
 Self
 Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-series""","Item","Link","Naming Series","item_sub_group","","Series","","series",0,0,0,0,"","",0,"eval:doc.item_group!='Tailoring'",0,0,0,0,0,0
 "","""Item-late_work_cost""","Item","Currency","Late Work Cost","items_image","","","cost/min","late_work_cost",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
 "","""Item-default_branch""","Item","Link","Default Branch","is_stock_item","","Branch","","default_branch",0,1,0,0,"","",0,"eval:doc.is_stock_item=='Yes'",0,0,0,0,0,0
 "","""Item-item_group_details""","Item","Section Break","Item Group Details","column_break0","","","","item_group_details",0,0,0,0,"","",1,"",0,0,0,0,0,0
@@ -47,7 +53,6 @@ Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-raw_material_item""","Item","Table","Raw Material Item","raw_material","","Raw Material Item","","raw_material_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-raw_material""","Item","Section Break","Raw Material","costing_item","","","","raw_material",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
 "","""Item-costing_item""","Item","Table","Costing Item","service","","Costing Item","","costing_item",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group=='Tailoring')",0,0,0,0,0,0
-"","""Item-fabric_costing""","Item","Table","Merchandise Costing","item_costing","","Fabric Costing","","fabric_costing",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group=='Fabric' || doc.item_group=='Merchandise' || doc.item_group=='Fabric Swatch Item')",0,0,0,0,0,0
 "","""Item-service""","Item","Link","Service","item_costing","","Service","","service",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group=='Tailoring')",0,0,0,0,0,0
 "","""Item-item_costing""","Item","Section Break","Item Costing","raw_material_item","","","","item_costing",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,0,0,0,0
 "","""Item-style_item""","Item","Table","Style Fields","measurement_item","","Style Item","","style_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -135,9 +140,6 @@ Purchase Return","","purpose_type",0,0,0,0,"","Material Issue",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-invoice_branch""","Purchase Invoice Item","Link","Invoice Branch","description","","Branch","","invoice_branch",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-measurement_details""","Customer","Section Break","Measurement Details","anniversary_date","","","","measurement_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-body_measurements""","Customer","Table","Body Measurements","measurement_details","","Measurement Details","","body_measurements",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-authenticated""","Sales Invoice","Select","Authenticated","delivery_date","","Approved
-Rejected
-Remove","","authenticated",0,0,1,0,"","",0,"",0,1,0,0,0,0
 "","""Sales Invoice-admin_authentication_note""","Sales Invoice","Small Text","Admin Authentication Note","authenticated","","","","admin_authentication_note",0,0,1,0,"","",0,"",0,1,0,0,0,0
 "","""Branch-y""","Branch","Column Break","","currency","","Currency","","y",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Branch-currency""","Branch","Link","Currency","y","","Currency","","currency",0,0,0,0,"","",0,"",0,0,0,0,0,0

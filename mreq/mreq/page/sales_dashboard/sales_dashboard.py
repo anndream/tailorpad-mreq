@@ -511,15 +511,25 @@ def create_addr(name, cust_details):
 
 @frappe.whitelist()
 def get_cust_details(customer):
-	return frappe.db.sql("""select c.customer_name, c.customer_type, c.territory, 
-			c.date_of_birth, co.designation, co.email_id, co.phone, 
-			co.mobile_no, addr.address_line1, addr.address_line2, addr.city 
-		from tabCustomer c, tabContact co, tabAddress addr 
-			where c.name = co.customer 
-				and c.name = addr.customer 
-				and addr.is_primary_address 
-				and co.is_primary_contact 
-				and c.name = '%s'"""%customer,as_dict=1, debug=1)[0]
+	customer_info = {}
+	customer_details = frappe.db.sql("""select c.customer_name, c.customer_type, c.territory, 
+			c.date_of_birth 
+		from tabCustomer c
+			where c.name = '%s'"""%customer,as_dict=1)
+	if customer_details:
+		customer_info.update(customer_details[0])
+	customer_contact_detail = frappe.db.sql("""select co.designation, co.email_id, co.phone, co.mobile_no
+		from tabContact co
+			where co.customer = '%s'"""%customer,as_dict=1)
+	if customer_contact_detail:
+		customer_info.update(customer_contact_detail[0])
+	customer_address_detail = frappe.db.sql("""select addr.address_line1, addr.address_line2, addr.city 
+		from tabAddress addr 
+			where addr.customer = '%s'"""%customer,as_dict=1)
+	if customer_address_detail:
+		customer_info.update(customer_address_detail[0])
+	if customer_info:
+		return customer_info
 
 @frappe.whitelist()
 def get_fabric_rate_and_width(fabric_code, price_list):
@@ -575,7 +585,7 @@ def get_merchandise_item_price(price_list, item_code):
 
 @frappe.whitelist()
 def get_work_orders(si_num):
-	return frappe.db.sql("""select tailor_work_order from `tabWork Order Distribution` where parent = '%s' and docstatus not in (1,2)"""%si_num.split('\t')[0])
+	return frappe.db.sql("""select name from `tabWork Order` where sales_invoice_no = '%s' and docstatus=0"""%si_num.split('\t')[0])
 
 @frappe.whitelist()
 def create_si(si_details, fields, reservation_details):
