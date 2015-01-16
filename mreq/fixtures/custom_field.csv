@@ -18,13 +18,23 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Customer-image2""","Customer","Small Text","Back view","select","","","","image2",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Customer-select""","Customer","Select","Back View image","select_image","","","","select",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Customer-image1""","Customer","Small Text","Front View","select_image","","","","image1",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Customer-select_image""","Customer","Select","Front View Image","lead_name","","","","select_image",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Customer-body_measurements""","Customer","Table","Body Measurements","measurement_details","","Measurement Details","","body_measurements",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Customer-measurement_details""","Customer","Section Break","Measurement Details","anniversary_date","","","","measurement_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Customer-anniversary_date""","Customer","Date","Anniversary Date","date_of_birth","","","","anniversary_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Customer-date_of_birth""","Customer","Date","Date of Birth","country","","","","date_of_birth",0,0,0,0,"","",0,"",0,0,0,0,1,0
+"","""Customer-cb""","Customer","Column Break","cb","","","","","cb",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Customer-take_image""","Customer","Button","Take Image","naming_series","","","","take_image",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-series""","Item","Link","Naming Series","item_sub_group","","Item Series","","series",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-fabric_costing""","Item","Table","Merchandise Costing","item_costing","","Fabric Costing","","fabric_costing",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group!='Tailoring')",0,0,0,0,0,0
 "","""Sales Invoice-authenticated""","Sales Invoice","Select","Authenticated","delivery_date","","
 Pending
 Approved
 Rejected
 Remove","","authenticated",0,0,1,0,"","Pending",0,"",0,1,0,0,0,0
-"","""Item-series""","Item","Link","Naming Series","item_sub_group","","Item Series","","series",0,0,0,0,"","",0,"eval:doc.item_group!='Tailoring'",0,0,0,0,0,0
 "","""Employee-skills_html""","Employee","HTML","Skills HTML","skills","","","Hello","skills_html",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Employee-employeeskills""","Employee","Table","EmployeeSkills","","","EmployeeSkill","","employeeskills",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Employee-skills""","Employee","Section Break","Skills","profile_type","","","Check / Uncheck skills  to assign the Employee.","skills",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -114,7 +124,6 @@ Pending","","cut_fabric_status",0,0,0,0,"","Pending",0,"",0,0,0,0,0,0
 Production
 Warehouse","","branch_type",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Branch-branch_details""","Branch","Section Break","Branch Details","branch_type","","","","branch_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Customer-date_of_birth""","Customer","Date","Date of Birth","country","","","","date_of_birth",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""WO Style-table_view""","WO Style","Select","Table View","extra_text_field","","Right
 Left","","table_view",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Task-item_name""","Task","Data","Item Name","process_name","","","","item_name",0,0,1,0,"","",0,"",0,0,0,0,0,0
@@ -132,14 +141,11 @@ Subcontract
 Sales Return
 Purchase Return","","purpose_type",0,0,0,0,"","Material Issue",0,"",0,0,0,0,0,0
 "","""Stock Entry-branch""","Stock Entry","Link","Branch","stock_in","","Branch","","branch",0,0,0,0,"","",0,"",1,1,0,0,0,0
-"","""Customer-anniversary_date""","Customer","Date","Anniversary Date","date_of_birth","","","","anniversary_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Stock Entry-process""","Stock Entry","Link","Process","refer_doctype_name","","Process","","process",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item Price-customer_rate_details""","Item Price","Section Break","Customer Rate Details","item_description","","","","customer_rate_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item Price-customer_rate""","Item Price","Table","Customer Rate","customer_rate_details","","Customer Rate","","customer_rate",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-delivery_date""","Sales Invoice","Date","Delivery Date","mode_of_payment","","","","delivery_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-invoice_branch""","Purchase Invoice Item","Link","Invoice Branch","description","","Branch","","invoice_branch",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Customer-measurement_details""","Customer","Section Break","Measurement Details","anniversary_date","","","","measurement_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Customer-body_measurements""","Customer","Table","Body Measurements","measurement_details","","Measurement Details","","body_measurements",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-admin_authentication_note""","Sales Invoice","Small Text","Admin Authentication Note","authenticated","","","","admin_authentication_note",0,0,1,0,"","",0,"",0,1,0,0,0,0
 "","""Branch-y""","Branch","Column Break","","currency","","Currency","","y",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Branch-currency""","Branch","Link","Currency","y","","Currency","","currency",0,0,0,0,"","",0,"",0,0,0,0,0,0
