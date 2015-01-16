@@ -1,6 +1,6 @@
 {
  "allow_copy": 0, 
- "allow_import": 0, 
+ "allow_import": 1, 
  "allow_rename": 0, 
  "autoname": "field:service", 
  "creation": "2014-10-29 17:34:56.533758", 
@@ -54,7 +54,7 @@
  "is_submittable": 0, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-01-14 21:03:20.460481", 
+ "modified": "2015-01-16 22:25:09.887646", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "Service", 
@@ -77,6 +77,14 @@
    "role": "Administrator", 
    "set_user_permissions": 0, 
    "submit": 0, 
+   "write": 1
+  }, 
+  {
+   "create": 1, 
+   "delete": 1, 
+   "permlevel": 0, 
+   "read": 1, 
+   "role": "System Manager", 
    "write": 1
   }
  ], 
