@@ -2265,7 +2265,7 @@ frappe.SalesForm = Class.extend({
 		})
 		frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_si",
-			args:{'si_details': me.invoce_details, 'fields':me.field_list, 'reservation_details': me.reservation_details},
+			args:{'si_details': me.invoce_details, 'fields':me.field_list, 'reservation_details': JSON.stringify(me.reservation_details)},
 			callback: function(r){
 				console.log(r.message)
 				// new frappe.SalesInvoce(me.wrapper)

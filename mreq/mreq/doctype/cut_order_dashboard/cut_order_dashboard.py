@@ -3,51 +3,78 @@
 
 from __future__ import unicode_literals
 import frappe
-from frappe.utils import cint, nowtime, nowdate
+from frappe import _, msgprint
+from frappe.utils import cint, nowtime, nowdate, flt
 from frappe.model.document import Document
-from tools.tools_management.custom_methods import get_fabric_details, get_warehouse, get_branch, get_series, get_fabric_details
+from tools.tools_management.custom_methods import get_fabric_details, get_warehouse, get_branch, get_series, get_fabric_details, make_material_request
 from tools.custom_data_methods import get_user_branch, get_branch_cost_center, get_branch_warehouse, update_serial_no, find_next_process
 
 class CutOrderDashboard(Document):
 	def get_invoice_details(self):
 		self.set('cut_order_item', [])
-		for co in self.get_cut_order_details():
-			coi = self.append('cut_order_item', {})
-			coi.invoice_no = co['invoice_no']
-			coi.article_code = co['article_code']
-			coi.fabric_code = co['fabric_code']
-			coi.fabric_qty = co['qty']
-			coi.actual_site = co['actual_site']
-			coi.fabric_site = co['fabric_site']
-			coi.cut_order_id = co['name']
+		args = self.get_cut_order_details()
+		if args:
+			for co in args:
+				if co.actual_site == co.fabric_site and co.fabric_site == get_user_branch():
+					self.create_cut_order(co)
+				elif co.fabric_site == get_user_branch():
+					self.create_cut_order(co)
+				elif get_user_branch == get_ActualFabric(co):
+					self.create_cut_order(co)
+
+	def create_cut_order(self, co):
+		coi = self.append('cut_order_item', {})
+		coi.invoice_no = co['invoice_no']
+		coi.article_code = co['article_code']
+		coi.fabric_code = co['fabric_code']
+		coi.fabric_qty = co['qty']
+		coi.actual_site = co['actual_site']
+		coi.fabric_site = co['fabric_site']
+		coi.cut_order_id = co['name']
+
+	def get_ActualFabric(self, args):
+		return frappe.db.get_value('Sales Invoice', args.invoice_no, 'branch')
 
 	def get_cut_order_details(self):
-		branch = get_user_branch()
-		cond = "1=1"
-		if branch:
-			cond = "fabric_site = '%s'"%(branch)
 		return frappe.db.sql("""select invoice_no, article_code, 
 				fabric_code, qty, 
 				article_serial_no, 
 				actual_site, fabric_site, name from `tabCut Order` 
-			where ifnull(docstatus, 0) not in (1,2) and invoice_no in 
-			(select name from `tabSales Invoice` where branch=%s) order by invoice_no desc"""%(cond), as_dict=1)
+			where ifnull(docstatus, 0) not in (1,2)  order by invoice_no desc""", as_dict=1, debug=1)
 
 	def cut_order(self):
 		issue_list, out_list = [], []
 		for item in self.cut_order_item:
 			if cint(item.select) == 1:
-				if item.actual_site == item.fabric_site:
-					self.Assign_FabricTo_ProcessAllotment(item)
+				status, msg = self.validate_actual_qty(item)
+				if status == 'true':
+					if item.actual_site == item.fabric_site:
+						# use in same branch
+						name = self.Assign_FabricTo_ProcessAllotment(item)
+					else:
+						if get_user_branch() == item.fabric_site:
+							# stock Entry to transfer material
+							self.make_material_out_list(item, out_list)
+							name = self.make_stock_transfer(item,out_list)
+						elif get_user_branch() != item.fabric_site:
+							# generate Material Request
+							name = make_material_request(item.sales_invoice_no, item.actual_site, item.fabric_site, item.fabric_code, item.fabric_qty)
+					if name:		
+						self.submit_cut_order(item)
+						return {"msg":"true"}
+					else:
+						return {"msg":"false"}
 				else:
-					if get_user_branch() == item.fabric_site:
-						self.make_material_out_list(item, out_list)
-						self.make_stock_transfer(item,out_list)
-					elif get_user_branch() != item.fabric_site:
-						pass #Remaining
-				self.submit_cut_order(item)
-		# self.update_fabric_stock(issue_list)
-		# self.get_invoice_details()
+					msgprint(msg)
+					return {"msg":"false"}
+
+	def validate_actual_qty(self, args):
+		if args.actual_cut_qty:
+			if flt(args.fabric_qty) != flt(args.actual_cut_qty):
+				return "false", "Actual qty must be equal to fabric qty"
+		else:
+			return "false", "Mandatory Field Actual qty at row %s"%(args.idx)
+		return "true",""
 
 	def Assign_FabricTo_ProcessAllotment(self, args):
 		process_allotment = self.get_process_allotment(args)
@@ -59,28 +86,24 @@ class CutOrderDashboard(Document):
 			rm.raw_sub_group = frappe.db.get_value('Item', args.fabric_code, 'item_sub_group')
 			rm.uom = frappe.db.get_value('Item', args.fabric_code, 'stock_uom')
 			rm.qty =  args.actual_cut_qty
-			rm.save(ignore_permissions = True)
-		return True
+			obj.save(ignore_permissions = True)
+		return obj.name
 
 	def get_process_allotment(self, args):
-		process = frappe.db.sql(""" select process_name from `tabProcess Item` 
-			where parent='%s' and actual_fabric = 1 order by idx limit 1"""%(args.article_code), )
+		process = frappe.db.sql(""" select a.process_data from `tabProcess Log` a, `tabProduction Dashboard Details` b
+			where a.parent = b.name and b.article_code='%s' and b.sales_invoice_no = '%s'
+			and a.actual_fabric = 1 limit 1"""%(args.article_code, args.invoice_no), as_list=1)
 		if process:
 			return process[0][0]
-		return None
+		else:
+			frappe.db.get_value('Process Allotment', {'sales_invoice_no': args.invoice_no}, 'name')
 
 	def make_material_issue_list(self, item, issue_list):
 		if item.actual_cut_qty:
 			data = frappe.db.sql("""select * from `tabProcess Allotment` where
 			 item = '%s' and sales_invoice_no = '%s' and process = 'Stiching'""")
-
 		else:
 			frappe.msgprint("Enter Actual Qty for Cut Order")
-		# frappe.errprint(item.invoice_no)
-		# issue_list.append([item.invoice_no, item.article_code, 
-		# 		item.fabric_code, item.fabric_qty, 
-		# 		item.actual_site, item.fabric_site])
-
 
 	def make_material_out_list(self, item, out_list):
 		out_list.append([item.invoice_no, item.article_code, 
@@ -93,9 +116,11 @@ class CutOrderDashboard(Document):
 		if name:
 			obj = frappe.get_doc('Stock Entry', name[0][0])
 			self.Make_ChildSte(obj, out_list)
-			obj.save(ignore_permissions = True)	
+			obj.save(ignore_permissions = True)
+			return obj.name
 		else:
-			self.make_parentSTE(item, out_list)
+			name = self.make_parentSTE(item, out_list)
+			return name
 
 	def make_parentSTE(self, item, out_list):
 		se = frappe.new_doc('Stock Entry')
@@ -107,6 +132,7 @@ class CutOrderDashboard(Document):
 		se.posting_time = nowtime().split('.')[0]
 		self.Make_ChildSte(se, out_list)
 		se.save(ignore_permissions = True)
+		return se.name
 
 	def Make_ChildSte(self, obj, out_list):
 		for item in out_list:
