@@ -1965,7 +1965,11 @@ frappe.SalesForm = Class.extend({
 			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Slipt Qty </button>")
 			.appendTo($("<td align='center'>").appendTo(row1))
 			.click(function() {
-				new frappe.SplitQty(me.wrapper, me)
+				if($('[data-fieldname="tailoring_qty"]').val() && $('[data-fieldname="tailoring_item_code"]').val()){
+					new frappe.SplitQty(me.wrapper, me)
+				}else{
+					alert("Product qty and Item Code is Mandatory Field")
+				}
 			});
 			$("<button class='btn btn-small btn-primary' id = 'reserve_fabric' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Reserve Fabric </button>")
 			.appendTo($("<td align='center'>").appendTo(row1))
@@ -1985,16 +1989,25 @@ frappe.SalesForm = Class.extend({
 			frappe.call({
 				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_fabric_rate_and_width",
 				args:{'price_list': $('[data-fieldname="tailoring_price_list"]').val(), 
-					'fabric_code':$('[data-fieldname="fabric_code"]').val()},
+					'fabric_code':$('[data-fieldname="fabric_code"]').val(),
+					'item_code':$('[data-fieldname="tailoring_item_code"]').val(),
+					'size':$('[data-fieldname="tailoring_size"]').val(),
+					'fabric_qty':$('[data-fieldname="fabric_qty"]').val(),
+					'fabric_rate':$('[data-fieldname="fabric_rate"]').val()
+				},
 				callback: function(r){
-					console.log(r.message)
-					$('[data-fieldname="fabric_rate"]').attr('value', r.message.fc)
-					$('[data-fieldname="width"]').attr('value', r.message.fw)
+					$('[data-fieldname="fabric_rate"]').val(r.message.fc)
+					$('[data-fieldname="tailoring_rate"]').val(r.message.ic)
+					$('[data-fieldname="width"]').val(r.message.fw)
+					$('[data-fieldname="fabric_qty"]').val(r.message.fq)
 					me.set_tot()
 				}
 			})
 		})
 
+		$('[data-fieldname="tailoring_item_code"]').change(function(){
+			me.clear_data('Item')
+		})
 
 		$('[data-fieldname="tailoring_size"]').change(function(){
 			frappe.call({
@@ -2009,11 +2022,10 @@ frappe.SalesForm = Class.extend({
 					'fabric_rate':$('[data-fieldname="fabric_rate"]').val()
 					},
 				callback: function(r){
-					$('[data-fieldname="tailoring_rate"]').attr('value', r.message)
+					$('[data-fieldname="tailoring_rate"]').val(r.message)
 				}
 			})
 		})
-
 
 		$('[data-fieldname="tailoring_qty"]').change(function(){
 			frappe.call({
@@ -2023,7 +2035,7 @@ frappe.SalesForm = Class.extend({
 					'size': $('[data-fieldname="tailoring_size"]').val()
 					},
 				callback: function(r){
-					$('[data-fieldname="fabric_qty"]').attr('value', flt(r.message) * flt($('[data-fieldname="tailoring_qty"]').val()))
+					$('[data-fieldname="fabric_qty"]').val(flt(r.message) * flt($('[data-fieldname="tailoring_qty"]').val()))
 					me.set_tot()
 				}
 			})
@@ -2108,7 +2120,12 @@ frappe.SalesForm = Class.extend({
 				$("<button class='btn btn-small btn-primary' style='margin-bottom:2%' id='"+key+"'><i class='icon-plus'></i></button>")
 				.appendTo($("<td align='center'>").appendTo(row))
 				.click(function() {
-					me.add_row($(this).attr('id'))
+					status = 'true'
+					status = me.AddDataValidation()
+					if(status == 'true'){
+						me.add_row($(this).attr('id'))
+						me.clear_data('Plus')
+					}
 				});
 			}
 
@@ -2125,9 +2142,37 @@ frappe.SalesForm = Class.extend({
 		}
 		
 	},
+	clear_data:function(type){
+		var me = this;
+		data = ['fabric_code','tailoring_size', 'tailoring_qty', 'width', 'fabric_qty', 'fabric_rate', 'tot_amt', 'tailoring_branch', 'split_qty', 'tailoring_rate', 'tailoring_delivery_date', 'tailoring_price_list', 'tailoring_item_code']
+		if (type == 'Item'){
+			data = ['fabric_code','tailoring_size', 'tailoring_qty', 'width', 'fabric_qty', 'fabric_rate', 'tot_amt', 'tailoring_branch', 'split_qty', 'tailoring_rate']
+		}
+
+		$.each(data, function(i){
+			$('[data-fieldname="'+data[i]+'"]').val("")	
+		})
+		
+	},
+	//Rohit
+	AddDataValidation: function(){
+		var me = this;
+		msg = "true"
+		data = {'tailoring_delivery_date':'Delivery Date','tailoring_item_code':'Item Code','fabric_code': 'Fabric Code','tailoring_size': 'Size', 'tailoring_qty':'Product Qty', 'width': 'Width', 'fabric_qty':'Fabric Qty', 'fabric_rate': 'Fabric Rate', 'tot_amt': 'Total Amt', 'tailoring_branch':'Delivery Branch', 'tailoring_rate':'Tailoring Rate', 'tailoring_delivery_date':'Delivery Date', 'tailoring_price_list':'Service'}
+		$.each(data, function(i, d){
+			if(!$('[data-fieldname="'+i+'"]').val()){
+				alert('Mandatory Field: '+d)
+				msg = "false"
+				return msg
+			}
+		})
+		return msg
+	},
 	set_tot:function(){				
 		$('[data-fieldname="tot_amt"]').attr("disabled","disabled")
-		$('[data-fieldname="tot_amt"]').val(flt($('[data-fieldname="tailoring_qty"]').val()) * flt($('[data-fieldname="tailoring_rate"]').val()) + flt($('[data-fieldname="fabric_qty"]').val()) * flt($('[data-fieldname="fabric_rate"]').val()))
+		$('[data-fieldname="fabric_qty"]').attr("disabled","disabled")
+		$('[data-fieldname="width"]').attr("disabled","disabled")
+		$('[data-fieldname="tot_amt"]').val(flt($('[data-fieldname="tailoring_qty"]').val()) * flt($('[data-fieldname="tailoring_rate"]').val()))
 	},
 	type_checker:function(form_type, key){
 		if(form_type == 'new')
@@ -2147,13 +2192,19 @@ frappe.SalesForm = Class.extend({
 		var row = $("<tr>").appendTo(me[key].find("tbody"));
 		
 		$.each(this.tailoring_item_details, function(i, d) {	
-			$("<td>").html(d).appendTo(row);
+			if(i=='split_qty' && d){
+				$("<td style='display:none'>").html(d).appendTo(row);	
+			}
+			else{
+				$("<td>").html(d).appendTo(row);	
+			}
 		});
 		// if(key == 'Tailoring Item Details')
 		// 	$("<td>").html(me.split_qty_dict).appendTo(row)
 
 		$('<button  class="remove"><i class="icon-trash"></i></button>').appendTo($("<td>")).appendTo(row)
 				.click(function(){
+					delete me.reservation_details[$(this).parent().find('td:eq(2)').text()]
 					$(this).parent().remove()
 					me.calc_total_amt()
 				});
@@ -2217,21 +2268,29 @@ frappe.SalesForm = Class.extend({
 	                               .attr("image", d[1])
 	                               .appendTo(row)
 	                               .click(function() {
-	                                      if(me1.fabric_detail[d[2]]){
+	                                      if($(this).find('input[type="checkbox"]').is(':checked') == true){
+	                               			if(me1.fabric_detail[d[2]]){
 	                                      	me1.fabric_detail[d[2]].push([$('[data-fieldname="fabric_code"]').val(), $(this).closest("tr").find('.text_box').val(), $('[data-fieldname="tailoring_item_code"]').val()])
 	                                      }
 	                                      else{
 	                                      	me1.fabric_detail[d[2]] = []
 	                                       	me1.fabric_detail[d[2]].push([$('[data-fieldname="fabric_code"]').val(), $(this).closest("tr").find('.text_box').val(), $('[data-fieldname="tailoring_item_code"]').val()])
-	                                       }
+	                                       }	
+	                               		}else{
+	                               			delete me1.fabric_detail[d[2]]
+	                               		}
 	                               });               
 	               });
 						
 						dialog.show();
 						$(fd.create_new.input).click(function() {
-							me1.reservation_details[$('[data-fieldname="tailoring_item_code"]').val()] = JSON.stringify(me1.fabric_detail)
+							if(parseInt(me1.fabric_detail.length)>1){
+								me1.reservation_details[$('[data-fieldname="tailoring_item_code"]').val()] = JSON.stringify(me1.fabric_detail)			
+							}						
 							dialog.hide()
 						})
+					}else{
+						alert("Stock is not available for selected fabric")
 					}
 				}
 			})	
@@ -2626,9 +2685,9 @@ frappe.WOForm = Class.extend({
 				dic = {'field_name': $('[data-fieldname="field_name"]').val(), 'abbreviation': ''} 
 			}
 			$("<td>").html(dic['field_name']).appendTo(row);
-			$("<td>").html('<input type="Textbox" class="text_box">').appendTo(row);
+			$("<td>").html('<input type="Textbox" class="text_box" value="'+dic['text']+'">').appendTo(row);
 			$("<td>").html(dic['abbreviation']).appendTo(row);
-			$("<td>").appendTo(row);
+			$("<td style='width:auto'>").html(dic['image']).appendTo(row);
 			$('<button  class="remove">View</button>').appendTo($("<td>")).appendTo(row)
 				.click(function(){
 					me.view_style($(this).closest("tr").find('td'), me[key].find("tbody"))

@@ -7,6 +7,7 @@ from frappe.utils import cint, cstr, flt, nowdate, now
 from frappe.model.document import Document
 from frappe import _, msgprint, throw
 from tools.custom_data_methods import get_user_branch, get_branch_cost_center
+from loyalty_point_engine.loyalty_point_engine.hooks_call_handler import get_points
 
 class CashierDashboard(Document):
 	def validate_methods(self, args):
@@ -58,7 +59,7 @@ class CashierDashboard(Document):
 		jv.fiscal_year = frappe.db.get_value('Global Defaults', None, 'current_fiscal_year')
 		jv.cheque_date = args.reference_date
 		jv.save(ignore_permissions=True)
-		other_details = [{'account':frappe.db.get_value('Sales Invoice', args.sales_invoice_no,'debit_to'),'account_type':'credit', 'payment':args.amount, 'invoice': args.sales_invoice_no},{'account':args.payment_account,'account_type':'debit', 'payment':args.amount,'invoice':''}]
+		other_details = [{'account':frappe.db.get_value('Sales Invoice', args.sales_invoice_no,'debit_to'),'account_type':'credit', 'payment':args.amount, 'mode': args.mode_of_payment, 'invoice': args.sales_invoice_no},{'account':args.payment_account,'account_type':'debit', 'mode': '', 'payment':args.amount,'invoice':''}]
 		self.make_gl_entry(jv.name, other_details, args.amount, args.outstanding)
 		jv = frappe.get_doc('Journal Voucher', jv.name)
 		jv.submit()
@@ -70,6 +71,7 @@ class CashierDashboard(Document):
 			jvd = frappe.new_doc('Journal Voucher Detail')
 			jvd.parent = parent
 			jvd.parenttype = 'Journal Voucher'
+			jvd.mode = s.get('mode')
 			jvd.parentfield = 'entries'
 			jvd.cost_center = get_branch_cost_center(get_user_branch())
 			jvd.account = s.get('account')
@@ -103,6 +105,7 @@ class CashierDashboard(Document):
 				pmt.sales_invoice_no = r.name
 				pmt.customer = r.customer
 				pmt.outstanding = r.outstanding_amount
+				pmt.earned_points = get_points(r.customer).get('points')
 				pmt.status = 'Pending' if not r.authenticated else r.authenticated
 				pmt.measurement = self.get_remaining_measurement_list(r.name)
 				pmt.min_payment_percentage = frappe.db.get_value('Branch', get_user_branch(), 'min_advance_payment')
@@ -140,3 +143,8 @@ class CashierDashboard(Document):
 		amt = frappe.db.sql(""" select sum(credit) from `tabJournal Voucher Detail` where 
 			against_invoice = '%s' and docstatus=1"""%(args.name), as_list=1) 
 		return amt[0][0] if amt else 0
+
+	def get_redem_amount(self, redeem_points):
+		redeem_conversion_factor = frappe.db.get_value('LPE Configuration', None, 'conversion_factor')
+		if redeem_conversion_factor:
+			return {'amount': flt(redeem_points) * flt(redeem_conversion_factor)}

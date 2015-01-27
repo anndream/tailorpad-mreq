@@ -91,6 +91,17 @@ cur_frm.cscript.work_order_status = function(doc, cdt, cdn){
     }
 }
 
+cur_frm.cscript.redeem_points = function(doc, cdt, cdn){
+    var d = locals[cdt][cdn]
+    if(d.mode_of_payment == 'Redeem'){
+        get_server_fields('get_redem_amount', d.redeem_points, '', doc, cdt, cdn, 1, function(r){
+            if(r){
+                refresh_field('amount', d.name, 'payment');
+            }
+        })
+    }
+}
+
 frappe.WorkOrderAction = Class.extend({
     init: function(data, doc, cdt, cdn){
         this.data = data
