@@ -139,8 +139,13 @@ frappe.WorkOrderAction = Class.extend({
         		'sales_invoice_no': me.data.sales_invoice_no
         	},
         	callback : function(r){
-        		me.args = r.message;
-        		me.make_structure()
+                if(r.message){
+                    me.args = r.message;
+                    me.make_structure()
+                }else{
+                    me.dialog.hide()
+                    alert("Work order already release")
+                }
         	}
         })
     },

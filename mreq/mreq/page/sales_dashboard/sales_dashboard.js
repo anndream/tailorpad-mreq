@@ -1962,7 +1962,7 @@ frappe.SalesForm = Class.extend({
 
 		if(key == 'Tailoring Item Details' && form_type == 'new'){
 			var row1 = $("<tr>").appendTo(me[key+'_1'].find("tbody"));
-			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Slipt Qty </button>")
+			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:30%'><i class='icon-save'></i> Split Qty </button>")
 			.appendTo($("<td align='center'>").appendTo(row1))
 			.click(function() {
 				if($('[data-fieldname="tailoring_qty"]').val() && $('[data-fieldname="tailoring_item_code"]').val()){
@@ -2121,7 +2121,11 @@ frappe.SalesForm = Class.extend({
 				.appendTo($("<td align='center'>").appendTo(row))
 				.click(function() {
 					status = 'true'
-					status = me.AddDataValidation()
+					if(key == 'Tailoring Item Details'){
+						status = me.AddDataValidation()
+					}else{
+						status = me.AddDataValidationMerchandise()
+					}
 					if(status == 'true'){
 						me.add_row($(this).attr('id'))
 						me.clear_data('Plus')
@@ -2163,10 +2167,23 @@ frappe.SalesForm = Class.extend({
 			if(!$('[data-fieldname="'+i+'"]').val()){
 				alert('Mandatory Field: '+d)
 				msg = "false"
-				return msg
+				return false
 			}
 		})
 		return msg
+	},
+	AddDataValidationMerchandise : function(){
+		var me = this;
+		msg = "true"
+		data = {'merchandise_delivery_date':'Merchandise Delivery Date','merchandise_item_code':'Merchandise Item Code', 'merchandise_price_list':'Merchandise Price List', 'merchandise_qty':'Product Qty','merchandise_branch':'Delivery Branch', 'merchandise_rate':'Tailoring Rate'}
+		$.each(data, function(i, d){
+			if(!$('[data-fieldname="'+i+'"]').val()){
+				alert('Mandatory Field: '+d)
+				msg = "false"
+				return false
+			}
+		})
+		return msg	
 	},
 	set_tot:function(){				
 		$('[data-fieldname="tot_amt"]').attr("disabled","disabled")

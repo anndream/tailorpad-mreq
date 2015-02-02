@@ -60,7 +60,7 @@ class CutOrderDashboard(Document):
 							# generate Material Request
 							name = make_material_request(item.sales_invoice_no, item.actual_site, item.fabric_site, item.fabric_code, item.fabric_qty)
 					if name:		
-						self.submit_cut_order(item)
+						self.submit_cut_order(item, name)
 						return {"msg":"true"}
 					else:
 						return {"msg":"false"}
@@ -70,7 +70,7 @@ class CutOrderDashboard(Document):
 
 	def validate_actual_qty(self, args):
 		if args.actual_cut_qty:
-			if flt(args.fabric_qty) != flt(args.actual_cut_qty):
+			if flt(args.fabric_qty) < flt(args.actual_cut_qty):
 				return "false", "Actual qty must be equal to fabric qty"
 		else:
 			return "false", "Mandatory Field Actual qty at row %s"%(args.idx)
@@ -96,7 +96,7 @@ class CutOrderDashboard(Document):
 		if process:
 			return process[0][0]
 		else:
-			frappe.db.get_value('Process Allotment', {'sales_invoice_no': args.invoice_no}, 'name')
+			return frappe.db.get_value('Process Allotment', {'sales_invoice_no': args.invoice_no}, 'name')
 
 	def make_material_issue_list(self, item, issue_list):
 		if item.actual_cut_qty:
@@ -157,6 +157,9 @@ class CutOrderDashboard(Document):
 
 	def update_fabric_stock(self, issue_list):pass
 
-	def submit_cut_order(self, item):
+	def submit_cut_order(self, item, name):
 		co = frappe.get_doc('Cut Order', item.cut_order_id)
 		co.submit()
+		frappe.db.sql(""" update `tabFabric Reserve` set qty='%s', article_serial_no='%s' where invoice_no='%s'
+			and article_code = '%s' and 
+			fabric_code='%s'"""%(item.actual_cut_qty, name, item.invoice_no, item.article_code, item.fabric_code))
