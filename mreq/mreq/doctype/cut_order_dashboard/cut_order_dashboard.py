@@ -111,7 +111,7 @@ class CutOrderDashboard(Document):
 				item.actual_site, item.fabric_site])
 
 	def make_stock_transfer(self, item, out_list):
-		name = frappe.db.sql(""" select distinct parent from `tabStock Entry Detail` a, `tabStock Entry` b
+		name = frappe.db.sql(""" select distinct a.parent from `tabStock Entry Detail` a, `tabStock Entry` b
 			where a.target_branch = '%s' and a.parent=b.name and b.docstatus=0"""%(item.actual_site), as_list=1)
 		if name:
 			obj = frappe.get_doc('Stock Entry', name[0][0])
