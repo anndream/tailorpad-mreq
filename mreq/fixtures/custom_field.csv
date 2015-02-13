@@ -18,6 +18,12 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Item-item_costing""","Item","Section Break","Item Pricing","raw_material_item","","","","item_costing",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,0,0,0,0
+"","""Stock Entry Detail-has_cut_order""","Stock Entry Detail","Select","Has Cut Order","trials","","--------
+Yes
+No","","has_cut_order",0,0,0,0,"","",1,"",1,1,0,0,0,1
+"","""Item-swatch_id""","Item","Link","Swatch Id","item_sub_group","","Swatch","","swatch_id",0,0,0,0,"","",0,"eval:doc.item_group == 'Fabric Swatch Item' && doc.supplier_code",0,0,0,0,0,0
+"","""Item-supplier_code""","Item","Link","Supplier Code","brand","","Supplier","","supplier_code",0,0,0,0,"","",0,"eval:doc.item_group=='Fabric' || doc.item_group=='Swatch Fabric Item' || doc.item_group=='Merchandise' || doc.item_group=='Raw Material' || doc.item_group == 'Stationary' || doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
 "","""Sales Invoice-is_multi_mode""","Sales Invoice","Check","IS Multi Mode","contact_email","","","","is_multi_mode",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-referral_name""","Sales Invoice","Dynamic Link","Referral Name","referral","","referral","","referral_name",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-referral""","Sales Invoice","Link","Referral","redeem_points","","DocType","","referral",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -77,7 +83,6 @@ Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-raw_material""","Item","Section Break","Raw Material","costing_item","","","","raw_material",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
 "","""Item-costing_item""","Item","Table","Costing Item","service","","Costing Item","","costing_item",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group=='Tailoring')",0,0,0,0,0,0
 "","""Item-service""","Item","Link","Service","item_costing","","Service","","service",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group=='Tailoring')",0,0,0,0,0,0
-"","""Item-item_costing""","Item","Section Break","Item Costing","raw_material_item","","","","item_costing",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,0,0,0,0
 "","""Item-style_item""","Item","Table","Style Fields","measurement_item","","Style Item","","style_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-measurement_item""","Item","Table","Measurement Fields","s_","","Measurement Item","","measurement_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-test_label""","Item","HTML","Test Label","","","","","test_label",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -98,8 +103,6 @@ Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-fabric_width""","Item","Link","Fabric Width","fabric_color","","Width","","fabric_width",0,0,0,0,"","",0,"eval:doc.item_group == 'Fabric' || doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
 "","""Item-desc""","Item","Column Break","","","","","","desc",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-barcode_image""","Item","Small Text","Barcode Image","barcode_image","","","","barcode_image",0,0,1,0,"","",0,"",0,1,0,0,0,0
-"","""Item-supplier_code""","Item","Link","Supplier Code","brand","","Supplier","","supplier_code",0,0,0,0,"","",0,"eval:doc.item_group=='Fabric' || doc.item_group=='Swatch Fabric Item' || doc.item_group=='Merchandise' || doc.item_group=='Raw Material' || doc.item_group == 'Stationary' || doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
-"","""Item-swatch_id""","Item","Link","Swatch Id","item_sub_group","","Swatch","","swatch_id",0,0,0,0,"","",0,"eval:doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
 "","""Item-barcode_img""","Item","Data","Barcode IMG","column_break0","","","","barcode_img",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Company-registered_email_id""","Company","Data","Registered email id","email","","","","registered_email_id",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-item_sub_group""","Item","Link","Item Sub Group","item_group","","Sub Groups","","item_sub_group",0,0,0,0,"","",0,"",0,0,0,0,0,0

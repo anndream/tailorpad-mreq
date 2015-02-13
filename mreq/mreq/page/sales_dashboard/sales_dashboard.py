@@ -430,15 +430,15 @@ from tools.custom_data_methods import get_user_branch
 def get_customer_list(search_key=None):
 	cond = ''
 	if search_key:
-		cond = "where c.name like '%%%s%%'"%search_key
+		cond = "where c.name like '%%%s%%' or c.customer_name like '%%%s%%'"%(search_key, search_key)
 
-	cust_list = frappe.db.sql("""select c.name as name, ifnull(co.email_id,'') as email, ifnull(co.mobile_no,'') as mobile_no 
+	cust_list = frappe.db.sql("""select c.name as name, c.customer_name as customer_name, ifnull(co.email_id,'') as email, ifnull(co.mobile_no,'') as mobile_no 
 				from tabCustomer c left join tabContact co 
 				on c.name = co.customer
 				%s order by c.creation desc"""%cond, as_dict=1)
 
 	for cust in cust_list:
-		cust.update({'label': cust['name'] + ' - '+ cust['email'] + ' - ' + cust['mobile_no']})
+		cust.update({'label': cust['customer_name'] + ' - '+ cust['email'] + ' - ' + cust['mobile_no']})
 		cust.update({'value': cust['name']})
 
 	frappe.errprint(cust_list)
@@ -473,7 +473,6 @@ def create_customer(cust_details):
 	cust.customer_type = cust_details.get('customer_type')
 	cust.customer_group = cust_details.get('customer_group')
 	cust.territory = cust_details.get('territory')
-	cust.date_of_birth = cust_details.get('date_of_birth')
 
 	cust.set('body_measurements', [])
 	for measurement_details in cust_details.get('Full Body Measurement Details'):
@@ -485,15 +484,11 @@ def create_customer(cust_details):
 
 	create_contact(cust.name, cust_details)
 
-	create_addr(cust.name, cust_details)
-
 def create_contact(name, cust_details):
 	contact = frappe.new_doc('Contact')
 	contact.first_name = name
 	contact.customer = name
-	contact.designation = cust_details.get('designation')
 	contact.email_id = cust_details.get('email_id')
-	contact.phone = cust_details.get('phone')
 	contact.mobile_no = cust_details.get('mobile_no')
 	contact.save()
 
@@ -504,7 +499,10 @@ def create_addr(name, cust_details):
 	addr.address_line2 = cust_details.get('address_line2')
 	addr.city = cust_details.get('city')
 	addr.email_id = cust_details.get('email_id')
-	addr.phone = cust_details.get('phone')
+	if cust_details.get('phone')=='':
+		addr.phone = cust_details.get('mobile_no')
+	else:
+		addr.phone = cust_details.get('phone')
 	addr.customer = name
 	addr.save()
 
@@ -513,7 +511,7 @@ def create_addr(name, cust_details):
 def get_cust_details(customer):
 	customer_info = {}
 	customer_details = frappe.db.sql("""select c.customer_name, c.customer_type, c.territory, 
-			c.date_of_birth 
+			c.customer_group 
 		from tabCustomer c
 			where c.name = '%s'"""%customer,as_dict=1)
 	if customer_details:
@@ -523,11 +521,6 @@ def get_cust_details(customer):
 			where co.customer = '%s'"""%customer,as_dict=1)
 	if customer_contact_detail:
 		customer_info.update(customer_contact_detail[0])
-	customer_address_detail = frappe.db.sql("""select addr.address_line1, addr.address_line2, addr.city 
-		from tabAddress addr 
-			where addr.customer = '%s'"""%customer,as_dict=1)
-	if customer_address_detail:
-		customer_info.update(customer_address_detail[0])
 	if customer_info:
 		return customer_info
 
@@ -575,6 +568,12 @@ def get_size_and_rate(price_list, item_code, fabric_code, size, width, fabric_qt
 def get_fabric_qty(item_code, width, size):
 	width = frappe.db.sql("""select ifnull(fabric_qty, 1) from `tabSize Item` where parent = '%s' and width = '%s' and size='%s'"""%(item_code, width, size),as_list=1)
 	return	((len(width[0]) > 1) and width[0] or width[0][0]) if width else 1
+
+@frappe.whitelist()
+def get_default_values():
+	default_values=frappe.db.sql(""" select value from `tabSingles` where doctype='Selling Settings' and field in ('customer_group','territory') """,debug=True,as_list=1)
+	if default_values:
+		return default_values	
 
 @frappe.whitelist()
 def get_merchandise_item_price(price_list, item_code):
@@ -833,20 +832,21 @@ def create_work_order(wo_details,style_details, fields, woname,  args=None, type
 			create_work_order_style(wo, style_details)
 			create_work_order_measurement(wo, wo_details)
 			create_work_order_process(wo, woname)
+			update_WorkOrder_Trials(wo.work_order_no, wo.trial_no, wo.pdd)
 			wo.submit()
-			update_WorkOrder_Trials(wo)
 			return wo.name, wo.trial_no
  
 def create_work_order_style(obj, args):
 	if args:
 		args = eval(args)
 		for s in args:
-			ws = obj.append('wo_style', {})
-			ws.field_name = args[s].get('field_name')
-			ws.abbreviation  = args[s].get('abbreviation')
-			ws.table_view = 'Right'
-			ws.default_value = args[s].get('default_value')
-			ws.image_viewer = args[s].get('image_viewer')
+			if args[s].get('default_value'):
+				ws = obj.append('wo_style', {})
+				ws.field_name = args[s].get('field_name')
+				ws.abbreviation  = args[s].get('abbreviation')
+				ws.table_view = 'Right'
+				ws.default_value = args[s].get('default_value')
+				ws.image_viewer = '<img src="%s" width="100px">'%(args[s].get('image_viewer'))
 	return True
 
 def create_work_order_measurement(obj, args):
@@ -878,8 +878,8 @@ def get_fabric_code(args, trial_no):
 			return frappe.db.get_value('Production Dashboard Details', args.pdd, 'fabric_code') if cint(data[0][0]) == 1 else args.fabric__code
 		return args.fabric__code
 
-def update_WorkOrder_Trials(args):
-	if args.name:
+def update_WorkOrder_Trials(name, trial_no, pdd):
+	if name:
 		frappe.db.sql(""" update `tabTrial Dates` a, `tabTrials` b set a.work_order = '%s' 
-			where a.parent = b.name and a.trial_no='%s' and b.pdd = '%s'"""%(args.name, args.trial_no, args.pdd))
+			where a.parent = b.name and a.trial_no>='%s' and b.pdd = '%s'"""%(name, trial_no, pdd), debug=1)
 		return "Done"

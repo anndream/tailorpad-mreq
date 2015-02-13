@@ -3,7 +3,7 @@
  "creation": "2014-10-17 16:13:37.801527", 
  "docstatus": 0, 
  "doctype": "Page", 
- "modified": "2014-10-17 16:13:37.801527", 
+ "modified": "2015-02-12 12:39:46.354242", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "sales-dashboard", 
@@ -11,7 +11,13 @@
  "page_name": "Sales Dashboard", 
  "roles": [
   {
-   "role": "All"
+   "role": "System Manager"
+  }, 
+  {
+   "role": "Sales User"
+  }, 
+  {
+   "role": "Sales Manager"
   }
  ], 
  "script": null, 

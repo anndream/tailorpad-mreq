@@ -4,13 +4,23 @@
  "docstatus": 0, 
  "doctype": "Page", 
  "icon": "icon-money", 
- "modified": "2014-11-09 21:19:19.304654", 
+ "modified": "2015-02-12 12:39:18.407744", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "account-dashboard", 
  "owner": "Administrator", 
  "page_name": "Account Dashboard", 
- "roles": [], 
+ "roles": [
+  {
+   "role": "System Manager"
+  }, 
+  {
+   "role": "Accounts User"
+  }, 
+  {
+   "role": "Accounts Manager"
+  }
+ ], 
  "script": null, 
  "standard": "Yes", 
  "style": null, 
