@@ -827,6 +827,8 @@ def create_work_order(wo_details,style_details, fields, woname,  args=None, type
 			wo.item_qty = wo_data.item_qty
 			wo.trial_no = cint(args.get('trial_no'))
 			wo.fabric__code = get_fabric_code(wo_data, wo.trial_no)
+			wo.current_process = wo_data.current_process
+			wo.total_process = wo_data.total_process 
 			wo.serial_no_data = wo_data.serial_no_data
 			wo.pdd = wo_data.pdd
 			create_work_order_style(wo, style_details)

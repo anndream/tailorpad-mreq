@@ -47,7 +47,7 @@
   {
    "fieldname": "payment_entry", 
    "fieldtype": "Section Break", 
-   "label": "Payment Entry", 
+   "label": "Invoice List", 
    "permlevel": 0, 
    "precision": ""
   }, 
@@ -101,7 +101,7 @@
  "is_submittable": 0, 
  "issingle": 1, 
  "istable": 0, 
- "modified": "2014-11-12 22:35:24.411511", 
+ "modified": "2015-02-16 13:35:58.922261", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "Cashier Dashboard", 

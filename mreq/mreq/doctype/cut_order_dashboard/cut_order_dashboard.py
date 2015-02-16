@@ -10,6 +10,7 @@ from tools.tools_management.custom_methods import get_fabric_details, get_wareho
 from tools.custom_data_methods import get_user_branch, get_branch_cost_center, get_branch_warehouse, update_serial_no, find_next_process
 
 class CutOrderDashboard(Document):
+
 	def get_invoice_details(self):
 		self.set('cut_order_item', [])
 		args = self.get_cut_order_details()
@@ -21,6 +22,10 @@ class CutOrderDashboard(Document):
 					self.create_cut_order(co)
 				elif get_user_branch == get_ActualFabric(co):
 					self.create_cut_order(co)
+		self.save()
+
+	def update_data(self):
+		self.save()
 
 	def create_cut_order(self, co):
 		coi = self.append('cut_order_item', {})
