@@ -2608,10 +2608,13 @@ frappe.WOForm = Class.extend({
 	},
 	render_child: function(fields, key){
 		var me = this;
-
+		data = key
+		if(key == 'Style Transactions'){
+			data = 'Style Options'
+		}
 		$('<h4 class="col-md-12" style="margin: 0px 0px 15px; width:300px">\
 			<i class="icon-in-circle icon-user"></i>\
-			<span class="section-count-label"></span>.'+key+'. </h4>').prependTo(me.table1)
+			<span class="section-count-label"></span>.'+data+'. </h4>').prependTo(me.table1)
 		if(key!='Work Order'){
 			$('<hr style="border: 2px solid #CBCACA"></hr>').insertBefore(me.table1)
 		}
