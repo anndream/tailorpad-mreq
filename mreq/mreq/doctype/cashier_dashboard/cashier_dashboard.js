@@ -13,6 +13,22 @@ cur_frm.fields_dict.payment.grid.get_field('sales_invoice_no').get_query = funct
 	}
 }
 
+cur_frm.cscript.onload=function(doc,dt,dn){
+     var d = locals[dt][dn]
+     console.log("in onload")
+     if(d.min_payment_amount){
+        console.log("in if loop")
+        d.amount=d.min_payment_amount
+        refresh_field('amount',d.name,'payment')
+     }else{
+        console.log("in else loop")
+        d.amount=d.outstanding
+        refresh_field('amount',d.name,'payment')
+
+     }
+
+}
+
 cur_frm.cscript.make_payment_inv = function(doc, cdt, cdn){
     var d = locals[cdt][cdn]
     if(parseInt(d.select) == 1)
