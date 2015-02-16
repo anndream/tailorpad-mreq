@@ -111,6 +111,7 @@ class CashierDashboard(Document):
 				pmt.min_payment_percentage = frappe.db.get_value('Branch', get_user_branch(), 'min_advance_payment')
 				pmt.min_payment_amount  = cstr(flt(pmt.min_payment_percentage) * flt(frappe.db.get_value('Sales Invoice', r.name, 'grand_total_export')) / flt(100))
 				pmt.paid_amount = self.get_paid_amount(r)
+				pmt.amount = pmt.min_payment_amount or pmt.outstanding
 			return True
 
 	def authenticate_for_production(self, args):

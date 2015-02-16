@@ -14,16 +14,16 @@ cur_frm.fields_dict.payment.grid.get_field('sales_invoice_no').get_query = funct
 }
 
 cur_frm.cscript.onload=function(doc,dt,dn){
-     var d = locals[dt][dn]
      console.log("in onload")
-     if(d.min_payment_amount){
+     //var d= locals[dt][cdn]
+     if(doc.min_payment_amount){
         console.log("in if loop")
-        d.amount=d.min_payment_amount
-        refresh_field('amount',d.name,'payment')
+        doc.amount=doc.min_payment_amount
+        refresh_field('amount',doc.name,'payment')
      }else{
         console.log("in else loop")
-        d.amount=d.outstanding
-        refresh_field('amount',d.name,'payment')
+        doc.amount=doc.outstanding
+        refresh_field('amount',doc.name,'payment')
 
      }
 

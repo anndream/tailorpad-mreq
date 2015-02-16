@@ -2561,7 +2561,7 @@ frappe.WOForm = Class.extend({
 					['Customer Name', 'Data', '', 'customer'],
 					['Serial NO', 'Small Text', '', 'serial_no_data']
 				],
-			"Style Options":[
+			"Style Transactions":[
 					['Field Name', 'Link', 'Style', 'field_name']
 				],
 			"Measurement Item":[
