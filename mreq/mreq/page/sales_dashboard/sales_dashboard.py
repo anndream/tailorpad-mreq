@@ -441,7 +441,7 @@ def get_customer_list(search_key=None):
 		cust.update({'label': cust['customer_name'] + ' - '+ cust['email'] + ' - ' + cust['mobile_no']})
 		cust.update({'value': cust['name']})
 
-	frappe.errprint(cust_list)
+	# frappe.errprint(cust_list)
 
 	return cust_list
 
@@ -462,12 +462,12 @@ def get_si_list(search_key=None):
 def get_images(name):
 	return frappe.db.sql("""select file_name from `tabFile Data` 
 			where attached_to_doctype = 'Customer' 
-				and attached_to_name = '%s'"""%(name),as_list=1, debug=1)
+				and attached_to_name = '%s'"""%(name),as_list=1)
 
 @frappe.whitelist()
 def create_customer(cust_details):
 	cust_details = eval(cust_details)
-	frappe.errprint(cust_details)
+	# frappe.errprint(cust_details)
 	cust = frappe.new_doc("Customer")
 	cust.customer_name = cust_details.get('customer_name')
 	cust.customer_type = cust_details.get('customer_type')
@@ -571,7 +571,7 @@ def get_fabric_qty(item_code, width, size):
 
 @frappe.whitelist()
 def get_default_values():
-	default_values=frappe.db.sql(""" select value from `tabSingles` where doctype='Selling Settings' and field in ('customer_group','territory') """,debug=True,as_list=1)
+	default_values=frappe.db.sql(""" select value from `tabSingles` where doctype='Selling Settings' and field in ('customer_group','territory') """,as_list=1)
 	if default_values:
 		return default_values	
 
@@ -589,7 +589,7 @@ def get_work_orders(si_num):
 @frappe.whitelist()
 def create_si(si_details, fields, reservation_details):
 	from datetime import datetime
-	frappe.errprint(si_details)
+	# frappe.errprint(si_details)
 	si_details = eval(si_details)
 	fields = eval(fields)
 	accounting_details = get_accounting_details()
@@ -607,7 +607,7 @@ def create_si(si_details, fields, reservation_details):
 	si.set('sales_invoice_items_one', [])
 	for tailoring_item in si_details.get('Tailoring Item Details'):
 		item_details = get_item_details(tailoring_item[2])
-		frappe.errprint(['tailoring_item',tailoring_item])
+		# frappe.errprint(['tailoring_item',tailoring_item])
 		e = si.append('sales_invoice_items_one', {})
 		e.tailoring_delivery_date = datetime.strptime(tailoring_item[0], '%d-%m-%Y').strftime('%Y-%m-%d')
 		e.tailoring_price_list = tailoring_item[1]
@@ -722,7 +722,7 @@ def get_wo_details(tab, woname):
 	
 	if tab in mapper:
 		return frappe.db.sql("""select %s from %s where parent = '%s'"""%(','.join(mapper.get(tab)), tab_mapper.get(tab),
-			 woname.split('\t')[-1].strip()), debug=1, as_dict=1)
+			 woname.split('\t')[-1].strip()),  as_dict=1)
 
 	else:
 		return frappe.db.sql(""" select sales_invoice_no, item_code, customer, serial_no_data from `tabWork Order` 
@@ -751,7 +751,7 @@ def update_wo(wo_details, fields, woname, style_details, args=None, type_of_wo=N
 	wo_details = eval(wo_details)
 	for d in wo.get('measurement_item'):
 		for style in wo_details['Measurement Item']:
-			frappe.errprint(style)
+			# frappe.errprint(style)
 			if d.parameter == style[0]:				
 				frappe.db.sql("""update `tabMeasurement Item` 
 									set value ='%s'
@@ -883,5 +883,5 @@ def get_fabric_code(args, trial_no):
 def update_WorkOrder_Trials(name, trial_no, pdd):
 	if name:
 		frappe.db.sql(""" update `tabTrial Dates` a, `tabTrials` b set a.work_order = '%s' 
-			where a.parent = b.name and a.trial_no>='%s' and b.pdd = '%s'"""%(name, trial_no, pdd), debug=1)
+			where a.parent = b.name and a.trial_no>='%s' and b.pdd = '%s'"""%(name, trial_no, pdd))
 		return "Done"

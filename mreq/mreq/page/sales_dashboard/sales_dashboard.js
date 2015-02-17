@@ -1361,8 +1361,7 @@ frappe.pages['sales-dashboard'].onload = function(wrapper) {
 		title: 'Sales Dashboard',
 		single_column: true
 	});
-	console.log($(this))
-	console.log($(wrapper).find(".layout-main"))
+	
 	// $(document).find('div.appframe container').css('width','inherit');
 	$('.container').css('width', 'inherit');
 	$(document).find('div.layout-main').css('width','inherit');
@@ -1503,7 +1502,7 @@ frappe.SalesInvoce = Class.extend({
 		});
 	},
 	add_worklist:function(si_num, td){
-		console.log(['test', si_num])
+		
 		var me = this;
 		this.si_td = td;
 		$('.btn-default').remove();
@@ -1536,6 +1535,7 @@ frappe.SearchArea = Class.extend({
 		$('<td>').html('<input class="form-control" \
 			placeholder="Search Area">').appendTo(row);
 
+		console.log($(me.area))
 		$(me.area).find('.form-control').val(this.search_key)
 
 		$("<button class='btn btn-small btn-info'><i class='icon-search'></i></button>")
@@ -1557,15 +1557,20 @@ frappe.SearchArea = Class.extend({
 			});
 
 		if($(me.area).attr('id') == 'customer'){
+			console.log("in customer")
+			console.log(this.search_key)
+
 			frappe.call({
 				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_autocomplete_list",
 				args:{'search_key': this.search_key},
 				callback: function(r){
+					console.log("incallback")
+					console.log(r.message)
 					$($(me.area).find('.form-control')).autocomplete({
 						source: function(request, response){
 							var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
 							response( $.grep( r.message, function( value ) {
-								console.log(value)
+								
 								return matcher.test(value['customer_name']) || matcher.test(value.email) || matcher.test(value.mobile_no);
 							}));
 						},
@@ -1579,6 +1584,7 @@ frappe.SearchArea = Class.extend({
 				}
 			})
 		}
+
 	}
 
 })
@@ -1675,8 +1681,7 @@ frappe.CustomerForm = Class.extend({
 		var count=0
 		$.each(fields, 
 			function(i, field) {
-				console.log(i)
-				console.log(field)
+				
 				if (count==3){
                     row = $("<tr width:'100%' >").appendTo(me.table.find("tbody"));
                     count=0
@@ -1717,13 +1722,13 @@ frappe.CustomerForm = Class.extend({
 			})
 			
 			if(key=='Full Body Measurement Details'){
-				console.log("In hide")
+				
 				$(me.table).hide();
 
 			}
 		
 		    if(form_type=='new'){
-		    	console.log("in new");
+		    	
 		    	$('[data-fieldname="customer_type"]').val("Individual").prop('selected', true)
 		    	frappe.call({
 		    		method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_default_values",
@@ -1778,9 +1783,9 @@ frappe.CustomerForm = Class.extend({
 
 			}
 		})
-		console.log(this.cust_details)
+		
 		if(this.cust_details.customer_name!="" && this.cust_details.customer_group!="" && this.cust_details.customer_type!="" && this.cust_details.territory!="" && this.cust_details.mobile_no!="" && this.cust_details.email_id!="" ){
-                console.log("in if")
+                
 				frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_customer",
 			args:{'cust_details': this.cust_details},
@@ -1806,7 +1811,7 @@ frappe.CustomerForm = Class.extend({
 					$('[data-fieldname="'+key+'"]').attr("value", val)
 
 					if(key=="customer_type"){
-						console.log("in customer type")
+						
 						$('[data-fieldname="'+key+'"]').val(val).prop('selected', true)
 					}
 				})
@@ -1891,7 +1896,7 @@ frappe.SalesForm = Class.extend({
 			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%;margin-left:40%;'><i class='icon-folder-open'></i> Open </button>")
 			.appendTo(me.field_area)
 			.click(function() {
-				console.log(me.si_no)
+				
 				window.open("#Form/Sales Invoice/"+me.si_no, "_self");
 			});
 		}
@@ -1928,7 +1933,7 @@ frappe.SalesForm = Class.extend({
 				        else{
 				 	      $(td).css('display','None')
 				         }	
-				 frappe.ui.form.make_control({
+				ui_controller =  frappe.ui.form.make_control({
 							df: {
 							    "fieldtype": field[1],
 								"fieldname": field[3],
@@ -1936,13 +1941,37 @@ frappe.SalesForm = Class.extend({
 								"label": field[0]
 								},
 							parent:td,
-						}).make_input();
+						});
+				custom_dict = {'tailoring_item_code':['Tailoring'], 'fabric_code':['Fabric', 'Fabric Swatch Item'], 'merchandise_item_code': ['Merchandise']}
+				$.each(custom_dict, function(field_key, filter_val){
+					if(field[3]==field_key){
+				 	ui_controller.get_query = function(){
+				 		return{
+				 			filters:[
+				 				['Item', 'item_group', 'in', filter_val]
+				 			]
+				 		}
+				 	}
+				 }	
+				})
+				 
+				 ui_controller.make_input();
+
+				 // if(key=='Tailoring Item Details' && field[0]=='Item Code'){
+				 // 	
+				 //    me.tailoring_item_code.get_query =function(){
+				 //    	return{
+				 //    		filters:{
+				 //    			'item_group':'Tailoring'
+				 //    		}
+				 //    	}
+				 //    }	
+				 // }
 						count=count+1;
 
 
 					if(form_type=='new' && ( field[3]=='tailoring_delivery_date' ||  field[3]=='posting_date' ||  field[3]=='merchandise_delivery_date' ) ){
-						 var d = new Date();
-                         console.log($.datepicker.formatDate('dd-mm-yy',d))
+						 var d = new Date();                      
                         $('[data-fieldname="'+field[3]+'"]').val($.datepicker.formatDate('dd-mm-yy',d));
 					}	
 
@@ -1950,7 +1979,7 @@ frappe.SalesForm = Class.extend({
 		}
 
 		$('[data-fieldname="split_qty"]').css('display','None');
-		console.log([key, form_type])
+		
 		if(key == 'Tailoring Item Details' && form_type == 'new'){
 			var row1 = $("<tr>").appendTo(me[key+'_1'].find("tbody"));
 			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%;'><i class='icon-save'></i> Split Qty </button>")
@@ -2191,8 +2220,7 @@ frappe.SalesForm = Class.extend({
 		data = {'merchandise_delivery_date':'Merchandise Delivery Date','merchandise_item_code':'Merchandise Item Code', 'merchandise_price_list':'Merchandise Price List', 'merchandise_qty':'Product Qty','merchandise_branch':'Delivery Branch', 'merchandise_rate':'Tailoring Rate'}
 		$.each(data, function(i, d){
 			if(!$('[data-fieldname="'+i+'"]').val()){
-				console.log(i)
-				console.log($('[data-fieldname="'+i+'"]').val())
+				
 				alert('Mandatory Field: '+d)
 				msg = "false"
 				return false
@@ -2252,8 +2280,8 @@ frappe.SalesForm = Class.extend({
 	},
 	reserve_fabric: function(){
 		var me1 = this;
-		console.log($('[data-fieldname="fabric_qty"]').val())
-		// console.log(e)
+		
+		
 		var image_data;
 		var dialog = new frappe.ui.Dialog({
 				title:__('Fabric Details'),
@@ -2290,7 +2318,7 @@ frappe.SalesForm = Class.extend({
 	                  }	);
 						
 						$.each(result_set, function(i, d) {
-							console.log(d)
+							
 							var row = $("<tr>").appendTo(me.table.find("tbody"));
 	                       $("<td>").html(d[2]).appendTo(row);
 	                       $("<td>").html(d[1]).appendTo(row); 
@@ -2333,7 +2361,7 @@ frappe.SalesForm = Class.extend({
 		$.each(this.field_list, function(tab_name, fields){
 			if(tab_name != 'Basic Info' && tab_name != 'Total' && tab_name != 'Taxes and Charges'){
 				var si_details_list = []
-				console.log(tab_name)
+				
 				me[tab_name].find('tr').each(function (tr_id, tr_val) {
 					if(tr_id != 0){
 						var $tds = $(this).find('td')
@@ -2354,20 +2382,37 @@ frappe.SalesForm = Class.extend({
 				me.invoce_details[tab_name] = [si_details_list]
 			}
 		})
-		frappe.call({
+		status=0
+
+		if(!me.invoce_details['Basic Info'][0][0] ){
+				status=1
+				alert('Mandatory field Customer')
+
+			}
+		else if(!me.invoce_details['Tailoring Item Details'][0] &&  !me.invoce_details['Merchandise Item Details'][0]){
+					status=1
+					alert('Mandatory table: Either Tailoring Item Details or Merchandise Item Details')
+					
+				}
+		
+		if (status==0){
+
+			frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_si",
 			args:{'si_details': me.invoce_details, 'fields':me.field_list, 'reservation_details': JSON.stringify(me.reservation_details)},
 			callback: function(r){
-				console.log(r.message)
+				
 				// new frappe.SalesInvoce(me.wrapper)
 				me.open_record(r.message, 'open')
-			}
-		})
+			 }
+		  })
+		}
+	
+	
 	},
 	render_tax_struct:function(tax_struct){
 		var me = this;
-		console.log(me['Taxes and Charges_1'])
-		console.log(me['Taxes and Charges_1'].find('tbody'))
+		
 		me['Taxes and Charges_1'].append(tax_struct)
 	},
 	open_record:function(si_no, form_type){
@@ -2385,7 +2430,7 @@ frappe.SalesForm = Class.extend({
 		})
 	},
 	add_values:function(si_details){
-		console.log(si_details['si'])
+		
 		var me = this;
 
 		//Render Basic Details 
@@ -2416,7 +2461,7 @@ frappe.SalesForm = Class.extend({
 
 	},
 	calc_total_amt: function(grand_total){
-		// console.log('test')
+		
 		var total = 0.0;
 		var me = this ;
 		me['Tailoring Item Details'].find('tr').each(function (tr_id, tr_val) {
@@ -2530,7 +2575,7 @@ frappe.SplitQty =  Class.extend({
         if(parseInt(qty)==parseInt($('[data-fieldname="tailoring_qty"]').val())) {
             this.si.split_qty_dict = JSON.stringify(me.split_dict)
             refresh_field('sales_invoice_items_one')
-            console.log(this.si.split_qty_dict)
+            
             me.dialog.hide()
         }else{
             alert("Split qty should be equal to Taiiloring Product Qty")
@@ -2581,7 +2626,7 @@ frappe.WOForm = Class.extend({
 
 		$.each(this.field_list, 
 			function(i, field) {
-				console.log([i, field])
+				
 				me.table1 = $("<table style='width:100%;table-layout:fixed'>\
 						<tbody style='width:100%;'></tbody>\
 						</table>").appendTo(me.field_area);
@@ -2684,7 +2729,7 @@ frappe.WOForm = Class.extend({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_wo_details",
 			args:{'tab': key, 'woname': this.woname},
 			callback: function(r){
-				console.log(r.message)
+				
 				$.each(r.message, function(i, d) {	
 					me.create_child_row(key, d)
 				});
@@ -2700,7 +2745,7 @@ frappe.WOForm = Class.extend({
 
 		if(key == 'Work Order') {
 			$.each(dic, function(key, val){
-				console.log([key, val])
+				
 				$('[data-fieldname="'+key+'"]').attr("disabled","disabled")
 				$('[data-fieldname="'+key+'"]').val(val)
 			})
@@ -2799,7 +2844,7 @@ frappe.WOForm = Class.extend({
 	                               		  	"tailor_cost": d[5],
 	                               		  	"extra_cost": d[6]
 	                               		  }
-	                               		   console.log(me1.style_details)
+	                               		   
 	                               });
 	                     
 	                       $("<td>").html($(d[1]).find('img')).appendTo(row);
@@ -2816,7 +2861,7 @@ frappe.WOForm = Class.extend({
 			})	
 	},
 	calc_measurement: function(tr, td, value){
-		console.log(this.style_details)
+		
 		var measurement_details = []
 		var param_args = {'parameter':$(td[0]).text(), 'value':value, 
 			'item':$('[data-fieldname="item_code"]').val()}
@@ -2856,8 +2901,7 @@ frappe.WOForm = Class.extend({
 		})
 		me.wo_details['Measurement Item'] = wo_details_list
 		
-		// console.log($(location).attr('host'))
-		// console.log([me.wo_details, me.style_details, me.field_list])
+		
 		frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.update_wo",
 			args:{'wo_details': me.wo_details, 'style_details':me.style_details, 'fields':me.field_list, 'woname': me.woname},

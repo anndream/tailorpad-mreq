@@ -18,6 +18,7 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Stock Entry-barcode""","Stock Entry","Data","Bundle Barcode","posting_time","","","","barcode",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Task-process_name""","Task","Link","Process Name","exp_end_date","","Process","","process_name",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Item-item_costing""","Item","Section Break","Item Pricing","raw_material_item","","","","item_costing",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,0,0,0,0
 "","""Stock Entry Detail-has_cut_order""","Stock Entry Detail","Select","Has Cut Order","trials","","--------
@@ -107,7 +108,6 @@ Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-barcode_img""","Item","Data","Barcode IMG","column_break0","","","","barcode_img",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Company-registered_email_id""","Company","Data","Registered email id","email","","","","registered_email_id",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-item_sub_group""","Item","Link","Item Sub Group","item_group","","Sub Groups","","item_sub_group",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Stock Entry-barcode""","Stock Entry","Data","Bundle Barcode","posting_time","","","","barcode",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Stock Entry-refer_doctype_name""","Stock Entry","Data","Refer Doctype Name","sales_invoice","","","","refer_doctype_name",0,0,0,0,"","",1,"",1,1,0,0,0,0
 "","""Stock Entry-sales_invoice""","Stock Entry","Link","Sales Invoice","select_print_heading","","Sales Invoice","","sales_invoice",0,0,0,0,"","",1,"",1,1,0,0,0,0
 "","""Sales Invoice Items-cut_fabric_status""","Sales Invoice Items","Select","Cut Fabric Status","fabric_owner","","Completed
