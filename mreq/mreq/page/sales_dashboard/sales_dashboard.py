@@ -669,7 +669,7 @@ def get_tax_details(si):
 def get_si_details(name):
 	si = frappe.db.sql("""select si.name,si.customer, si.currency, 
 								si.delivery_date, si.posting_date, 
-								si.branch, si.authenticated 
+								si.branch, si.authenticated ,si.release
 						from `tabSales Invoice` si 
 						where si.name = '%s' """%(name),as_dict=1)
 

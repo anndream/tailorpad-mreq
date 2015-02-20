@@ -2360,7 +2360,6 @@ frappe.SalesForm = Class.extend({
 			}
 		})
 		status=0
-
 		if(!me.invoce_details['Basic Info'][0][0] ){
 				status=1
 				alert('Mandatory field Customer')
@@ -2401,6 +2400,7 @@ frappe.SalesForm = Class.extend({
 				me.si_no = si_no
 				me.render_sales_form(form_type)
 				me.add_values(r.message)
+				console.log(r.message)
 				me.render_tax_struct(r.message['tax_details'])
 				me.calc_total_amt(r.message['tot'])
 			}
@@ -2415,6 +2415,15 @@ frappe.SalesForm = Class.extend({
 			$.each(value, function(key, val){
 				$('[data-fieldname="'+key+'"]').attr("disabled","disabled")
 				$('[data-fieldname="'+key+'"]').val(val)
+				if(key=="release"){
+					if (val==1){
+						$('[data-fieldname="'+key+'"]').val('Yes').prop('selected', true)
+					}else{
+						$('[data-fieldname="'+key+'"]').val('No').prop('selected', true)
+					}
+						
+					
+					}
 			})
 		})	
 
