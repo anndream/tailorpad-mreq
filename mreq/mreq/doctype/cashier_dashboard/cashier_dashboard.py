@@ -30,7 +30,6 @@ class CashierDashboard(Document):
 		if frappe.db.get_value('Sales Invoice', args.sales_invoice_no, 'authenticated') == 'Approved' and args.status in ['Pending', 'Rejected', 'Remove'] : 
 			frappe.throw(_('This order is already approved'))
 		amt = flt(args.paid_amount) + flt(args.amount)
-		frappe.errprint([amt, args.min_payment_amount])
 		if args.status == 'Approved' and flt(amt) < flt(args.min_payment_amount) and not frappe.db.get_value('Sales Invoice', args.sales_invoice_no, 'authenticated') == 'Approved':
 			frappe.throw(_('To approved the order you have to pay min amt {0} at row {1}').format(args.min_payment_amount, args.idx))
 
@@ -102,6 +101,7 @@ class CashierDashboard(Document):
 		if data:
 			for r in data:
 				pmt = self.append('payment',{})
+				pmt.mode_of_payment = 'Cash'
 				pmt.sales_invoice_no = r.name
 				pmt.customer = r.customer
 				pmt.outstanding = r.outstanding_amount

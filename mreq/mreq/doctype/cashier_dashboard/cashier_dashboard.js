@@ -14,14 +14,11 @@ cur_frm.fields_dict.payment.grid.get_field('sales_invoice_no').get_query = funct
 }
 
 cur_frm.cscript.onload=function(doc,dt,dn){
-     console.log("in onload")
      //var d= locals[dt][cdn]
      if(doc.min_payment_amount){
-        console.log("in if loop")
         doc.amount=doc.min_payment_amount
         refresh_field('amount',doc.name,'payment')
      }else{
-        console.log("in else loop")
         doc.amount=doc.outstanding
         refresh_field('amount',doc.name,'payment')
 
@@ -98,12 +95,12 @@ cur_frm.cscript.work_order_status = function(doc, cdt, cdn){
     // new frappe.WorkOrderAction(d, doc, cdt, cdn)    
     if(d.min_payment_percentage){
         if(parseFloat(d.paid_amount) >= parseFloat(d.min_payment_amount)){
-            new frappe.WorkOrderAction(d)    
+            new frappe.WorkOrderAction(d, doc, cdt, cdn)    
         }else{
             alert("You have not paid min amount")
         }    
     }else{
-        new frappe.WorkOrderAction(d)    
+        new frappe.WorkOrderAction(d, doc, cdt, cdn)    
     }
 }
 
@@ -168,7 +165,6 @@ frappe.WorkOrderAction = Class.extend({
 
     make_structure: function(){
         var me = this;
-        console.log(me.args)
         $sub_div = $(me.div).find('#mytable tbody')
         $.each(me.args, function(i){
         	$div = $(' <tr style="background-color:#fff"> <td><a href="#Form/Work Order/'+me.args[i].name+'">'+me.args[i].name+'</td>\
@@ -221,7 +217,7 @@ frappe.WorkOrderAction = Class.extend({
     		},
     		callback: function(){
     			me.dialog.hide()
-                window.location.reload()
+                cur_frm.cscript.refresh(me.doc, me.cdt, me.cdn)
     		}
     	})
     }

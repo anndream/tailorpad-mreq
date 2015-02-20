@@ -54,7 +54,7 @@
  "is_submittable": 0, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-01-16 22:25:09.887646", 
+ "modified": "2015-02-20 06:33:50.228063", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "Service", 
@@ -86,6 +86,11 @@
    "read": 1, 
    "role": "System Manager", 
    "write": 1
+  }, 
+  {
+   "permlevel": 0, 
+   "read": 1, 
+   "role": "Sales User"
   }
  ], 
  "read_only": 0, 

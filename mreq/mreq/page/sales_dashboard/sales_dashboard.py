@@ -441,7 +441,6 @@ def get_customer_list(search_key=None):
 		cust.update({'label': cust['customer_name'] + ' - '+ cust['email'] + ' - ' + cust['mobile_no']})
 		cust.update({'value': cust['name']})
 
-	# frappe.errprint(cust_list)
 
 	return cust_list
 
@@ -467,7 +466,6 @@ def get_images(name):
 @frappe.whitelist()
 def create_customer(cust_details):
 	cust_details = eval(cust_details)
-	# frappe.errprint(cust_details)
 	cust = frappe.new_doc("Customer")
 	cust.customer_name = cust_details.get('customer_name')
 	cust.customer_type = cust_details.get('customer_type')
@@ -589,7 +587,6 @@ def get_work_orders(si_num):
 @frappe.whitelist()
 def create_si(si_details, fields, reservation_details):
 	from datetime import datetime
-	# frappe.errprint(si_details)
 	si_details = eval(si_details)
 	fields = eval(fields)
 	accounting_details = get_accounting_details()
@@ -606,23 +603,22 @@ def create_si(si_details, fields, reservation_details):
 
 	si.set('sales_invoice_items_one', [])
 	for tailoring_item in si_details.get('Tailoring Item Details'):
-		item_details = get_item_details(tailoring_item[2])
-		# frappe.errprint(['tailoring_item',tailoring_item])
+		item_details = get_item_details(tailoring_item[1])
 		e = si.append('sales_invoice_items_one', {})
-		e.tailoring_delivery_date = datetime.strptime(tailoring_item[0], '%d-%m-%Y').strftime('%Y-%m-%d')
-		e.tailoring_price_list = tailoring_item[1]
-		e.tailoring_item_code = tailoring_item[2]
+		e.tailoring_price_list = tailoring_item[0]
+		e.tailoring_item_code = tailoring_item[1]
 		e.tailoring_item_name = item_details[0]
 		e.tailoring_description = item_details[1]
-		e.fabric_code = tailoring_item[3]
-		e.tailoring_size = tailoring_item[4]
-		e.width = tailoring_item[6]
-		e.fabric_qty = flt(tailoring_item[7])
-		e.tailoring_qty = cint(tailoring_item[5])
-		e.tailoring_rate = tailoring_item[8]
-		e.tailoring_amount = flt(tailoring_item[9])
+		e.fabric_code = tailoring_item[2]
+		e.tailoring_size = tailoring_item[3]
+		e.width = tailoring_item[5]
+		e.fabric_qty = flt(tailoring_item[6])
+		e.tailoring_qty = cint(tailoring_item[4])
+		e.tailoring_rate = tailoring_item[7]
+		e.tailoring_amount = flt(tailoring_item[8])
 		e.tailoring_income_account = accounting_details[0]
 		e.tailoring_cost_center = accounting_details[1]
+		e.tailoring_delivery_date = datetime.strptime(tailoring_item[9], '%d-%m-%Y').strftime('%Y-%m-%d')
 		e.tailoring_branch = tailoring_item[10]
 		e.split_qty_dict = tailoring_item[11]
 		if tailoring_item[11]:
@@ -630,19 +626,19 @@ def create_si(si_details, fields, reservation_details):
 
 	si.set('merchandise_item', [])
 	for merchandise_item in si_details.get('Merchandise Item Details'):
-		item_details = get_item_details(merchandise_item[2])
+		item_details = get_item_details(merchandise_item[1])
 
 		e = si.append('merchandise_item', {})
-		e.merchandise_delivery_date = datetime.strptime(merchandise_item[0], '%d-%m-%Y').strftime('%Y-%m-%d')
-		e.merchandise_price_list = merchandise_item[1]
-		e.merchandise_item_code = merchandise_item[2]
+		e.merchandise_price_list = merchandise_item[0]
+		e.merchandise_item_code = merchandise_item[1]
 		e.merchandise_item_name = item_details[0]
 		e.merchandise_description = item_details[1]
-		e.merchandise_qty = cint(merchandise_item[3])
-		e.merchandise_rate = cint(merchandise_item[4])
-		e.merchandise_amount = flt(merchandise_item[3]) * flt(merchandise_item[4])
+		e.merchandise_qty = cint(merchandise_item[2])
+		e.merchandise_rate = cint(merchandise_item[3])
+		e.merchandise_amount = flt(merchandise_item[2]) * flt(merchandise_item[3])
 		e.merchandise_income_account = accounting_details[0]
 		e.merchandise_cost_center = accounting_details[1]
+		e.merchandise_delivery_date = datetime.strptime(merchandise_item[4], '%d-%m-%Y').strftime('%Y-%m-%d')
 		e.merchandise_branch = merchandise_item[5]
 
 	for tax in si_details.get('Taxes and Charges'):
@@ -751,7 +747,6 @@ def update_wo(wo_details, fields, woname, style_details, args=None, type_of_wo=N
 	wo_details = eval(wo_details)
 	for d in wo.get('measurement_item'):
 		for style in wo_details['Measurement Item']:
-			# frappe.errprint(style)
 			if d.parameter == style[0]:				
 				frappe.db.sql("""update `tabMeasurement Item` 
 									set value ='%s'
@@ -824,6 +819,7 @@ def create_work_order(wo_details,style_details, fields, woname,  args=None, type
 			wo.customer = wo_data.customer
 			wo.sales_invoice_no = wo_data.sales_invoice_no
 			wo.customer_name = wo_data.customer_name
+			wo.work_order_name = wo_data.work_order_name
 			wo.item_qty = wo_data.item_qty
 			wo.trial_no = cint(args.get('trial_no'))
 			wo.fabric__code = get_fabric_code(wo_data, wo.trial_no)

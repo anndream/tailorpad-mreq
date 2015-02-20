@@ -79,7 +79,6 @@ def add_ticker(recipient, message):
 		for site_user in frappe.db.sql("""select name from `%s`.`tabUser`
 			 where name not in ('Guest') """%(get_db_name(site_name))):
 			url="http://%(site_name)s/api/resource/User/%(user)s"%{'site_name':cstr(site_name), 'user':site_user[0]}
-			frappe.errprint(url)
 			user = {}
 			user['ticker'] = cstr(message)
 			user['disable_ticker'] = 1

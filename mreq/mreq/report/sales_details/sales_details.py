@@ -17,7 +17,7 @@ def execute(filters=None):
 			columns_data, item_group, table  = get_invoice_detail(filters.get('item_group'))
 
 	data = frappe.db.sql("""select a.parent, %s, b.branch 
-		from `tab%s`a, `tabSales Invoice` b where a.parent = b.name and %s and %s and b.docstatus = 1"""%(columns_data, table, cond, item_group), as_list=1, debug=1)
+		from `tab%s`a, `tabSales Invoice` b where a.parent = b.name and %s and %s and b.docstatus = 1"""%(columns_data, table, cond, item_group), as_list=1)
 
 	columns = ["Sales Invoice:Link/Sales Invoice:150", "Item Name::110","Item Group::100","Qty::50", "Amount:Currency:100","Branch:Link/Branch:150"]
 	return columns, data

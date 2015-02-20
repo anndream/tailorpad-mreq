@@ -4,7 +4,6 @@
 // 		title: 'Sales Dashboard',
 // 		single_column: true
 // 	});
-// 	console.log($(this))
 // 	$(wrapper).find(".layout-main").html("<div class='user-settings'></div>\
 // 	<table width = '100%'>\
 // 		<tr><td width = '40%' bgcolor = '#FAFBFC' style='padding:0; margin:0;border-spacing: 0;'><div id= 'customer' width='100%'></div></td>\
@@ -142,7 +141,6 @@
 // 		});
 // 	},
 // 	add_worklist:function(si_num, td){
-// 		console.log(['test', si_num])
 // 		var me = this;
 // 		this.si_td = td;
 // 		$('.btn-default').remove();
@@ -297,7 +295,6 @@
 // 						docname: $('[data-fieldname="customer_name"]').val(),
 // 					},
 // 					callback: function(attachment, r) {
-// 						console.log(attachment)
 // 					}
 // 				})
 // 			});
@@ -426,7 +423,6 @@
 
 // 			}
 // 		})
-// 		console.log(this.cust_details)
 // 		frappe.call({
 // 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_customer",
 // 			args:{'cust_details': this.cust_details},
@@ -523,7 +519,6 @@
 // 			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%;margin-left:40%;'><i class='icon-folder-open'></i> Open </button>")
 // 			.appendTo(me.field_area)
 // 			.click(function() {
-// 				console.log(me.si_no)
 // 				window.open("#Form/Sales Invoice/"+me.si_no, "_self");
 // 			});
 // 		}
@@ -767,7 +762,6 @@
 // 	                  }	);
 						
 // 						$.each(result_set, function(i, d) {
-// 							console.log(d)
 // 							var row = $("<tr>").appendTo(me.table.find("tbody"));
 // 	                       $("<td>").html(d[2]).appendTo(row);
 // 	                       $("<td>").html(d[1]).appendTo(row); 
@@ -802,7 +796,6 @@
 // 		$.each(this.field_list, function(tab_name, fields){
 // 			if(tab_name != 'Basic Info' && tab_name != 'Total' && tab_name != 'Taxes and Charges'){
 // 				var si_details_list = []
-// 				console.log(tab_name)
 // 				me[tab_name].find('tr').each(function (tr_id, tr_val) {
 // 					if(tr_id != 0){
 // 						var $tds = $(this).find('td')
@@ -827,7 +820,6 @@
 // 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_si",
 // 			args:{'si_details': me.invoce_details, 'fields':me.field_list, 'reservation_details': me.reservation_details},
 // 			callback: function(r){
-// 				console.log(r.message)
 // 				// new frappe.SalesInvoce(me.wrapper)
 // 				me.open_record(r.message, 'open')
 // 			}
@@ -835,8 +827,6 @@
 // 	},
 // 	render_tax_struct:function(tax_struct){
 // 		var me = this;
-// 		console.log(me['Taxes and Charges_1'])
-// 		console.log(me['Taxes and Charges_1'].find('tbody'))
 // 		me['Taxes and Charges_1'].append(tax_struct)
 // 	},
 // 	open_record:function(si_no, form_type){
@@ -854,7 +844,6 @@
 // 		})
 // 	},
 // 	add_values:function(si_details){
-// 		console.log(si_details['si'])
 // 		var me = this;
 
 // 		//Render Basic Details 
@@ -885,7 +874,6 @@
 
 // 	},
 // 	calc_total_amt: function(grand_total){
-// 		console.log('test')
 // 		var total = 0.0;
 // 		var me = this ;
 // 		me['Tailoring Item Details'].find('tr').each(function (tr_id, tr_val) {
@@ -998,7 +986,6 @@
 //         if(parseInt(qty)==parseInt($('[data-fieldname="tailoring_qty"]').val())) {
 //             this.si.split_qty_dict = JSON.stringify(me.split_dict)
 //             refresh_field('sales_invoice_items_one')
-//             console.log(this.si.split_qty_dict)
 //             me.dialog.hide()
 //         }else{
 //             alert("Split qty should be equal to Taiiloring Product Qty")
@@ -1049,7 +1036,6 @@
 
 // 		$.each(this.field_list, 
 // 			function(i, field) {
-// 				console.log([i, field])
 // 				me.table1 = $("<table>\
 // 						<tbody style=''></tbody>\
 // 						</table>").appendTo(me.field_area);
@@ -1164,7 +1150,6 @@
 // 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_wo_details",
 // 			args:{'tab': key, 'woname': this.woname},
 // 			callback: function(r){
-// 				console.log(r.message)
 // 				$.each(r.message, function(i, d) {	
 // 					me.create_child_row(key, d)
 // 				});
@@ -1180,7 +1165,6 @@
 
 // 		if(key == 'Work Order') {
 // 			$.each(dic, function(key, val){
-// 				console.log([key, val])
 // 				$('[data-fieldname="'+key+'"]').attr("disabled","disabled")
 // 				$('[data-fieldname="'+key+'"]').val(val)
 // 			})
@@ -1287,7 +1271,6 @@
 // 	                               		  	"tailor_cost": d[5],
 // 	                               		  	"extra_cost": d[6]
 // 	                               		  }
-// 	                               		   console.log(me1.style_details)
 // 	                               });
 	                     
 // 	                       $("<td>").html($(d[1]).find('img')).appendTo(row);
@@ -1304,7 +1287,6 @@
 // 			})	
 // 	},
 // 	calc_measurement: function(tr, td, value){
-// 		console.log(this.style_details)
 // 		var measurement_details = []
 // 		var param_args = {'parameter':$(td[0]).text(), 'value':value, 
 // 			'item':$('[data-fieldname="item_code"]').val()}
@@ -1535,7 +1517,6 @@ frappe.SearchArea = Class.extend({
 		$('<td>').html('<input class="form-control" \
 			placeholder="Search Area">').appendTo(row);
 
-		console.log($(me.area))
 		$(me.area).find('.form-control').val(this.search_key)
 
 		$("<button class='btn btn-small btn-info'><i class='icon-search'></i></button>")
@@ -1557,15 +1538,11 @@ frappe.SearchArea = Class.extend({
 			});
 
 		if($(me.area).attr('id') == 'customer'){
-			console.log("in customer")
-			console.log(this.search_key)
 
 			frappe.call({
 				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_autocomplete_list",
 				args:{'search_key': this.search_key},
 				callback: function(r){
-					console.log("incallback")
-					console.log(r.message)
 					$($(me.area).find('.form-control')).autocomplete({
 						source: function(request, response){
 							var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
@@ -1835,8 +1812,7 @@ frappe.SalesForm = Class.extend({
 			'Basic Info':[['Customer', 'Link', 'Customer','customer'], 
 				['Book Date', 'Date', '', 'posting_date'], 
 				['Release', 'Select', 'No\nYes', 'release']],
-			'Tailoring Item Details':[
-				['Delivery Date','Date','','tailoring_delivery_date',1],
+			'Tailoring Item Details':[				
 				['Service', 'Link', 'Service','tailoring_price_list',1], 
 				['Item Code', 'Link', 'Item','tailoring_item_code',1], 
 				['Fabric Code', 'Link', 'Item','fabric_code',1],
@@ -1847,14 +1823,15 @@ frappe.SalesForm = Class.extend({
 				['Product Rate', 'Data', '','tailoring_rate',1],
 				['Fabric Rate', 'Data', '','fabric_rate',0],
 				['Total Amt', 'Data', '','tot_amt',1],
+				['Delivery Date','Date','','tailoring_delivery_date',1],
 				['Delivery Branch (Tailoring)', 'Link', 'Branches', 'tailoring_branch',1],
 				['Split Qty', 'Data', '', 'split_qty', 1]],
 			'Merchandise Item Details':[
-				['Delivery Date','Date','','merchandise_delivery_date',1],
 				['Price List', 'Link', 'Price List','merchandise_price_list',1], 
 				['Item Code', 'Link', 'Item','merchandise_item_code',1], 
 				['Qty', 'Data', '','merchandise_qty',1],
 				['Rate', 'Data', '','merchandise_rate',1],
+				['Delivery Date','Date','','merchandise_delivery_date',1],
 				['Delivery Branch (Merchandise)', 'Link', 'Branches', 'merchandise_branch',1]],
 			'Taxes and Charges':
 				[['Taxes and Charges', 'Link', 'Sales Taxes and Charges Master', 'taxes_and_charges']],
@@ -2097,10 +2074,10 @@ frappe.SalesForm = Class.extend({
 
 		if(key!='Basic Info' && key != 'Total' && key != 'Taxes and Charges'){
 			if(key == 'Tailoring Item Details')
-				columns = [["Delivery Date",50], ["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Prod. Qty", 100],["Width", 100], ["Fabric Qty", 100], ['Prod. Rate', 100], ['Tot Amt', 100], ['Tailoring Branch', 100], ['', 50]];
+				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Prod. Qty", 100],["Width", 100], ["Fabric Qty", 100], ['Prod. Rate', 100], ['Tot Amt', 100], ["Delivery Date",50], ['Tailoring Branch', 100], ['', 50]];
 			
 			if(key == 'Merchandise Item Details')
-				columns = [["Delivery Date",50], ["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100],['', 50]];
+				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100],["Delivery Date",50], ['Merchandise Branch', 100],['', 50]];
 			
 			// if(key == 'Taxes and Charges')
 			// 	columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100]];
@@ -2467,7 +2444,7 @@ frappe.SalesForm = Class.extend({
 		me['Tailoring Item Details'].find('tr').each(function (tr_id, tr_val) {
 			if(tr_id != 0){
 				var $tds = $(this).find('td')
-				sub_tot = flt($tds.eq(9).text())
+				sub_tot = flt($tds.eq(8).text())
 				total += sub_tot
 			}	
 		})
@@ -2475,7 +2452,7 @@ frappe.SalesForm = Class.extend({
 		me['Merchandise Item Details'].find('tr').each(function (tr_id, tr_val) {
 			if(tr_id != 0){
 				var $tds = $(this).find('td')
-				sub_tot = flt($tds.eq(3).text()) * flt($tds.eq(4).text())
+				sub_tot = flt($tds.eq(2).text()) * flt($tds.eq(3).text())
 				total += sub_tot
 			}	
 		})
@@ -2606,13 +2583,13 @@ frappe.WOForm = Class.extend({
 					['Customer Name', 'Data', '', 'customer'],
 					['Serial NO', 'Small Text', '', 'serial_no_data']
 				],
-			"Style Transactions":[
-					['Field Name', 'Link', 'Style', 'field_name']
-				],
 			"Measurement Item":[
 					['Parameter', 'Link', 'Measurement', 'parameter'],
 					['Abbreviation', 'Data', '', 'abbreviation'],
 					['Value', 'Float', '', 'value']
+				],
+				"Style Transactions":[
+					['Field Name', 'Link', 'Style', 'field_name']
 				]
 		}
 

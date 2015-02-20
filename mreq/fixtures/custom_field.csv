@@ -18,6 +18,14 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Stock Entry-f_branch""","Stock Entry","Link","Default Source Warehouse","from_warehouse","","Warehouse","","f_branch",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-t_branch""","Stock Entry","Link","Default Target Branch","to_warehouse","","Branches","","t_branch",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Quality Inspection-serial_no_data""","Quality Inspection","Small Text","Serial No","batch_no","","","","serial_no_data",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Quality Inspection-trial_no""","Quality Inspection","Data","Trial No","process","","","","trial_no",0,0,1,0,"","",0,"",1,1,0,0,0,0
+"","""Quality Inspection-process""","Quality Inspection","Data","Process","pdd","","","","process",0,0,1,0,"","",0,"",1,1,0,0,0,0
+"","""Quality Inspection-pdd""","Quality Inspection","Data","PDD","","","","","pdd",0,0,1,0,"","",0,"",1,1,0,0,0,0
+"","""Quality Inspection-work_order""","Quality Inspection","Data","Work Order","serial_no_data","","","","work_order",0,0,1,0,"","",1,"",1,1,0,0,0,0
+"","""Quality Inspection-tdd""","Quality Inspection","Data","TDD","trial_no","","","","tdd",0,0,1,0,"","",0,"",1,1,0,0,0,0
 "","""Stock Entry-barcode""","Stock Entry","Data","Bundle Barcode","posting_time","","","","barcode",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Task-process_name""","Task","Link","Process Name","exp_end_date","","Process","","process_name",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Item-item_costing""","Item","Section Break","Item Pricing","raw_material_item","","","","item_costing",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,0,0,0,0
@@ -212,14 +220,8 @@ Yes","","co",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Serial No-process""","Serial No","Data","Process","work_order","","","","process",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Serial No-work_order""","Serial No","Link","Work Order","finished_trial_no","","Work Order","","work_order",0,0,0,0,"","",0,"",0,1,0,0,0,0
 "","""Serial No-serial_no_detail""","Serial No","Table","Serial No Detail","process_status","","Serial No Detail","","serial_no_detail",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Quality Inspection-serial_no_data""","Quality Inspection","Small Text","Serial No Data","batch_no","","","","serial_no_data",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Serial No-quality_check""","Serial No","Select","Quality Check","serial_no","","Pending
 Completed","","quality_check",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Quality Inspection-tdd""","Quality Inspection","Data","TDD","trial_no","","","","tdd",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Quality Inspection-trial_no""","Quality Inspection","Data","Trial No","process","","","","trial_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Quality Inspection-process""","Quality Inspection","Data","Process","pdd","","","","process",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Quality Inspection-pdd""","Quality Inspection","Data","PDD","","","","","pdd",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Quality Inspection-work_order""","Quality Inspection","Data","Work Order","serial_no_data","","","","work_order",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item Quality Inspection Parameter-qi_process""","Item Quality Inspection Parameter","Link","Process","value","","Process","","qi_process",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Sales Invoice Item-sales_invoice_branch""","Sales Invoice Item","Link","Sales Invoice Branch","warehouse","","Branches","","sales_invoice_branch",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Stock Entry-stock_in""","Stock Entry","Data","Bundle No","purpose","","","","stock_in",0,0,0,0,"","",0,"eval:doc.purpose_type == 'Material In'",0,0,0,1,0,0

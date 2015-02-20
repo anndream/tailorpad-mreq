@@ -34,7 +34,6 @@ cur_frm.cscript.material_issue = function(doc, dt, dn) {
 			d1.qty = doc.request_for[row].qty
 		}
 	}
-	console.log(se.name)
 	loaddoc('Stock Entry', se.name);
 }
 

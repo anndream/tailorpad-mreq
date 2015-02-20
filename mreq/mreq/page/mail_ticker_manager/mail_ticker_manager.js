@@ -55,14 +55,11 @@ erpnext.AccountsChart = Class.extend({
 					condition: function(node) { return !node.root },
 					label: __("Add To Notifier List"),
 					click: function(node) {
-						console.log(node)
 						if(!node.data.listed){
 							me.set_span(node, mail_to)
 						}
 						else{
 						 	var ids = node.data.value.replace(/[`~!@#$%^&*()_|+\-=?;:'" ,.<>\{\}\[\]\\\/]/gi, '_')
-						 	console.log(ids)
-						 	console.log($('#'+ids))
 						 	$('#'+ids).removeClass('icon-check')
 						 	$("#"+ids).remove()
 						 	node.data.listed = null

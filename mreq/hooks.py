@@ -11,7 +11,7 @@ app_version = "0.0.1"
 # Includes in <head>
 # ------------------
 
-fixtures = ['Custom Field', 'Property Setter']
+fixtures = ['Custom Field', 'Property Setter', 'DocPerm']
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/mreq/css/mreq.css"

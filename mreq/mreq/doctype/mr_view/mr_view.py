@@ -9,16 +9,13 @@ from tools.tools_management.custom_methods import make_cut_order, make_stock_tra
 
 class MRView(Document):
 	def onload(self):
-		frappe.errprint(frappe.session.get('user'))
 		self.get_raised_by()
 		self.get_req_by()
 
 	def get_raised_by(self):
-		frappe.errprint(['Print ', frappe.session.user])
 		raised_by = frappe.db.sql("""select mr.name,  mri.name as mri_name, mri.item_code, mri.item_name, mri.description, mri.item_group, mri.uom, mri.qty, mri.for_branch, mri.from_branch, mri.warehouse, mri.from_warehouse 
 			from `tabMaterial Request` mr, `tabMaterial Request Item` mri, `tabUser` u
-			where mr.name = mri.parent and mri.for_branch = u.branch and u.name = 'Administrator' """, as_dict=1, debug=1)
-		frappe.errprint(raised_by)
+			where mr.name = mri.parent and mri.for_branch = u.branch and u.name = 'Administrator' """, as_dict=1)
 		self.set('raised_by', [])	
 		
 		for mr in raised_by:
@@ -39,7 +36,7 @@ class MRView(Document):
 	def get_req_by(self):
 		req_by = frappe.db.sql("""select mr.name,  mri.name as mri_name, mri.item_code, mri.item_name, mri.description, mri.item_group, mri.uom, mri.qty, mri.for_branch, mri.from_branch, mri.warehouse, mri.from_warehouse, mri.invoice_no 
 			from `tabMaterial Request` mr, `tabMaterial Request Item` mri, `tabUser` u
-			where mr.name = mri.parent and mri.from_branch = u.branch and u.name = 'Administrator'""", as_dict=1, debug=1)
+			where mr.name = mri.parent and mri.from_branch = u.branch and u.name = 'Administrator'""", as_dict=1)
 
 		self.set('request_for', [])
 		for mr in req_by:
