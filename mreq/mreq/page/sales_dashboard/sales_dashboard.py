@@ -880,4 +880,8 @@ def update_WorkOrder_Trials(name, trial_no, pdd):
 	if name:
 		frappe.db.sql(""" update `tabTrial Dates` a, `tabTrials` b set a.work_order = '%s' 
 			where a.parent = b.name and a.trial_no>='%s' and b.pdd = '%s'"""%(name, trial_no, pdd))
+		process_name = frappe.db.get_value('Process Log',{'trials':trial_no, 'parent': pdd}, 'process_data')
+		if process_name:
+			frappe.db.sql(""" update `tabProcess Allotment` set work_order = '%s' where
+				name = '%s'	"""%(name, process_name))
 		return "Done"

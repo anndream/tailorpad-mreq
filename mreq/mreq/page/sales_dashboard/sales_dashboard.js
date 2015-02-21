@@ -1647,7 +1647,7 @@ frappe.CustomerForm = Class.extend({
 	render_child: function(fields, form_type, key){
 		var me = this;
 		
-		$('<h4 class="col-md-12" style="margin: 0px 0px 15px; width:300px">\
+		$('<h4 class="col-md-12" style="margin: 0px 0px 15px; width:100%">\
 			<i class="icon-in-circle icon-user"></i>\
 			<span class="section-count-label"></span>.'+key+'.</h4>').prependTo(me.table)
 		if(key!='Basic Info' && key!='Full Body Measurement Details' ){
@@ -1883,7 +1883,7 @@ frappe.SalesForm = Class.extend({
 	render_child: function(fields, form_type, key){
 		var me = this;
 
-		$('<h4 class="col-md-12" style="margin: 0px 0px 15px; width:300px">\
+		$('<h4 class="col-md-12" style="margin: 0px 0px 15px; width:100%">\
 			<i class="icon-in-circle icon-user"></i>\
 			<span class="section-count-label"></span>.'+key+'. </h4>').prependTo(me[key+'_1'])
 		if(key!='Basic Info'){
@@ -2643,7 +2643,7 @@ frappe.WOForm = Class.extend({
 		if(key == 'Style Transactions'){
 			data = 'Style Options'
 		}
-		$('<h4 class="col-md-12" style="margin: 0px 0px 15px; width:300px">\
+		$('<h4 class="col-md-12" style="margin: 0px 0px 15px; width:100%">\
 			<i class="icon-in-circle icon-user"></i>\
 			<span class="section-count-label"></span>.'+data+'. </h4>').prependTo(me.table1)
 		if(key!='Work Order'){
