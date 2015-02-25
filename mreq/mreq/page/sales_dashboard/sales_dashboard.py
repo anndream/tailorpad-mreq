@@ -424,7 +424,8 @@
 
 import frappe
 from frappe.utils import getdate, flt, cint, nowdate
-from tools.custom_data_methods import get_user_branch
+from tools.custom_data_methods import get_user_branch, get_branch_warehouse
+from erpnext.accounts.doctype.pricing_rule.pricing_rule import get_pricing_rule_for_item
 
 @frappe.whitelist()
 def get_customer_list(search_key=None):
@@ -564,8 +565,17 @@ def get_size_and_rate(price_list, item_code, fabric_code, size, width, fabric_qt
 
 @frappe.whitelist()
 def get_fabric_qty(item_code, width, size):
-	width = frappe.db.sql("""select ifnull(fabric_qty, 1) from `tabSize Item` where parent = '%s' and width = '%s' and size='%s'"""%(item_code, width, size),as_list=1)
-	return	((len(width[0]) > 1) and width[0] or width[0][0]) if width else 1
+	fab_qty = 0.0
+	if item_code:
+		if frappe.db.get_value('Sales BOM', item_code, 'name'):
+			name = frappe.db.sql(""" Select * from `tabSales BOM Item` where parent ='%s'
+				and parenttype = 'Sales BOM' """%(item_code), as_dict=1)
+			if name:
+				for data in name:
+					fab_qty += flt(frappe.db.get_value('Size Item', {'size': size, 'width': width, 'parent': data.item_code}, 'fabric_qty')) * flt(data.qty)
+		else:
+			fab_qty = frappe.db.get_value('Size Item', {'size': size, 'width': width, 'parent': item_code}, 'fabric_qty')
+	return fab_qty
 
 @frappe.whitelist()
 def get_default_values():
@@ -604,11 +614,16 @@ def create_si(si_details, fields, reservation_details):
 	si.set('sales_invoice_items_one', [])
 	for tailoring_item in si_details.get('Tailoring Item Details'):
 		item_details = get_item_details(tailoring_item[1])
+		# args = get_args_list(tailoring_item, item_details, si)
+		# data = get_pricing_rule_for_item(args)
+		# frappe.errprint(data.discount_percentage)
+		# frappe.errprint(wefwe)
 		e = si.append('sales_invoice_items_one', {})
 		e.tailoring_price_list = tailoring_item[0]
 		e.tailoring_item_code = tailoring_item[1]
 		e.tailoring_item_name = item_details[0]
 		e.tailoring_description = item_details[1]
+		e.tailoring_stock_uom = frappe.db.get_value('Item', e.tailoring_item_code, 'stock_uom')
 		e.fabric_code = tailoring_item[2]
 		e.tailoring_size = tailoring_item[3]
 		e.width = tailoring_item[5]
@@ -632,6 +647,7 @@ def create_si(si_details, fields, reservation_details):
 		e.merchandise_price_list = merchandise_item[0]
 		e.merchandise_item_code = merchandise_item[1]
 		e.merchandise_item_name = item_details[0]
+		e.stock_uom = frappe.db.get_value('Item', e.merchandise_item_code, 'stock_uom')
 		e.merchandise_description = item_details[1]
 		e.merchandise_qty = cint(merchandise_item[2])
 		e.merchandise_rate = cint(merchandise_item[3])
@@ -652,6 +668,48 @@ def create_si(si_details, fields, reservation_details):
 	si.submit()
 	frappe.msgprint("Sales Invoce %s, created successfully"%si.name)
 	return si.name
+
+def get_args_list(tailoring_item, args, si_details):
+	return frappe._dict({
+			"item_code": tailoring_item[1],
+			"warehouse": get_branch_warehouse(tailoring_item[10]),
+			"parenttype": "Sales Invoice",
+			"parent":"New Sales Invoice",
+			"customer" : si_details.customer,
+			"currency" : frappe.db.get_value('Global Defaults', None, 'default_currency'),
+			"conversion_rate" : 1,
+			"price_list" : tailoring_item[0],
+			"plc_conversion_rate" : 1,
+			"company" : frappe.db.get_value('Global Defaults', None, 'default_company'),
+			"is_pos" : 0,
+			"is_subcontracted":0,
+			"transaction_date" : nowdate(),
+			"ignore_pricing_rule": 0,
+			"doctype":"Sales Invoice Item",
+			"name":"New Sales Invoice Item",
+			"transaction_type":"selling"
+		})
+
+def get_args_list_for_PricingRule(args):
+	return frappe._dict({
+			"item_code": args.item_code,
+			"warehouse": args.warehouse,
+			"parenttype": args.parenttype,
+			"parent": args.parent,
+			"customer" : args.customer,
+			"currency" : args.currency,
+			"conversion_rate" : args.conversion_rate,
+			"price_list" : args.price_list,
+			"plc_conversion_rate" : args.plc_conversion_rate,
+			"company" : args.company,
+			"is_pos" : args.is_pos,
+			"is_subcontracted": args.is_subcontracted,
+			"transaction_date" : args.transaction_date,
+			"ignore_pricing_rule": args.ignore_pricing_rule,
+			"doctype": args.doctype,
+			"name": args.name,
+			"transaction_type": args.transaction_type
+		})
 
 def get_tax_details(si):
 	tax_details = frappe.db.sql("""select description, tax_amount, item_wise_tax_detail 
@@ -721,7 +779,7 @@ def get_wo_details(tab, woname):
 			 woname.split('\t')[-1].strip()),  as_dict=1)
 
 	else:
-		return frappe.db.sql(""" select sales_invoice_no, item_code, customer, serial_no_data from `tabWork Order` 
+		return frappe.db.sql(""" select sales_invoice_no, item_code, customer, serial_no_data, '' as note from `tabWork Order` 
 					where name = '%s' """%(woname.split('\t')[-1].strip()), as_dict=1)
 
 @frappe.whitelist()
@@ -807,7 +865,7 @@ def make_po(supp_dic):
 
 
 @frappe.whitelist()
-def create_work_order(wo_details,style_details, fields, woname,  args=None, type_of_wo=None):
+def create_work_order(wo_details,style_details, fields, woname, note,  args=None, type_of_wo=None):
 	if args:
 		args = eval(args)
 		if woname:
@@ -815,6 +873,7 @@ def create_work_order(wo_details,style_details, fields, woname,  args=None, type
 			wo = frappe.new_doc('Work Order')
 			wo.item_code = wo_data.item_code
 			wo.status = wo_data.status
+			wo.note = note
 			wo.work_order_no = get_amended_name(woname)
 			wo.customer = wo_data.customer
 			wo.sales_invoice_no = wo_data.sales_invoice_no

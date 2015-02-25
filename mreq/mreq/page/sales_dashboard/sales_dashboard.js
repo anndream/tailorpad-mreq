@@ -2181,7 +2181,7 @@ frappe.SalesForm = Class.extend({
 	AddDataValidation: function(){
 		var me = this;
 		msg = "true"
-		data = {'tailoring_delivery_date':'Delivery Date','tailoring_item_code':'Item Code','fabric_code': 'Fabric Code','tailoring_size': 'Size', 'tailoring_qty':'Product Qty', 'width': 'Width', 'fabric_qty':'Fabric Qty', 'fabric_rate': 'Fabric Rate', 'tot_amt': 'Total Amt', 'tailoring_branch':'Delivery Branch', 'tailoring_rate':'Tailoring Rate', 'tailoring_delivery_date':'Delivery Date', 'tailoring_price_list':'Service'}
+		data = {'tailoring_delivery_date':'Delivery Date','tailoring_item_code':'Item Code','tailoring_size': 'Size', 'tailoring_qty':'Product Qty', 'fabric_qty':'Fabric Qty', 'fabric_rate': 'Fabric Rate', 'tot_amt': 'Total Amt', 'tailoring_branch':'Delivery Branch', 'tailoring_rate':'Tailoring Rate', 'tailoring_delivery_date':'Delivery Date', 'tailoring_price_list':'Service'}
 		$.each(data, function(i, d){
 			if(!$('[data-fieldname="'+i+'"]').val()){
 				alert('Mandatory Field: '+d)

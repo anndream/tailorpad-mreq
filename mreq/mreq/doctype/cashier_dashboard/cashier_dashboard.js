@@ -139,7 +139,7 @@ frappe.WorkOrderAction = Class.extend({
         this.controller = this.dialog.fields_dict;
         this.div = $('<div id="status" style="float:left;width:100%;padding:10px;"><div class="control-label small col-xs-2" style="width:15px;margin-left:-10px">All</div><select style="width:150px;float:left; margin-left:11px" class="input-with-feedback form-control"><option value="Null"></option><option value="Pending">Pending</option>\
         			<option value="Hold">Hold</option><option value="Release">Release</option></select>\
-        			</div><div id="myGrid" style="float:left;width:100%;height:200px;margin:10px;"><table class="table table-bordered" style="background-color: #ddd;height:10px" id="mytable">\
+        			</div><div id="myGrid" style="float:left;width:100%;height:200px;margin:10px;overflow-x:scroll"><table class="table table-bordered" style="background-color: #ddd;height:10px" id="mytable">\
                     <thead><tr><td>Work Order</td><td>Item</td><td>Status</td></tr></thead><tbody></tbody></table></div>').appendTo($(this.controller.work_order.wrapper))
         this.dialog.show();
     },
