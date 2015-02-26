@@ -1348,7 +1348,7 @@ frappe.pages['sales-dashboard'].onload = function(wrapper) {
 	$('.container').css('width', 'inherit');
 	$(document).find('div.layout-main').css('width','inherit');
 	$(wrapper).find(".layout-main").html("<div class='user-settings'></div>\
-	<table  width = '100%'>\
+	<table  width = '100%' style='table-layout:fixed'>\
 		<tr><td bgcolor = '#FAFBFC' style='padding:0; margin:0;border-spacing: 0;width:25%'><div id= 'customer' width='100%'></div></td>\
 			<td  rowspan='2' valign='top' style='width:75%'><div id= 'result_area' style ='height:600px;overflow-y:auto;'  ></div></td>\
 		</tr>\
@@ -2152,7 +2152,7 @@ frappe.SalesForm = Class.extend({
 				
 			}
 
-			this[key] =$("<table class='table table-bordered;table-layout:fixed'  style='width:100%' id='sp'>\
+			this[key] =$("<table class='table table-bordered;'  style='width:100%;table-layout:fixed' id='sp'>\
 				<thead style='width:100%'><tr style='width:100%'></tr></thead>\
 				<tbody style='width:100%'></tbody>\
 			</table>").appendTo(me.field_area)
@@ -2181,7 +2181,7 @@ frappe.SalesForm = Class.extend({
 	AddDataValidation: function(){
 		var me = this;
 		msg = "true"
-		data = {'tailoring_delivery_date':'Delivery Date','tailoring_item_code':'Item Code','tailoring_size': 'Size', 'tailoring_qty':'Product Qty', 'fabric_qty':'Fabric Qty', 'fabric_rate': 'Fabric Rate', 'tot_amt': 'Total Amt', 'tailoring_branch':'Delivery Branch', 'tailoring_rate':'Tailoring Rate', 'tailoring_delivery_date':'Delivery Date', 'tailoring_price_list':'Service'}
+		data = {'tailoring_delivery_date':'Delivery Date','tailoring_item_code':'Item Code','tailoring_size': 'Size', 'tailoring_qty':'Product Qty', 'fabric_qty':'Fabric Qty', 'tot_amt': 'Total Amt', 'tailoring_branch':'Delivery Branch', 'tailoring_rate':'Tailoring Rate', 'tailoring_delivery_date':'Delivery Date', 'tailoring_price_list':'Service'}
 		$.each(data, function(i, d){
 			if(!$('[data-fieldname="'+i+'"]').val()){
 				alert('Mandatory Field: '+d)
@@ -2430,18 +2430,18 @@ frappe.SalesForm = Class.extend({
 		//Render Tailoring Item Details
 		$.each(si_details['tailoring_item'], 
 				function(i, values) {
-				var row = $("<tr>").appendTo(me['Tailoring Item Details'].find("tbody"));
+				var row = $("<tr>").appendTo(me['Tailoring Item Details']);
 				$.each(values, function(i, d) {	
-					$("<td>").html(d).appendTo(row);
+					$("<td width='100px'>").html(d).appendTo(row);
 				});
 			});
 
 		//Render Merchandise Item Details
 		$.each(si_details['merchandise_item'], 
 				function(i, values) {
-				var row = $("<tr>").appendTo(me['Merchandise Item Details'].find("tbody"));
+				var row = $("<tr>").appendTo(me['Merchandise Item Details']);
 				$.each(values, function(i, d) {	
-					$("<td>").html(d).appendTo(row);
+					$("<td width='100px'>").html(d).appendTo(row);
 				});
 			});
 
@@ -2593,12 +2593,12 @@ frappe.WOForm = Class.extend({
 					['Serial NO', 'Small Text', '', 'serial_no_data']
 				],
 			"Measurement Item":[
-					['Parameter', 'Link', 'Measurement', 'parameter'],
-					['Abbreviation', 'Data', '', 'abbreviation'],
-					['Value', 'Float', '', 'value']
+					// ['Parameter', 'Link', 'Measurement', 'parameter'],
+					// ['Abbreviation', 'Data', '', 'abbreviation'],
+					// ['Value', 'Float', '', 'value']
 				],
 				"Style Transactions":[
-					['Field Name', 'Link', 'Style', 'field_name']
+					// ['Field Name', 'Link', 'Style', 'field_name']
 				]
 		}
 
@@ -2684,11 +2684,11 @@ frappe.WOForm = Class.extend({
 
 		if(key!='Work Order'){
 
-			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%' id='"+key+"'><i class='icon-plus'></i></button>")
-			.appendTo($("<td colspan='2' align='center'>").appendTo(row))
-			.click(function() {
-				me.add_row($(this).attr('id'))
-			});
+			// $("<button class='btn btn-small btn-primary' style='margin-bottom:2%' id='"+key+"'><i class='icon-plus'></i></button>")
+			// .appendTo($("<td colspan='2' align='center'>").appendTo(row))
+			// .click(function() {
+			// 	me.add_row($(this).attr('id'))
+			// });
 
 			if(key == 'Style Transactions')
 				columns = [["Field Name",50], ["Name", 100], ["Abbreviation", 100], ['Image', 100],["View", 100]];
