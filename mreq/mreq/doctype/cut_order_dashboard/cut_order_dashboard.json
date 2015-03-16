@@ -76,7 +76,7 @@
  "is_submittable": 0, 
  "issingle": 1, 
  "istable": 0, 
- "modified": "2015-02-20 06:32:05.980234", 
+ "modified": "2015-03-07 02:57:02.652468", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "Cut Order Dashboard", 
@@ -108,6 +108,13 @@
    "print": 1, 
    "read": 1, 
    "role": "Accounts User", 
+   "write": 1
+  }, 
+  {
+   "create": 1, 
+   "permlevel": 0, 
+   "read": 1, 
+   "role": "System Manager", 
    "write": 1
   }
  ], 

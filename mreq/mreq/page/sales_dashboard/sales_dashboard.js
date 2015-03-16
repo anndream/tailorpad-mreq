@@ -1811,7 +1811,9 @@ frappe.SalesForm = Class.extend({
 		this.field_list = {
 			'Basic Info':[['Customer', 'Link', 'Customer','customer'], 
 				['Book Date', 'Date', '', 'posting_date'], 
-				['Release', 'Select', 'No\nYes', 'release']],
+				['Release', 'Select', 'No\nYes', 'release'],
+				['Trial Date', 'Datetime', '', 'trial_date']
+				],
 			'Tailoring Item Details':[				
 				['Service', 'Link', 'Service','tailoring_price_list',1], 
 				['Item Code', 'Link', 'Item','tailoring_item_code',1], 
@@ -2372,7 +2374,6 @@ frappe.SalesForm = Class.extend({
 				}
 		
 		if (status==0){
-
 			frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_si",
 			args:{'si_details': me.invoce_details, 'fields':me.field_list, 'reservation_details': JSON.stringify(me.reservation_details)},
@@ -2590,7 +2591,8 @@ frappe.WOForm = Class.extend({
 					['Sales Invoice No','Link','Sales Invoice','sales_invoice_no'],
 					['Item code', 'Link', 'Item', 'item_code'],
 					['Customer Name', 'Data', '', 'customer'],
-					['Serial NO', 'Small Text', '', 'serial_no_data']
+					['Serial NO', 'Small Text', '', 'serial_no_data'],
+					['Note', 'Small Text', '', 'note']
 				],
 			"Measurement Item":[
 					// ['Parameter', 'Link', 'Measurement', 'parameter'],
@@ -2731,8 +2733,9 @@ frappe.WOForm = Class.extend({
 
 		if(key == 'Work Order') {
 			$.each(dic, function(key, val){
-				
-				$('[data-fieldname="'+key+'"]').attr("disabled","disabled")
+				if(key!='note'){
+					$('[data-fieldname="'+key+'"]').attr("disabled","disabled")
+				}
 				$('[data-fieldname="'+key+'"]').val(val)
 			})
 		};
@@ -2744,7 +2747,7 @@ frappe.WOForm = Class.extend({
 				dic = {'field_name': $('[data-fieldname="field_name"]').val(), 'abbreviation': ''} 
 			}
 			$("<td>").html(dic['field_name']).appendTo(row);
-			$("<td>").html('<input type="Textbox" class="text_box" value="'+dic['text']+'">').appendTo(row);
+			$("<td>").html(dic['text']).appendTo(row);
 			$("<td>").html(dic['abbreviation']).appendTo(row);
 			$("<td style='width:auto'>").html(dic['image']).appendTo(row);
 			$('<button  class="remove">View</button>').appendTo($("<td>")).appendTo(row)
@@ -2820,6 +2823,7 @@ frappe.WOForm = Class.extend({
 	                               .appendTo(row)
 	                               .click(function() {
 	                               		  $(col_id[3]).html($(this).attr('image'))
+	                               		  $(col_id[1]).html($(this).attr('value'))
 
 	                               		  me1.style_details[style_name] = {
 	                               		  	'style': d[0],
@@ -2890,7 +2894,7 @@ frappe.WOForm = Class.extend({
 		
 		frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.update_wo",
-			args:{'wo_details': me.wo_details, 'style_details':me.style_details, 'fields':me.field_list, 'woname': me.woname},
+			args:{'wo_details': me.wo_details, 'style_details':me.style_details, 'fields':me.field_list, 'woname': me.woname, 'note': $("[data-fieldname='note']").val()},
 			callback: function(r){
 				// new frappe.SalesInvoce(me.wrapper)
 			}

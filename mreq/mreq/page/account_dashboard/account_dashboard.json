@@ -4,7 +4,7 @@
  "docstatus": 0, 
  "doctype": "Page", 
  "icon": "icon-money", 
- "modified": "2015-02-12 12:39:18.407744", 
+ "modified": "2015-03-07 07:39:13.916423", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "account-dashboard", 
@@ -19,6 +19,9 @@
   }, 
   {
    "role": "Accounts Manager"
+  }, 
+  {
+   "role": "Cashier"
   }
  ], 
  "script": null, 

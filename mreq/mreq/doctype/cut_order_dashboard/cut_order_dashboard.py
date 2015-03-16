@@ -29,8 +29,10 @@ class CutOrderDashboard(Document):
 		self.save()
 
 	def create_cut_order(self, co):
+		customer=frappe.db.get_value('Sales Invoice',co['invoice_no'],'customer')
 		coi = self.append('cut_order_item', {})
 		coi.invoice_no = co['invoice_no']
+		coi.customer = frappe.db.get_value('Sales Invoice',co['invoice_no'],'customer') if co['invoice_no'] else ''
 		coi.article_code = co['article_code']
 		coi.fabric_code = co['fabric_code']
 		coi.fabric_qty = co['qty']

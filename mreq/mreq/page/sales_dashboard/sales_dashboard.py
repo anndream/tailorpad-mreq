@@ -605,19 +605,17 @@ def create_si(si_details, fields, reservation_details):
 
 	for cust in si_details.get('Basic Info'):
 		si.customer = cust[0]
+		si.trial_date = datetime.strptime(cust[3], '%d-%m-%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
 		si.currency = frappe.db.get_value('Global Details', None, 'default_currency')
 		# si.delivery_date = datetime.strptime(cust[1] , '%d-%m-%Y').strftime('%Y-%m-%d')
 		si.posting_date = datetime.strptime(cust[1], '%d-%m-%Y').strftime('%Y-%m-%d')
 		si.branch = get_user_branch()
 		si.release = 1 if cust[2] == 'Yes' else 0
-
 	si.set('sales_invoice_items_one', [])
 	for tailoring_item in si_details.get('Tailoring Item Details'):
 		item_details = get_item_details(tailoring_item[1])
 		# args = get_args_list(tailoring_item, item_details, si)
 		# data = get_pricing_rule_for_item(args)
-		# frappe.errprint(data.discount_percentage)
-		# frappe.errprint(wefwe)
 		e = si.append('sales_invoice_items_one', {})
 		e.tailoring_price_list = tailoring_item[0]
 		e.tailoring_item_code = tailoring_item[1]
@@ -725,7 +723,7 @@ def get_tax_details(si):
 
 @frappe.whitelist()
 def get_si_details(name):
-	si = frappe.db.sql("""select si.name,si.customer, si.currency, 
+	si = frappe.db.sql("""select si.name,si.customer, si.currency, si.trial_date,
 								si.delivery_date, si.posting_date, 
 								si.branch, si.authenticated ,si.release
 						from `tabSales Invoice` si 
@@ -779,15 +777,18 @@ def get_wo_details(tab, woname):
 			 woname.split('\t')[-1].strip()),  as_dict=1)
 
 	else:
-		return frappe.db.sql(""" select sales_invoice_no, item_code, customer, serial_no_data, '' as note from `tabWork Order` 
+		return frappe.db.sql(""" select sales_invoice_no, item_code, customer, serial_no_data, note as note from `tabWork Order` 
 					where name = '%s' """%(woname.split('\t')[-1].strip()), as_dict=1)
 
 @frappe.whitelist()
-def update_wo(wo_details, fields, woname, style_details, args=None, type_of_wo=None):
+def update_wo(wo_details, fields, woname, style_details,note, args=None, type_of_wo=None):
 	from frappe.utils import cstr
 
 	wo = frappe.get_doc('Work Order', woname)
 	style_details =  eval(style_details)
+
+	if note:
+		frappe.db.sql(""" update `tabWork Order` set note = '%s' where name = '%s'"""%(note, woname))
 
 	for d in wo.get('wo_style'):
 		for style in style_details:

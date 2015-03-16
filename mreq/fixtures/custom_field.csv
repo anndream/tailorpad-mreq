@@ -18,6 +18,40 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""File Data-type_of_file""","File Data","Data","Type of File","content_hash","","","","type_of_file",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-trial_date""","Sales Invoice","Datetime","Trial Date","customer_name","","","","trial_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-qrcode""","Item","Data","QRCode","brand","","","","qrcode",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Item-item_group_details""","Item","Section Break","Item Group Details","column_break0","","","","item_group_details",0,0,0,0,"","",1,"",0,0,0,0,0,0
+"","""Item-sales_bom_item""","Item","Table","Sales BOM Item","x","","Sales BOM Item","","sales_bom_item",0,0,0,0,"","",0,"eval:doc.is_clubbed_product==1",0,0,0,0,0,0
+"","""Item-x""","Item","Section Break","","weight_uom","","","","x",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-default_branch""","Item","Link","Default Branch","is_stock_item","","Branch","","default_branch",0,0,0,0,"","",0,"eval:doc.is_stock_item=='Yes'",0,0,0,0,0,0
+"","""Item-is_clubbed_product""","Item","Check","Is Clubbed Product","is_stock_item","","","","is_clubbed_product",0,0,0,0,"","",0,"eval:doc.is_stock_item=='No'",0,0,0,0,0,0
+"","""Item-raw_material_item""","Item","Table","Raw Material Item","raw_material","","Raw Material Item","","raw_material_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-raw_material""","Item","Section Break","Raw Material","costing_item","","","","raw_material",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
+"","""Item-costing_item""","Item","Table","Costing Item","service","","Costing Item","","costing_item",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group=='Tailoring')",0,0,0,0,0,0
+"","""Item-fabric_costing""","Item","Table","Merchandise Costing","item_costing","","Fabric Costing","","fabric_costing",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group!='Tailoring')",0,0,0,0,0,0
+"","""Item-service""","Item","Link","Service","item_costing","","Service","","service",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group=='Tailoring')",0,0,0,0,0,0
+"","""Item-item_costing""","Item","Section Break","Item Pricing","raw_material_item","","","","item_costing",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,0,0,0,0
+"","""Item-style_item""","Item","Table","Style Fields","measurement_item","","Style Item","","style_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-measurement_item""","Item","Table","Measurement Fields","s_","","Measurement Item","","measurement_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-test_label""","Item","HTML","Test Label","","","","","test_label",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-s_""","Item","Section Break","Measurement and Style Option","measurement_formula_template","","","","s_",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
+"","""Item-measurement_formula_template""","Item","Link","Measurement Formula Template","c","","Measurement Formula","","measurement_formula_template",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-c""","Item","Column Break","c","measurement_template","","","","c",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-measurement_template""","Item","Link","Measurement Template","measurement_formula","","Measurement Template","","measurement_template",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-measurement_formula""","Item","Section Break","Measurement Formula","size_item","","","","measurement_formula",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
+"","""Item-size_item""","Item","Table","Size Item","more_details","","Size Item","","size_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Item-more_details""","Item","Section Break","Size Details","add_image","","","","more_details",0,0,0,0,"","",0,"eval:!doc.__islocal && doc.item_group == 'Tailoring'",0,0,0,0,0,0
+"","""Item-process_item""","Item","Table","Process Item","style_item","","Process Item","","process_item",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
+"","""Item-process_details""","Item","Section Break","Process Details","","","","","process_details",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
+"","""Item-barcode_description""","Item","Data","Barcode Description","barcode_image","","","","barcode_description",0,0,0,0,"","",1,"",0,0,0,0,0,0
+"","""Item-late_work_cost""","Item","Currency","Late Work Cost","items_image","","","cost/min","late_work_cost",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
+"","""Item-items_image""","Item","Button","Items Images","size_for_merchandise","","","","items_image",0,0,0,0,"","",1,"",0,0,0,0,0,0
+"","""Item-size_for_merchandise""","Item","Link","Size","items_image","","Size","","size_for_merchandise",0,0,0,0,"","",0,"eval:doc.item_group=='Merchandise'",0,0,0,0,0,0
+"","""Item-supplier_item_code""","Item","Data","Supplier Item Code","barcode","","","","supplier_item_code",0,0,0,0,"","",0,"eval:doc.item_group == 'Fabric' || doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
+"","""Item-fabric_color""","Item","Data","Fabric Color","","","","","fabric_color",0,0,0,0,"","",0,"eval:doc.item_group=='Fabric' || doc.item_group=='Swatch Fabric Item'",0,0,0,0,0,0
+"","""Item-fabric_width""","Item","Link","Fabric Width","fabric_color","","Width","","fabric_width",0,0,0,0,"","",0,"eval:doc.item_group == 'Fabric' || doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
+"","""Cut Order Item-customer""","Cut Order Item","Link","Customer","select","","Customer","","customer",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Style Item-default""","Style Item","Check","Default","","","","","default",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Sales Invoice Item-tailoring_size""","Sales Invoice Item","Link","Tailoring Size","fabric_qty","","Size","","tailoring_size",0,0,1,0,"","",1,"",1,0,0,0,0,0
 "","""Sales Invoice Item-fabric_qty""","Sales Invoice Item","Int","Fabric Qty","fabric_code","","","","fabric_qty",0,0,0,0,"","",0,"",1,0,0,0,0,0
@@ -52,7 +86,6 @@ Remove","","authenticated",0,0,1,0,"","Pending",0,"",1,1,0,0,0,0
 "","""Quality Inspection-tdd""","Quality Inspection","Data","TDD","trial_no","","","","tdd",0,0,1,0,"","",0,"",1,1,0,0,0,0
 "","""Stock Entry-barcode""","Stock Entry","Data","Bundle Barcode","posting_time","","","","barcode",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Task-process_name""","Task","Link","Process Name","exp_end_date","","Process","","process_name",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Item-item_costing""","Item","Section Break","Item Pricing","raw_material_item","","","","item_costing",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,0,0,0,0
 "","""Stock Entry Detail-has_cut_order""","Stock Entry Detail","Select","Has Cut Order","trials","","--------
 Yes
 No","","has_cut_order",0,0,0,0,"","",1,"",1,1,0,0,0,1
@@ -70,7 +103,6 @@ No","","has_cut_order",0,0,0,0,"","",1,"",1,1,0,0,0,1
 No","","is_existing_customer",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-referral_details""","Customer","Section Break","Referral Details","website","","","","referral_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Journal Voucher Detail-mode""","Journal Voucher Detail","Link","Mode","balance","","Mode of Payment","","mode",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-default_branch""","Item","Link","Default Branch","is_stock_item","","Branch","","default_branch",0,0,0,0,"","",0,"eval:doc.is_stock_item=='Yes'",0,0,0,0,0,0
 "","""Customer-image2""","Customer","Small Text","Back view","select","","","","image2",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-select""","Customer","Select","Back View image","select_image","","","","select",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-image1""","Customer","Small Text","Front View","select_image","","","","image1",0,0,1,0,"","",0,"",0,0,0,0,0,0
@@ -82,7 +114,6 @@ No","","is_existing_customer",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-cb""","Customer","Column Break","cb","","","","","cb",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-take_image""","Customer","Button","Take Image","naming_series","","","","take_image",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-series""","Item","Link","Naming Series","item_sub_group","","Item Series","","series",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-fabric_costing""","Item","Table","Merchandise Costing","item_costing","","Fabric Costing","","fabric_costing",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group!='Tailoring')",0,0,0,0,0,0
 "","""Employee-skills_html""","Employee","HTML","Skills HTML","skills","","","Hello","skills_html",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Employee-employeeskills""","Employee","Table","EmployeeSkills","","","EmployeeSkill","","employeeskills",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Employee-skills""","Employee","Section Break","Skills","profile_type","","","Check / Uncheck skills  to assign the Employee.","skills",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -99,33 +130,6 @@ true","","flag",0,0,0,0,"","false
 "","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","
 Self
 Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-late_work_cost""","Item","Currency","Late Work Cost","items_image","","","cost/min","late_work_cost",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
-"","""Item-item_group_details""","Item","Section Break","Item Group Details","column_break0","","","","item_group_details",0,0,0,0,"","",1,"",0,0,0,0,0,0
-"","""Item-sales_bom_item""","Item","Table","Sales BOM Item","x","","Sales BOM Item","","sales_bom_item",0,0,0,0,"","",0,"eval:doc.is_clubbed_product==1",0,0,0,0,0,0
-"","""Item-x""","Item","Section Break","","weight_uom","","","","x",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-is_clubbed_product""","Item","Check","Is Clubbed Product","is_stock_item","","","","is_clubbed_product",0,0,0,0,"","",0,"eval:doc.is_stock_item=='No'",0,0,0,0,0,0
-"","""Item-raw_material_item""","Item","Table","Raw Material Item","raw_material","","Raw Material Item","","raw_material_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-raw_material""","Item","Section Break","Raw Material","costing_item","","","","raw_material",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
-"","""Item-costing_item""","Item","Table","Costing Item","service","","Costing Item","","costing_item",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group=='Tailoring')",0,0,0,0,0,0
-"","""Item-service""","Item","Link","Service","item_costing","","Service","","service",0,0,0,0,"","",0,"eval:!doc.__islocal && (doc.item_group=='Tailoring')",0,0,0,0,0,0
-"","""Item-style_item""","Item","Table","Style Fields","measurement_item","","Style Item","","style_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-measurement_item""","Item","Table","Measurement Fields","s_","","Measurement Item","","measurement_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-test_label""","Item","HTML","Test Label","","","","","test_label",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-s_""","Item","Section Break","Measurement and Style Option","measurement_formula_template","","","","s_",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
-"","""Item-measurement_formula_template""","Item","Link","Measurement Formula Template","c","","Measurement Formula","","measurement_formula_template",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-c""","Item","Column Break","c","measurement_template","","","","c",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-measurement_template""","Item","Link","Measurement Template","measurement_formula","","Measurement Template","","measurement_template",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-measurement_formula""","Item","Section Break","Measurement Formula","size_item","","","","measurement_formula",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
-"","""Item-size_item""","Item","Table","Size Item","more_details","","Size Item","","size_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-more_details""","Item","Section Break","Size Details","add_image","","","","more_details",0,0,0,0,"","",0,"eval:!doc.__islocal && doc.item_group == 'Tailoring'",0,0,0,0,0,0
-"","""Item-process_item""","Item","Table","Process Item","style_item","","Process Item","","process_item",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
-"","""Item-process_details""","Item","Section Break","Process Details","","","","","process_details",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
-"","""Item-barcode_description""","Item","Data","Barcode Description","barcode_image","","","","barcode_description",0,0,0,0,"","",1,"",0,0,0,0,0,0
-"","""Item-items_image""","Item","Button","Items Images","size_for_merchandise","","","","items_image",0,0,0,0,"","",1,"",0,0,0,0,0,0
-"","""Item-size_for_merchandise""","Item","Link","Size","items_image","","Size","","size_for_merchandise",0,0,0,0,"","",0,"eval:doc.item_group=='Merchandise'",0,0,0,0,0,0
-"","""Item-supplier_item_code""","Item","Data","Supplier Item Code","barcode","","","","supplier_item_code",0,0,0,0,"","",0,"eval:doc.item_group == 'Fabric' || doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
-"","""Item-fabric_color""","Item","Data","Fabric Color","","","","","fabric_color",0,0,0,0,"","",0,"eval:doc.item_group=='Fabric' || doc.item_group=='Swatch Fabric Item'",0,0,0,0,0,0
-"","""Item-fabric_width""","Item","Link","Fabric Width","fabric_color","","Width","","fabric_width",0,0,0,0,"","",0,"eval:doc.item_group == 'Fabric' || doc.item_group == 'Fabric Swatch Item'",0,0,0,0,0,0
 "","""Item-desc""","Item","Column Break","","","","","","desc",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-barcode_image""","Item","Small Text","Barcode Image","barcode_image","","","","barcode_image",0,0,1,0,"","",0,"",0,1,0,0,0,0
 "","""Item-barcode_img""","Item","Data","Barcode IMG","column_break0","","","","barcode_img",0,0,0,0,"","",1,"",0,0,0,0,0,0
