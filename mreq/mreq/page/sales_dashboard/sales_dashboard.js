@@ -1811,7 +1811,7 @@ frappe.SalesForm = Class.extend({
 		this.field_list = {
 			'Basic Info':[['Customer', 'Link', 'Customer','customer'], 
 				['Book Date', 'Date', '', 'posting_date'], 
-				['Release', 'Select', 'No\nYes', 'release'],
+				['Release', 'Select', 'Yes\nNo', 'release'],
 				['Trial Date', 'Datetime', '', 'trial_date']
 				],
 			'Tailoring Item Details':[				
