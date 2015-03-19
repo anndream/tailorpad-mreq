@@ -21,7 +21,7 @@ class CutOrderDashboard(Document):
 					self.create_cut_order(co)
 				elif co.fabric_site == get_user_branch():
 					self.create_cut_order(co)
-				elif get_user_branch == get_ActualFabric(co):
+				elif get_user_branch == self.get_ActualFabric(co):
 					self.create_cut_order(co)
 		self.save()
 
@@ -29,16 +29,26 @@ class CutOrderDashboard(Document):
 		self.save()
 
 	def create_cut_order(self, co):
+		work_order_data = ''
+		serial_nos = ''
 		customer=frappe.db.get_value('Sales Invoice',co['invoice_no'],'customer')
 		coi = self.append('cut_order_item', {})
 		coi.invoice_no = co['invoice_no']
 		coi.customer = frappe.db.get_value('Sales Invoice',co['invoice_no'],'customer') if co['invoice_no'] else ''
 		coi.article_code = co['article_code']
 		coi.fabric_code = co['fabric_code']
+		# Suyash 'serial_no_data and work_order_nos added in cut order item'
+		if co['invoice_no']:
+			for row in self.get_wo_serial_nos_of_si(co['invoice_no']):
+				work_order_data = work_order_data + row['name'] + '\n'
+				serial_nos = serial_nos + row['serial_no_data']	+ '\n'   
+			coi.serial_no_data = serial_nos
+			coi.work_order_nos = work_order_data
 		coi.fabric_qty = co['qty']
 		coi.actual_site = co['actual_site']
 		coi.fabric_site = co['fabric_site']
 		coi.cut_order_id = co['name']
+		self.get_wo_serial_nos_of_si(co['invoice_no'])
 
 	def get_ActualFabric(self, args):
 		return frappe.db.get_value('Sales Invoice', args.invoice_no, 'branch')
@@ -49,6 +59,13 @@ class CutOrderDashboard(Document):
 				article_serial_no, 
 				actual_site, fabric_site, name from `tabCut Order` 
 			where ifnull(docstatus, 0) not in (1,2)  order by invoice_no desc""", as_dict=1)
+
+	def get_wo_serial_nos_of_si(self,sales_invoice_no):
+		if sales_invoice_no:
+			return frappe.db.sql(""" select serial_no_data,name from `tabWork Order` where sales_invoice_no='%s'   """%(sales_invoice_no),as_dict=1)
+			
+
+
 
 	def cut_order(self):
 		msg_status, msg = 'true', ''

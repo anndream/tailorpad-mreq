@@ -18,6 +18,11 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Quality Inspection-sales_invoice_no""","Quality Inspection","Data","Sales Invoice no","item_serial_no","","","","sales_invoice_no",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Quality Inspection-customer_name""","Quality Inspection","Data","Customer Name","item_serial_no","","","","customer_name",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Quality Inspection-work_order""","Quality Inspection","Data","Work Order","serial_no_data","","","","work_order",0,0,1,0,"","",0,"",1,1,0,0,0,0
+"","""Stock Entry Detail-customer_name""","Stock Entry Detail","Data","Customer Name","sales_invoice_no","","","","customer_name",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry Detail-sales_invoice_no""","Stock Entry Detail","Data","Sales invoice No","work_order","","","","sales_invoice_no",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""File Data-type_of_file""","File Data","Data","Type of File","content_hash","","","","type_of_file",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-trial_date""","Sales Invoice","Datetime","Trial Date","customer_name","","","","trial_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-qrcode""","Item","Data","QRCode","brand","","","","qrcode",0,0,1,0,"","",0,"",0,0,0,0,0,0
@@ -82,7 +87,6 @@ Remove","","authenticated",0,0,1,0,"","Pending",0,"",1,1,0,0,0,0
 "","""Quality Inspection-trial_no""","Quality Inspection","Data","Trial No","process","","","","trial_no",0,0,1,0,"","",0,"",1,1,0,0,0,0
 "","""Quality Inspection-process""","Quality Inspection","Data","Process","pdd","","","","process",0,0,1,0,"","",0,"",1,1,0,0,0,0
 "","""Quality Inspection-pdd""","Quality Inspection","Data","PDD","","","","","pdd",0,0,1,0,"","",0,"",1,1,0,0,0,0
-"","""Quality Inspection-work_order""","Quality Inspection","Data","Work Order","serial_no_data","","","","work_order",0,0,1,0,"","",1,"",1,1,0,0,0,0
 "","""Quality Inspection-tdd""","Quality Inspection","Data","TDD","trial_no","","","","tdd",0,0,1,0,"","",0,"",1,1,0,0,0,0
 "","""Stock Entry-barcode""","Stock Entry","Data","Bundle Barcode","posting_time","","","","barcode",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Task-process_name""","Task","Link","Process Name","exp_end_date","","Process","","process_name",0,0,1,0,"","",0,"",0,0,0,0,0,0

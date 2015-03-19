@@ -605,7 +605,8 @@ def create_si(si_details, fields, reservation_details):
 
 	for cust in si_details.get('Basic Info'):
 		si.customer = cust[0]
-		si.trial_date = datetime.strptime(cust[3], '%d-%m-%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
+		if cust[3] and si_details.get('Tailoring Item Details'):
+			si.trial_date = datetime.strptime(cust[3], '%d-%m-%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
 		si.currency = frappe.db.get_value('Global Details', None, 'default_currency')
 		# si.delivery_date = datetime.strptime(cust[1] , '%d-%m-%Y').strftime('%Y-%m-%d')
 		si.posting_date = datetime.strptime(cust[1], '%d-%m-%Y').strftime('%Y-%m-%d')
