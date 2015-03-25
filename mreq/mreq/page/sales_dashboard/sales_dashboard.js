@@ -1905,11 +1905,14 @@ frappe.SalesForm = Class.extend({
                     }
 				
 				 var td = $("<td width='35%'>").appendTo(row)
-                     if(field[0]!='Split Qty'){
+				   if(field[3] == 'merchandise_delivery_date'){
+				      	  $(td).css('display','None')
+				      }
+					else if(field[0]!='Split Qty' ){
                      
                          $(td).html('<label class="control-label" style="align:center;margin-top:2%;margin-left:10%;display:inline-block">'+field[0]+'</label>').appendTo(row); 
 				      }
-				        else{
+					else{
 				 	      $(td).css('display','None')
 				         }	
 				ui_controller =  frappe.ui.form.make_control({
