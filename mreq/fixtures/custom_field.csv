@@ -18,6 +18,8 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Item-s_""","Item","Section Break","","measurement_formula_template","","","","s_",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
+"","""Item-measurement_formula""","Item","Section Break","Measurement and Style Option","size_item","","","","measurement_formula",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
 "","""Sales Invoice-thank_you""","Sales Invoice","Data","Thank You","notification_send","","","","thank_you",0,0,1,0,"","",1,"",1,1,0,0,0,0
 "","""Sales Invoice-notification_send""","Sales Invoice","Data","Notification Send","against_income_account","","","","notification_send",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-referral_name""","Sales Invoice","Dynamic Link","Referral Name","referral","","referral","","referral_name",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -78,11 +80,9 @@ Purchase Return","","purpose_type",0,0,0,0,"","Material Issue",0,"",0,0,0,0,0,0
 "","""Item-style_item""","Item","Table","Style Fields","measurement_item","","Style Item","","style_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-measurement_item""","Item","Table","Measurement Fields","s_","","Measurement Item","","measurement_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-test_label""","Item","HTML","Test Label","","","","","test_label",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-s_""","Item","Section Break","Measurement and Style Option","measurement_formula_template","","","","s_",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
 "","""Item-measurement_formula_template""","Item","Link","Measurement Formula Template","c","","Measurement Formula","","measurement_formula_template",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-c""","Item","Column Break","c","measurement_template","","","","c",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-measurement_template""","Item","Link","Measurement Template","measurement_formula","","Measurement Template","","measurement_template",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Item-measurement_formula""","Item","Section Break","Measurement Formula","size_item","","","","measurement_formula",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring' && !doc.__islocal",0,0,0,0,0,0
 "","""Item-size_item""","Item","Table","Size Item","more_details","","Size Item","","size_item",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-more_details""","Item","Section Break","Size Details","add_image","","","","more_details",0,0,0,0,"","",0,"eval:!doc.__islocal && doc.item_group == 'Tailoring'",0,0,0,0,0,0
 "","""Item-process_item""","Item","Table","Process Item","style_item","","Process Item","","process_item",0,0,0,0,"","",0,"eval:doc.item_group=='Tailoring'",0,0,0,0,0,0
