@@ -88,15 +88,16 @@ class CashierDashboard(Document):
 		else:
 			return flt(amt)
 
-	def show_pending_balance_invoices(self):
-		self.set('payment',[])
+	def show_pending_balance_invoices(self,x=None):
+		if x !='more':
+			self.set('payment',[])
 		cond = "1=1"
 		if frappe.session.user !='Administrator':
 			cond = "branch='%s'"%(get_user_branch())
 		
 		data = frappe.db.sql("""select * from `tabSales Invoice` b where 
 			docstatus= 1 and (ifnull(outstanding_amount, 0)>0 or name in (select a.sales_invoice_no from `tabWork Order` a where a.sales_invoice_no = b.name and ifnull(a.status, '')<>'Release'))
-			and %s order by name desc"""%(cond), as_dict=1)
+			and %s %s order by name desc limit 10 %s """%(cond,self.get_conditions(),self.get_offset()),debug=True, as_dict=1)
 
 		if data:
 			for r in data:
@@ -112,7 +113,28 @@ class CashierDashboard(Document):
 				pmt.min_payment_amount  = cstr(flt(pmt.min_payment_percentage) * flt(frappe.db.get_value('Sales Invoice', r.name, 'grand_total_export')) / flt(100))
 				pmt.paid_amount = self.get_paid_amount(r)
 				pmt.amount = pmt.outstanding if flt(pmt.paid_amount) > flt(pmt.min_payment_amount) else pmt.min_payment_amount
-			return True
+			self.offset = len(self.get('payment'))
+			offset_no =self.offset
+			return{
+				   'offset':offset_no
+				}
+
+
+	def get_offset(self):
+		offset = ''
+		if self.offset:
+			offset = "offset %s"%(self.offset)
+		return offset
+
+	def get_conditions(self):
+		conditions = ''
+		if self.customer_name:
+			conditions = conditions + " and customer='{0}'".format(self.customer_name)
+		if self.sales_invoice:
+			conditions = conditions + " and name = '%s' "%(self.sales_invoice)
+		self.offset = len(self.get('payment'))	
+		return conditions	
+		
 
 	def authenticate_for_production(self, args):
 		branch = get_user_branch()
@@ -149,3 +171,9 @@ class CashierDashboard(Document):
 		redeem_conversion_factor = frappe.db.get_value('LPE Configuration', None, 'conversion_factor')
 		if redeem_conversion_factor:
 			return {'amount': flt(redeem_points) * flt(redeem_conversion_factor)}
+
+
+def get_customer_name(doctype, txt, searchfield, start, page_len, filters):
+	if filters.get('sales_invoice'):
+		return frappe.db.sql(""" select customer from `tabSales Invoice` where name='{0}'  """.format(filters.get('sales_invoice')))
+

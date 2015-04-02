@@ -454,9 +454,9 @@ def get_autocomplete_list():
 def get_si_list(search_key=None):
 	cond = ''
 	if search_key:
-		cond = "where customer like '%%%s%%'"%search_key
-
-	return frappe.db.sql("""select name from `tabSales Invoice` %s order by creation desc"""%cond, as_list=1)
+		cond = "and name like '%%%s%%'"%search_key
+	user_branch = frappe.db.get_value('User',frappe.session.user,'branch')	
+	return frappe.db.sql("""select name from `tabSales Invoice`  where  branch='%s' '%s' and docstatus = 1 order by creation desc"""%(user_branch,cond), as_list=1)
 
 @frappe.whitelist()
 def get_images(name):
@@ -782,14 +782,13 @@ def get_wo_details(tab, woname):
 					where name = '%s' """%(woname.split('\t')[-1].strip()), as_dict=1)
 
 @frappe.whitelist()
-def update_wo(wo_details, fields, woname, style_details,note, args=None, type_of_wo=None):
+def update_wo(wo_details, fields, woname, style_details,note,measured_by ,args=None, type_of_wo=None):
 	from frappe.utils import cstr
-
 	wo = frappe.get_doc('Work Order', woname)
 	style_details =  eval(style_details)
 
 	if note:
-		frappe.db.sql(""" update `tabWork Order` set note = '%s' where name = '%s'"""%(note, woname))
+		frappe.db.sql(""" update `tabWork Order` set note = '%s', measured_by = '%s' where name = '%s'"""%(note, measured_by,woname))
 
 	for d in wo.get('wo_style'):
 		for style in style_details:
@@ -946,3 +945,14 @@ def update_WorkOrder_Trials(name, trial_no, pdd):
 			frappe.db.sql(""" update `tabProcess Allotment` set work_order = '%s' where
 				name = '%s'	"""%(name, process_name))
 		return "Done"
+
+
+@frappe.whitelist()
+def get_release_status():
+	value = frappe.db.sql("select value from `tabSingles` where doctype='Selling Settings' and field='show_sales_invoice_release_option' ")
+	#role_list = frappe.db.get_value()
+	return value
+
+@frappe.whitelist()
+def get_branch():
+	return get_user_branch()				

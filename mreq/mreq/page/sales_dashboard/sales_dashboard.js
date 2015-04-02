@@ -1860,7 +1860,6 @@ frappe.SalesForm = Class.extend({
 						<tbody style='width:100%;'></tbody>\
 						</table>").appendTo(me.field_area);
 				me.render_child(field, form_type, i)
-
 		})
 
 		if(form_type == 'new'){
@@ -1892,29 +1891,34 @@ frappe.SalesForm = Class.extend({
 			$('<hr style="border: 2px solid #CBCACA"></hr>').insertBefore(me[key+'_1'])
 		}
 
-
 		var row = $("<tr width='100%'>").appendTo(me[key+'_1'].find("tbody"));
 		var count=0;
 		if(me.type_checker(form_type, key)){
+
 			$.each(fields, 
 				function(i, field) {
+				
 
 					if (count==3){
                     row =  $("<tr width='100%'>").appendTo(me[key+'_1'].find("tbody"));
                     count=0
                     }
-				
-				 var td = $("<td width='35%'>").appendTo(row)
-				   if(field[3] == 'merchandise_delivery_date'){
+
+
+                  var td = $("<td width='35%'>").appendTo(row)
+                  
+
+
+				   if(field[3] == 'merchandise_delivery_date' || field[0] =='Split Qty'){
 				      	  $(td).css('display','None')
 				      }
-					else if(field[0]!='Split Qty' ){
+					else{
                      
                          $(td).html('<label class="control-label" style="align:center;margin-top:2%;margin-left:10%;display:inline-block">'+field[0]+'</label>').appendTo(row); 
 				      }
-					else{
-				 	      $(td).css('display','None')
-				         }	
+
+
+	 
 				ui_controller =  frappe.ui.form.make_control({
 							df: {
 							    "fieldtype": field[1],
@@ -1955,10 +1959,56 @@ frappe.SalesForm = Class.extend({
 					if(form_type=='new' && ( field[3]=='tailoring_delivery_date' ||  field[3]=='posting_date' ||  field[3]=='merchandise_delivery_date' ) ){
 						 var d = new Date();                      
                         $('[data-fieldname="'+field[3]+'"]').val($.datepicker.formatDate('dd-mm-yy',d));
-					}	
+					}
+					if(form_type=='new' &&  field[3]=='tailoring_branch'){
+						frappe.call({
+							method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_branch",
+							callback:function(r){
+								 $('[data-fieldname="'+field[3]+'"]').val(r.message)
+						}
 
-				})
+						})
+						
+					}
+
+
+
+					if (field[3]=='release'){
+
+						flag =false	
+						role_list = ['System Manager']
+						$.each(role_list,function(j){
+
+						if(in_list(user_roles,role_list[j])){
+							  			flag = true
+							  			return false
+								  	}	
+                       })
+                       
+                      if (flag == false){
+
+                        frappe.call({
+							method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_release_status",
+							callback:function(r){
+                               var release = r.message[0][0]
+                             
+                               if (release == 0){
+                               	     $(td).css('display','None');
+                                  }
+                              }
+
+
+						  });
+
+                        }      
+						
+			     } 
+
+
+
+			})
 		}
+
 
 		$('[data-fieldname="split_qty"]').css('display','None');
 		
@@ -2025,6 +2075,19 @@ frappe.SalesForm = Class.extend({
 					},
 				callback: function(r){
 					$('[data-fieldname="tailoring_rate"]').val(r.message)
+
+					frappe.call({
+							method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_fabric_qty",
+							args:{'item_code':$('[data-fieldname="tailoring_item_code"]').val(),
+							'width': $('[data-fieldname="width"]').val(),
+							'size': $('[data-fieldname="tailoring_size"]').val()
+					},
+				callback: function(r){
+						$('[data-fieldname="fabric_qty"]').val( flt(r.message) * 1 )
+						}
+					})
+
+					
 				}
 			})
 		})
@@ -2172,9 +2235,9 @@ frappe.SalesForm = Class.extend({
 	},
 	clear_data:function(type){
 		var me = this;
-		data = ['fabric_code','tailoring_size', 'tailoring_qty', 'width', 'fabric_qty', 'fabric_rate', 'tot_amt', 'tailoring_branch', 'split_qty', 'tailoring_rate', 'tailoring_price_list', 'tailoring_item_code']
+		data = ['fabric_code','tailoring_size', 'tailoring_qty', 'width', 'fabric_qty', 'fabric_rate', 'tot_amt', 'split_qty', 'tailoring_rate', 'tailoring_price_list', 'tailoring_item_code']
 		if (type == 'Item'){
-			data = ['fabric_code','tailoring_size', 'tailoring_qty', 'width', 'fabric_qty', 'fabric_rate', 'tot_amt', 'tailoring_branch', 'split_qty', 'tailoring_rate']
+			data = ['fabric_code','tailoring_size', 'tailoring_qty', 'width', 'fabric_qty', 'fabric_rate', 'tot_amt', 'split_qty', 'tailoring_rate']
 		}
 
 		$.each(data, function(i){
@@ -2595,7 +2658,8 @@ frappe.WOForm = Class.extend({
 					['Item code', 'Link', 'Item', 'item_code'],
 					['Customer Name', 'Data', '', 'customer'],
 					['Serial NO', 'Small Text', '', 'serial_no_data'],
-					['Note', 'Small Text', '', 'note']
+					['Note', 'Small Text', '', 'note'],
+					['Measured By', 'Data', '', 'measured_by']
 				],
 			"Measurement Item":[
 					// ['Parameter', 'Link', 'Measurement', 'parameter'],
@@ -2897,7 +2961,7 @@ frappe.WOForm = Class.extend({
 		
 		frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.update_wo",
-			args:{'wo_details': me.wo_details, 'style_details':me.style_details, 'fields':me.field_list, 'woname': me.woname, 'note': $("[data-fieldname='note']").val()},
+			args:{'wo_details': me.wo_details, 'style_details':me.style_details, 'fields':me.field_list, 'woname': me.woname, 'note': $("[data-fieldname='note']").val(),'measured_by': $("[data-fieldname='measured_by']").val()},
 			callback: function(r){
 				// new frappe.SalesInvoce(me.wrapper)
 			}

@@ -6,7 +6,8 @@
 // }
 
 cur_frm.fields_dict.payment.grid.get_field('sales_invoice_no').get_query = function(doc, cdt, cdn){
-	return {
+	
+    return {
 		filters :{
 			'docstatus' : 1
 		}
@@ -50,11 +51,54 @@ cur_frm.cscript.make_payment = function(doc, cdt, cdn){
 	})
 }
 
-cur_frm.cscript.refresh = function(doc, cdt, cdn){
+cur_frm.cscript.onload = function(doc, cdt, cdn){
+    doc.sales_invoice = ''
+    doc.customer_name = ''
+    doc.offset = 0
+
 	get_server_fields('show_pending_balance_invoices','','', doc, cdt, cdn, 1, function(r){
 		refresh_field('payment')
 	})
 }
+
+
+cur_frm.cscript.more = function(doc,cdt,cdn){
+    var x = 'more'
+    get_server_fields('show_pending_balance_invoices',x,'',doc,cdt,cdn,1,function(){
+        refresh_field('offset')
+        refresh_field('payment')
+
+    })
+
+}
+
+
+cur_frm.cscript.search = function(doc,cdt,cdn){
+    var obj = {'Customer Name':doc.customer_name,'Sales Invoice':doc.sales_invoice}
+    
+    $.each(obj,function(key,value){
+        if(!value){
+            alert("Please Enter in  '%s' Field".replace(/%s/g,key))
+            return false
+        }
+
+    })
+    var x='search'
+    get_server_fields('show_pending_balance_invoices',x,'',doc,cdt,cdn,1,function(){
+        refresh_field('offset')
+        refresh_field('payment')
+        
+    })
+
+}
+
+
+
+
+
+
+
+
 
 cur_frm.cscript.amount = function(doc, cdt, cdn){
 	var d =locals[cdt][cdn]
@@ -114,6 +158,34 @@ cur_frm.cscript.redeem_points = function(doc, cdt, cdn){
         })
     }
 }
+
+
+cur_frm.fields_dict.customer_name.get_query = function(doc) {
+    if (doc.sales_invoice){
+        return{ query:"mreq.mreq.doctype.cashier_dashboard.cashier_dashboard.get_customer_name",
+                filters:{'sales_invoice': doc.sales_invoice}
+        }
+    }
+    
+}
+cur_frm.fields_dict.sales_invoice.get_query = function(doc) {
+    if (doc.customer_name){
+
+    return{
+        filters:{
+            'customer': doc.customer_name
+            }
+        }
+
+   }
+}
+
+
+
+
+
+
+
 
 frappe.WorkOrderAction = Class.extend({
     init: function(data, doc, cdt, cdn){

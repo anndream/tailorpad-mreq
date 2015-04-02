@@ -17,6 +17,14 @@
    "precision": ""
   }, 
   {
+   "fieldname": "customer_name", 
+   "fieldtype": "Link", 
+   "label": "Customer Name", 
+   "options": "Customer", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "fieldname": "column_break_2", 
    "fieldtype": "Column Break", 
    "permlevel": 0, 
@@ -32,6 +40,14 @@
    "precision": ""
   }, 
   {
+   "fieldname": "sales_invoice", 
+   "fieldtype": "Link", 
+   "label": "Sales Invoice", 
+   "options": "Sales Invoice", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "fieldname": "column_break_4", 
    "fieldtype": "Column Break", 
    "permlevel": 0, 
@@ -41,6 +57,21 @@
    "fieldname": "make_payment", 
    "fieldtype": "Button", 
    "label": "Make Payment", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "search", 
+   "fieldtype": "Button", 
+   "label": "Search", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "default": "0", 
+   "fieldname": "offset", 
+   "fieldtype": "Data", 
+   "label": "Offset", 
    "permlevel": 0, 
    "precision": ""
   }, 
@@ -91,6 +122,13 @@
    "options": "Cashier Payment Log", 
    "permlevel": 0, 
    "precision": ""
+  }, 
+  {
+   "fieldname": "more", 
+   "fieldtype": "Button", 
+   "label": "More", 
+   "permlevel": 0, 
+   "precision": ""
   }
  ], 
  "hide_heading": 0, 
@@ -101,7 +139,7 @@
  "is_submittable": 0, 
  "issingle": 1, 
  "istable": 0, 
- "modified": "2015-03-07 04:28:04.581495", 
+ "modified": "2015-04-01 04:21:46.620422", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "Cashier Dashboard", 
