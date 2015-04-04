@@ -454,9 +454,9 @@ def get_autocomplete_list():
 def get_si_list(search_key=None):
 	cond = ''
 	if search_key:
-		cond = "and name like '%%%s%%'"%search_key
+		cond = 'and customer like "%%%s%%"'%search_key
 	user_branch = frappe.db.get_value('User',frappe.session.user,'branch')	
-	return frappe.db.sql("""select name from `tabSales Invoice`  where  branch='%s' '%s' and docstatus = 1 order by creation desc"""%(user_branch,cond), as_list=1)
+	return frappe.db.sql("""select name from `tabSales Invoice`  where  branch='%s' %s and docstatus = 1 order by creation desc"""%(user_branch,cond), as_list=1, debug=1)
 
 @frappe.whitelist()
 def get_images(name):
@@ -509,15 +509,15 @@ def create_addr(name, cust_details):
 @frappe.whitelist()
 def get_cust_details(customer):
 	customer_info = {}
-	customer_details = frappe.db.sql("""select c.customer_name, c.customer_type, c.territory, 
+	customer_details = frappe.db.sql('''select c.customer_name, c.customer_type, c.territory, 
 			c.customer_group 
 		from tabCustomer c
-			where c.name = '%s'"""%customer,as_dict=1)
+			where c.name = "%s"'''%customer,as_dict=1)
 	if customer_details:
 		customer_info.update(customer_details[0])
-	customer_contact_detail = frappe.db.sql("""select co.designation, co.email_id, co.phone, co.mobile_no
+	customer_contact_detail = frappe.db.sql('''select co.designation, co.email_id, co.phone, co.mobile_no
 		from tabContact co
-			where co.customer = '%s'"""%customer,as_dict=1)
+			where co.customer = "%s"'''%customer,as_dict=1)
 	if customer_contact_detail:
 		customer_info.update(customer_contact_detail[0])
 	if customer_info:
@@ -730,10 +730,10 @@ def get_si_details(name):
 						from `tabSales Invoice` si 
 						where si.name = '%s' """%(name),as_dict=1)
 
-	tailoring_item = frappe.db.sql("""select tailoring_delivery_date, tailoring_price_list,
+	tailoring_item = frappe.db.sql("""select  tailoring_price_list,
 										tailoring_item_code, fabric_code, tailoring_size, 
 											tailoring_qty, width, fabric_qty,  
-											tailoring_rate, tailoring_amount, tailoring_branch 
+											tailoring_rate, tailoring_amount,tailoring_delivery_date, tailoring_branch 
 									from `tabSales Invoice Items` 
 									where parent = '%s' """%(name), as_list=1)
 

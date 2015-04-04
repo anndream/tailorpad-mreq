@@ -2495,6 +2495,7 @@ frappe.SalesForm = Class.extend({
 		})	
 
 		//Render Tailoring Item Details
+
 		$.each(si_details['tailoring_item'], 
 				function(i, values) {
 				var row = $("<tr>").appendTo(me['Tailoring Item Details']);
