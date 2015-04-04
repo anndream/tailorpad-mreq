@@ -1822,7 +1822,7 @@ frappe.SalesForm = Class.extend({
 				['Product Qty', 'Data', '','tailoring_qty',1],
 				['Width', 'Link', 'Width','width',1],
 				['Fabric Qty', 'Data', '','fabric_qty',1],
-				['Product Rate', 'Data', '','tailoring_rate',1],
+				['Rate(Product + Fabric)', 'Data', '','tailoring_rate',1],
 				['Fabric Rate', 'Data', '','fabric_rate',0],
 				['Total Amt', 'Data', '','tot_amt',1],
 				['Delivery Date','Date','','tailoring_delivery_date',1],
@@ -2126,7 +2126,20 @@ frappe.SalesForm = Class.extend({
 		})
 
 		$('[data-fieldname="fabric_rate"]').change(function(){
-			me.set_tot()
+			frappe.call({
+				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_product_rate",
+				args:{'item_code':$('[data-fieldname="tailoring_item_code"]').val(),
+					'service': $('[data-fieldname="tailoring_price_list"]').val(),
+					'size': $('[data-fieldname="tailoring_size"]').val(),
+					'width':$('[data-fieldname="width"]').val(),
+					},
+				callback: function(r){
+					tot_amt = (parseFloat(r.message[0])) + (parseFloat(r.message[1]) * parseFloat($('[data-fieldname="fabric_rate"]').val() || 0.0))
+					$('[data-fieldname="tailoring_rate"]').val(tot_amt.toFixed(2))
+					me.set_tot()		
+				}
+			})
+			
 		})
 
 		$('[data-fieldname="merchandise_item_code"]').change(function(){

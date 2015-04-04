@@ -456,7 +456,7 @@ def get_si_list(search_key=None):
 	if search_key:
 		cond = 'and customer like "%%%s%%"'%search_key
 	user_branch = frappe.db.get_value('User',frappe.session.user,'branch')	
-	return frappe.db.sql("""select name from `tabSales Invoice`  where  branch='%s' %s and docstatus = 1 order by creation desc"""%(user_branch,cond), as_list=1, debug=1)
+	return frappe.db.sql("""select name from `tabSales Invoice`  where  branch='%s' %s and docstatus = 1 order by creation desc"""%(user_branch,cond), as_list=1)
 
 @frappe.whitelist()
 def get_images(name):
@@ -600,11 +600,13 @@ def create_si(si_details, fields, reservation_details):
 	si_details = eval(si_details)
 	fields = eval(fields)
 	accounting_details = get_accounting_details()
+	# customer_name = ''
 
 	si = frappe.new_doc("Sales Invoice")
 
 	for cust in si_details.get('Basic Info'):
 		si.customer = cust[0]
+		# customer_name = cust[0]
 		if cust[3] and si_details.get('Tailoring Item Details'):
 			si.trial_date = datetime.strptime(cust[3], '%d-%m-%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
 		si.currency = frappe.db.get_value('Global Details', None, 'default_currency')
@@ -655,6 +657,8 @@ def create_si(si_details, fields, reservation_details):
 		e.merchandise_cost_center = accounting_details[1]
 		e.merchandise_delivery_date = datetime.strptime(merchandise_item[4], '%d-%m-%Y').strftime('%Y-%m-%d')
 		e.merchandise_branch = merchandise_item[5]
+		# if item_details[2] == 'Gift Voucher':
+		# 	check_availability_of_gift_voucher(merchandise_item[1],cint(merchandise_item[2]),customer_name)
 
 	for tax in si_details.get('Taxes and Charges'):
 		si.taxes_and_charges = tax[0]
@@ -665,8 +669,28 @@ def create_si(si_details, fields, reservation_details):
 
 	si = frappe.get_doc('Sales Invoice', si.name)
 	si.submit()
-	frappe.msgprint("Sales Invoce %s, created successfully"%si.name)
+	frappe.msgprint("Sales Invoice %s, created successfully"%si.name)
 	return si.name
+
+
+
+# def check_availability_of_gift_voucher(item_code,quantity,customer):
+# 	if item_code and quantity:
+# 		warehouse = frappe.db.get_value('Branch',get_user_branch(),'warehouse')
+# 		count = frappe.db.sql(""" select count(name) from `tabSerial No` where item_code='{0}' and warehouse='{1}' and status='Available'  """.format(item_code,warehouse),as_list=True)
+# 		if count[0][0] >= quantity:
+# 			update_serial_nos(item_code,quantity,warehouse,customer)
+# 		else:
+# 			frappe.throw("Gift voucher Not available for {0} ".format(item_code))	
+
+
+# def update_serial_nos(item_code,quantity,warehouse,customer):
+# 	result = frappe.db.sql(""" select name from `tabSerial No` where item_code='{0}' and warehouse='{1}' and status='Available'  order by creation asc limit {2} """.format(item_code,warehouse,quantity),as_list=1)
+# 	if result:
+# 		for serial_no in result:
+# 			frappe.db.sql(""" update `tabSerial No` set status='Delivered' ,customer='{0}' where name='{1}'  """.format(customer,serial_no[0]))
+# 			frappe.db.commit()
+
 
 def get_args_list(tailoring_item, args, si_details):
 	return frappe._dict({
@@ -751,7 +775,7 @@ def get_si_details(name):
 	}
 
 def get_item_details(item):
-	return frappe.db.sql("select item_name, description from tabItem where name = '%s'"%item, as_list=1)[0]
+	return frappe.db.sql("select item_name, description,item_group from tabItem where name = '%s'"%item, as_list=1)[0]
 
 def get_accounting_details():
 	company =  frappe.db.get_value('Global Defaults', None, 'default_company') 
@@ -956,3 +980,11 @@ def get_release_status():
 @frappe.whitelist()
 def get_branch():
 	return get_user_branch()				
+
+@frappe.whitelist()
+def get_product_rate(item_code, service, size, width):
+	if frappe.db.get_value('Item', item_code, 'service') == service:
+		product_rate = frappe.db.get_value('Costing Item', {'parent': item_code, 'branch': get_user_branch(), 'size': size}, 'service_rate') or 0.0
+		qty = frappe.db.get_value('Size Item', {'parent': item_code, 'size': size, 'width': width}, 'fabric_qty') or 0.0
+		return product_rate, qty
+	return 0.0, 0.0
