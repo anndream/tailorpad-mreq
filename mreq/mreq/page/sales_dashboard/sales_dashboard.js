@@ -1928,7 +1928,7 @@ frappe.SalesForm = Class.extend({
 								},
 							parent:td,
 						});
-				custom_dict = {'tailoring_item_code':['Tailoring'], 'fabric_code':['Fabric', 'Fabric Swatch Item'], 'merchandise_item_code': ['Merchandise']}
+				custom_dict = {'tailoring_item_code':['Tailoring'], 'fabric_code':['Fabric', 'Fabric Swatch Item'], 'merchandise_item_code': ['Merchandise', 'Fabric', 'Fabric Swatch Item']}
 				$.each(custom_dict, function(field_key, filter_val){
 					if(field[3]==field_key){
 				 	ui_controller.get_query = function(){
