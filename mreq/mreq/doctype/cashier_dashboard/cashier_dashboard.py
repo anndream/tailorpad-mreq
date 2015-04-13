@@ -43,8 +43,17 @@ class CashierDashboard(Document):
 				# self.authenticate_for_production(d)
 			if cint(d.select) == 1:
 				self.update_status(d)
+
+			if d.gv_serial_no:
+				self.update_serial_no_status(d.gv_serial_no)	
 		self.show_pending_balance_invoices()		
 		return "Successfully received amount"
+
+
+	def update_serial_no_status(self,serial_no):
+		my_doc = frappe.get_doc('Serial No',serial_no)
+		my_doc.status='Not Available'
+		my_doc.save(ignore_permissions=True)	
 
 	def update_status(self, args):
 		frappe.db.sql("""update `tabSales Invoice` set authenticated = '%s' 
@@ -65,6 +74,8 @@ class CashierDashboard(Document):
 		return jv.name
 
 	def make_gl_entry(self, parent, args, amount, outstanding):
+		company = frappe.db.get_value('Global Defaults',None,'default_company')
+		cost_center = frappe.db.get_value('Company',company,'cost_center')
 		for s in args:
 			amount = self.adjust_amount(amount, outstanding)
 			jvd = frappe.new_doc('Journal Voucher Detail')
@@ -72,7 +83,7 @@ class CashierDashboard(Document):
 			jvd.parenttype = 'Journal Voucher'
 			jvd.mode = s.get('mode')
 			jvd.parentfield = 'entries'
-			jvd.cost_center = get_branch_cost_center(get_user_branch())
+			jvd.cost_center = get_branch_cost_center(get_user_branch()) or cost_center
 			jvd.account = s.get('account')
 			if s.get('account_type') == 'credit':
 				jvd.credit = cstr(amount)
@@ -171,6 +182,13 @@ class CashierDashboard(Document):
 		redeem_conversion_factor = frappe.db.get_value('LPE Configuration', None, 'conversion_factor')
 		if redeem_conversion_factor:
 			return {'amount': flt(redeem_points) * flt(redeem_conversion_factor)}
+
+	def get_gv_account(self):
+		company = frappe.db.get_value('Global Defaults',None,'default_company')
+		gift_voucher_account = frappe.db.get_value('Company',company,'gift_voucher_account')
+		return {
+		'payment_account':gift_voucher_account		
+		}
 
 
 def get_customer_name(doctype, txt, searchfield, start, page_len, filters):

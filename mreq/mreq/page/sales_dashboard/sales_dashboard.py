@@ -1,4 +1,3 @@
-# import frappe
 # from frappe.utils import getdate, flt, cint, nowdate, cstr
 # from tools.custom_data_methods import get_user_branch
 
@@ -426,6 +425,8 @@ import frappe
 from frappe.utils import getdate, flt, cint, nowdate
 from tools.custom_data_methods import get_user_branch, get_branch_warehouse
 from erpnext.accounts.doctype.pricing_rule.pricing_rule import get_pricing_rule_for_item
+import string
+import random
 
 @frappe.whitelist()
 def get_customer_list(search_key=None):
@@ -585,10 +586,13 @@ def get_default_values():
 
 @frappe.whitelist()
 def get_merchandise_item_price(price_list, item_code):
+	result_list = []
 	if price_list and item_code:
-		return frappe.db.get_value('Item Price', {'price_list': price_list, 'item_code': item_code}, 'price_list_rate')
-	else:
-		return ''
+		price = frappe.db.get_value('Item Price', {'price_list': price_list, 'item_code': item_code}, 'price_list_rate')
+		result_list.append(price)
+		group = frappe.db.get_value('Item', {'item_code': item_code},'item_group')
+		result_list.append(group)
+		return result_list
 
 @frappe.whitelist()
 def get_work_orders(si_num):
@@ -603,7 +607,6 @@ def create_si(si_details, fields, reservation_details):
 	# customer_name = ''
 
 	si = frappe.new_doc("Sales Invoice")
-
 	for cust in si_details.get('Basic Info'):
 		si.customer = cust[0]
 		# customer_name = cust[0]
@@ -651,14 +654,13 @@ def create_si(si_details, fields, reservation_details):
 		e.stock_uom = frappe.db.get_value('Item', e.merchandise_item_code, 'stock_uom')
 		e.merchandise_description = item_details[1]
 		e.merchandise_qty = cint(merchandise_item[2])
-		e.merchandise_rate = cint(merchandise_item[3])
-		e.merchandise_amount = flt(merchandise_item[2]) * flt(merchandise_item[3])
+		e.merchandise_rate = cint(merchandise_item[4])
+		e.merchandise_amount = flt(merchandise_item[2]) * flt(merchandise_item[4])
 		e.merchandise_income_account = accounting_details[0]
 		e.merchandise_cost_center = accounting_details[1]
-		e.merchandise_delivery_date = datetime.strptime(merchandise_item[4], '%d-%m-%Y').strftime('%Y-%m-%d')
+		e.free = merchandise_item[3]
+		e.merchandise_delivery_date = datetime.strptime(merchandise_item[6], '%d-%m-%Y').strftime('%Y-%m-%d')
 		e.merchandise_branch = merchandise_item[5]
-		# if item_details[2] == 'Gift Voucher':
-		# 	check_availability_of_gift_voucher(merchandise_item[1],cint(merchandise_item[2]),customer_name)
 
 	for tax in si_details.get('Taxes and Charges'):
 		si.taxes_and_charges = tax[0]
@@ -673,23 +675,6 @@ def create_si(si_details, fields, reservation_details):
 	return si.name
 
 
-
-# def check_availability_of_gift_voucher(item_code,quantity,customer):
-# 	if item_code and quantity:
-# 		warehouse = frappe.db.get_value('Branch',get_user_branch(),'warehouse')
-# 		count = frappe.db.sql(""" select count(name) from `tabSerial No` where item_code='{0}' and warehouse='{1}' and status='Available'  """.format(item_code,warehouse),as_list=True)
-# 		if count[0][0] >= quantity:
-# 			update_serial_nos(item_code,quantity,warehouse,customer)
-# 		else:
-# 			frappe.throw("Gift voucher Not available for {0} ".format(item_code))	
-
-
-# def update_serial_nos(item_code,quantity,warehouse,customer):
-# 	result = frappe.db.sql(""" select name from `tabSerial No` where item_code='{0}' and warehouse='{1}' and status='Available'  order by creation asc limit {2} """.format(item_code,warehouse,quantity),as_list=1)
-# 	if result:
-# 		for serial_no in result:
-# 			frappe.db.sql(""" update `tabSerial No` set status='Delivered' ,customer='{0}' where name='{1}'  """.format(customer,serial_no[0]))
-# 			frappe.db.commit()
 
 
 def get_args_list(tailoring_item, args, si_details):
@@ -761,11 +746,12 @@ def get_si_details(name):
 									from `tabSales Invoice Items` 
 									where parent = '%s' """%(name), as_list=1)
 
-	merchandise_item = frappe.db.sql("""select merchandise_delivery_date, merchandise_price_list, merchandise_item_code, 
-											merchandise_qty, merchandise_rate, merchandise_branch 
+	merchandise_item = frappe.db.sql("""select merchandise_price_list, merchandise_item_code, 
+											merchandise_qty,free, merchandise_rate, merchandise_delivery_date,merchandise_branch 
 										from `tabMerchandise Items` 
 										where parent = '%s'"""%(name), as_list=1)
 
+	frappe.errprint(merchandise_item)
 	return {
 		'si': si,
 		'tailoring_item': tailoring_item,

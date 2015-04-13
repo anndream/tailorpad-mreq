@@ -1832,9 +1832,10 @@ frappe.SalesForm = Class.extend({
 				['Price List', 'Link', 'Price List','merchandise_price_list',1], 
 				['Item Code', 'Link', 'Item','merchandise_item_code',1], 
 				['Qty', 'Data', '','merchandise_qty',1],
+				['Free', 'Select', '\nYes\nNo','free',1],
 				['Rate', 'Data', '','merchandise_rate',1],
-				['Delivery Date','Date','','merchandise_delivery_date',1],
-				['Delivery Branch (Merchandise)', 'Link', 'Branches', 'merchandise_branch',1]],
+				['Delivery Branch (Merchandise)', 'Link', 'Branches', 'merchandise_branch',1],
+				['Delivery Date','Date','','merchandise_delivery_date',1]],
 			'Taxes and Charges':
 				[['Taxes and Charges', 'Link', 'Sales Taxes and Charges Master', 'taxes_and_charges']],
 			'Total':
@@ -1928,7 +1929,7 @@ frappe.SalesForm = Class.extend({
 								},
 							parent:td,
 						});
-				custom_dict = {'tailoring_item_code':['Tailoring'], 'fabric_code':['Fabric', 'Fabric Swatch Item'], 'merchandise_item_code': ['Merchandise', 'Fabric', 'Fabric Swatch Item']}
+				custom_dict = {'tailoring_item_code':['Tailoring'], 'fabric_code':['Fabric', 'Fabric Swatch Item'], 'merchandise_item_code': ['Merchandise', 'Fabric', 'Fabric Swatch Item','Gift Voucher']}
 				$.each(custom_dict, function(field_key, filter_val){
 					if(field[3]==field_key){
 				 	ui_controller.get_query = function(){
@@ -2011,7 +2012,8 @@ frappe.SalesForm = Class.extend({
 
 
 		$('[data-fieldname="split_qty"]').css('display','None');
-		
+		$('[data-fieldname="free"]').attr("disabled","disabled")
+
 		if(key == 'Tailoring Item Details' && form_type == 'new'){
 			var row1 = $("<tr>").appendTo(me[key+'_1'].find("tbody"));
 			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%;'><i class='icon-save'></i> Split Qty </button>")
@@ -2125,6 +2127,14 @@ frappe.SalesForm = Class.extend({
 			me.set_tot()
 		})
 
+		$('[data-fieldname="free"]').change(function(){
+		 var free_value = $(this).val()
+		 	if (free_value == 'Yes'){
+		 		$('[data-fieldname="merchandise_rate"]').attr('value',0)
+		 	}
+			
+		})
+
 		$('[data-fieldname="fabric_rate"]').change(function(){
 			frappe.call({
 				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_product_rate",
@@ -2148,9 +2158,16 @@ frappe.SalesForm = Class.extend({
 				args:{'price_list': $('[data-fieldname="merchandise_price_list"]').val(), 
 					'item_code':$('[data-fieldname="merchandise_item_code"]').val()},
 				callback: function(r){
-					$('[data-fieldname="merchandise_rate"]').attr('value', r.message)
+					$('[data-fieldname="merchandise_rate"]').attr('value', r.message[0])
+					if(r.message[1]=='Gift Voucher'){
+						$('[data-fieldname="free"]').removeAttr('disabled');
+					}else{
+						$('[data-fieldname="free"]').attr("disabled","disabled")
+					}
 				}
 			})
+		
+
 		})
 
 		if(key!='Basic Info' && key != 'Total' && key != 'Taxes and Charges'){
@@ -2158,7 +2175,7 @@ frappe.SalesForm = Class.extend({
 				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Prod. Qty", 100],["Width", 100], ["Fabric Qty", 100], ['Prod. Rate', 100], ['Tot Amt', 100], ["Delivery Date",50], ['Tailoring Branch', 100], ['', 50]];
 			
 			if(key == 'Merchandise Item Details')
-				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100],["Delivery Date",50], ['Merchandise Branch', 100],['', 50]];
+				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ["Free",100],['Rate', 100],['Merchandise Branch', 100],["Delivery Date",50],['', 50]];
 			
 			// if(key == 'Taxes and Charges')
 			// 	columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ['Rate', 100], ['Merchandise Branch', 100]];
@@ -2239,7 +2256,7 @@ frappe.SalesForm = Class.extend({
 			</table>").appendTo(me.field_area)
 
 			$.each(columns, 
-				function(i, col) {
+				function(i, col) {	
 				$("<th>").html(col[0]).css("width", col[1]+"px")
 					.appendTo(me[key].find("thead tr"));
 			});
@@ -2306,7 +2323,7 @@ frappe.SalesForm = Class.extend({
 		var me = this;
 		this.tailoring_item_details = {};
 		this.retrive_data(this.field_list[key])
-
+		console.log(this.field_list[key])
 		var row = $("<tr>").appendTo(me[key].find("tbody"));
 		
 		$.each(this.tailoring_item_details, function(i, d) {	
@@ -2332,6 +2349,7 @@ frappe.SalesForm = Class.extend({
 		var me = this;
 		$.each(fields, function(i, field) {
 			if(field[4]==1){
+				console.log($('[data-fieldname="'+field[3]+'"]').val())
 				me.tailoring_item_details[field[3]] = $('[data-fieldname="'+field[3]+'"]').val()
 			}
 		})	
@@ -2423,10 +2441,12 @@ frappe.SalesForm = Class.extend({
 				me[tab_name].find('tr').each(function (tr_id, tr_val) {
 					if(tr_id != 0){
 						var $tds = $(this).find('td')
+						console.log($tds)
 						var values = [];
 						for(i=0; i< $tds.length; i++){
 							values.push($tds.eq(i).text())
 						}
+						console.log(values)
 						si_details_list.push(values)
 					}	
 				})
@@ -2453,6 +2473,7 @@ frappe.SalesForm = Class.extend({
 				}
 		
 		if (status==0){
+			console.log(me.invoce_details)
 			frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_si",
 			args:{'si_details': me.invoce_details, 'fields':me.field_list, 'reservation_details': JSON.stringify(me.reservation_details)},
@@ -2542,7 +2563,7 @@ frappe.SalesForm = Class.extend({
 		me['Merchandise Item Details'].find('tr').each(function (tr_id, tr_val) {
 			if(tr_id != 0){
 				var $tds = $(this).find('td')
-				sub_tot = flt($tds.eq(2).text()) * flt($tds.eq(3).text())
+				sub_tot = flt($tds.eq(2).text()) * flt($tds.eq(4).text())
 				total += sub_tot
 			}	
 		})

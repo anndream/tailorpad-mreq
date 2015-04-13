@@ -133,6 +133,13 @@ cur_frm.cscript.apply_status = function(doc, cdt, cdn){
 	refresh_field('payment')
 }
 
+
+
+ cur_frm.add_fetch("gv_serial_no", "gift_voucher_amount", "amount")
+
+
+
+
 cur_frm.cscript.work_order_status = function(doc, cdt, cdn){
 	var d;
 	d = locals[cdt][cdn]
@@ -160,6 +167,21 @@ cur_frm.cscript.redeem_points = function(doc, cdt, cdn){
 }
 
 
+cur_frm.cscript.mode_of_payment = function(doc, cdt, cdn){
+    var d = locals[cdt][cdn]
+    if(d.mode_of_payment == 'Gift Voucher'){
+        get_server_fields('get_gv_account','', '', doc, cdt, cdn, 1, function(r){
+            if(r){
+                refresh_field('payment_account', d.name,'payment');
+            }
+        })
+    }
+}
+
+
+
+
+
 cur_frm.fields_dict.customer_name.get_query = function(doc) {
     if (doc.sales_invoice){
         return{ query:"mreq.mreq.doctype.cashier_dashboard.cashier_dashboard.get_customer_name",
@@ -180,6 +202,16 @@ cur_frm.fields_dict.sales_invoice.get_query = function(doc) {
    }
 }
 
+cur_frm.fields_dict["payment"].grid.get_field("gv_serial_no").get_query = function(doc,cdt,cdn) {
+    var d =locals[cdt][cdn]
+    return {
+        filters: {
+            'customer': d.customer,
+            'status': 'Delivered',
+            'sales_invoice':''
+        }
+    }
+}
 
 
 
