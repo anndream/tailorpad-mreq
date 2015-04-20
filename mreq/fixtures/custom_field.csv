@@ -18,7 +18,8 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
-"","""Stock Entry Detail-sales_invoice_no""","Stock Entry Detail","Link","Sales invoice No","work_order","","Sales invoice","","sales_invoice_no",0,0,0,0,"","",0,"",0,0,0,0,1,0
+"","""Sales Invoice Items-total_expenses""","Sales Invoice Items","Data","Total Expenses","delivery_branch","","","","total_expenses",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry Detail-sales_invoice_no""","Stock Entry Detail","Link","Sales invoice No","work_order","","Sales Invoice","","sales_invoice_no",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Serial No-gift_voucher_amount""","Serial No","Data","Gift voucher Amount","serial_no","","","This Field applicable for Gift Voucher Only.","gift_voucher_amount",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Company-gift_voucher_account""","Company","Link","Gift Voucher Account","default_income_account","","Account","","gift_voucher_account",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-item_group_details""","Item","Section Break","Item Group Details","column_break0","","","","item_group_details",0,0,0,0,"","",1,"",0,0,0,0,0,0
