@@ -1473,8 +1473,9 @@ frappe.SalesInvoce = Class.extend({
 
 		$.each(si_list, 
 			function(i, si) {
+			
 			var row = $("<tr id="+i+">").appendTo(me.table.find("tbody"));
-			$("<td>").html(si[0]).appendTo(row).click(function(){
+			$("<td>").html(si).appendTo(row).click(function(){
 				$('.bold').removeClass('bold'); // deselect
 				$(this).addClass('bold');
 				me.add_worklist($(this).text(), row)
@@ -1482,6 +1483,8 @@ frappe.SalesInvoce = Class.extend({
 			})
 
 		});
+			
+
 	},
 	add_worklist:function(si_num, td){
 		
@@ -1537,6 +1540,35 @@ frappe.SearchArea = Class.extend({
 					new frappe.SalesForm(me.wrapper, 'new', me.search_key, '')
 			});
 
+		if($(me.area).attr('id') == 'sales_invoice'){
+			frappe.call({
+				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_si_list",
+				args:{'search_key': this.search_key},
+				callback: function(r){
+					si_list = []
+					$.each(r.message,function(key,value){
+						
+						si_list.push(value[0])
+					})
+					$($(me.area).find('.form-control')).autocomplete({
+						source: function(request, response){
+							var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+							response( $.grep( si_list, function( value ) {
+								return matcher.test(value);
+							}));
+						},
+						select: function( event, ui ) {
+							$(me.area).find('input').val(ui.item.value)
+							new frappe.SalesForm(me.wrapper,'open','',$(me.area).find('.form-control').val())
+							new frappe.SalesInvoce(me.wrapper,$(me.area).find('.form-control').val())
+						}
+					});
+					// new frappe.SalesInvoce(me.wrapper,me.search_key)
+				}
+			})
+		}
+
+
 		if($(me.area).attr('id') == 'customer'){
 
 			frappe.call({
@@ -1547,11 +1579,12 @@ frappe.SearchArea = Class.extend({
 						source: function(request, response){
 							var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
 							response( $.grep( r.message, function( value ) {
-								
+
 								return matcher.test(value['customer_name']) || matcher.test(value.email) || matcher.test(value.mobile_no);
 							}));
 						},
 						select: function( event, ui ) {
+							$(me.area).find('input').val(ui.item.value)
 							new frappe.Customer(me.wrapper, $(me.area).find('.form-control').val())
 							new frappe.CustomerForm(me.wrapper, 'open', $(me.area).find('.form-control').val())
 							new frappe.SalesInvoce(me.wrapper,$(me.area).find('.form-control').val())
@@ -1561,6 +1594,9 @@ frappe.SearchArea = Class.extend({
 				}
 			})
 		}
+
+
+
 
 	}
 
@@ -1827,6 +1863,7 @@ frappe.SalesForm = Class.extend({
 				['Total Amt', 'Data', '','tot_amt',1],
 				['Delivery Date','Date','','tailoring_delivery_date',1],
 				['Delivery Branch (Tailoring)', 'Link', 'Branches', 'tailoring_branch',1],
+				['Raw Material Expense','Data','','expense',1],
 				['Split Qty', 'Data', '', 'split_qty', 1]],
 			'Merchandise Item Details':[
 				['Price List', 'Link', 'Price List','merchandise_price_list',1], 
@@ -2007,6 +2044,25 @@ frappe.SalesForm = Class.extend({
 
 
 
+
+			     if(form_type=='new' &&  field[3]=='expense'){
+						 frappe.call({
+							method:"mreq.mreq.page.sales_dashboard.sales_dashboard.get_expenses_status",
+							callback:function(r){
+                               var release = r.message[0][0]
+                             
+                               if (release == 0){
+                               	     $(td).css('display','None');
+                                  }
+                              }
+
+
+						  });
+						
+					}
+
+
+
 			})
 		}
 
@@ -2085,7 +2141,7 @@ frappe.SalesForm = Class.extend({
 							'size': $('[data-fieldname="tailoring_size"]').val()
 					},
 				callback: function(r){
-						$('[data-fieldname="fabric_qty"]').val( flt(r.message) * 1 )
+						$('[data-fieldname="fabric_qty"]').val(flt(r.message.fabric_qty) * 1 )
 						}
 					})
 
@@ -2102,7 +2158,11 @@ frappe.SalesForm = Class.extend({
 					'size': $('[data-fieldname="tailoring_size"]').val()
 					},
 				callback: function(r){
-					$('[data-fieldname="fabric_qty"]').val(flt(r.message) * flt($('[data-fieldname="tailoring_qty"]').val()))
+					$('[data-fieldname="fabric_qty"]').val(flt(r.message.fabric_qty) * flt($('[data-fieldname="tailoring_qty"]').val() ))
+					if($('[data-fieldname="expense"]').closest("td").css('display')!= 'none'){
+						$('[data-fieldname="expense"]').val( flt(r.message.total_expense) * flt($('[data-fieldname="tailoring_qty"]').val() ))  
+					}
+					
 					me.set_tot()
 				}
 			})
@@ -2172,7 +2232,7 @@ frappe.SalesForm = Class.extend({
 
 		if(key!='Basic Info' && key != 'Total' && key != 'Taxes and Charges'){
 			if(key == 'Tailoring Item Details')
-				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Prod. Qty", 100],["Width", 100], ["Fabric Qty", 100], ['Prod. Rate', 100], ['Tot Amt', 100], ["Delivery Date",50], ['Tailoring Branch', 100], ['', 50]];
+				columns = [["Price List",50], ["Item Code", 100], ["Fabric Code", 100], ["Size", 100], ["Prod. Qty", 100],["Width", 100], ["Fabric Qty", 100], ['Prod. Rate', 100], ['Tot Amt', 100], ["Delivery Date",50], ['Tailoring Branch', 100], ['RM Expense',100],['', 50]];
 			
 			if(key == 'Merchandise Item Details')
 				columns = [["Price List",50], ["Item Code", 100], ["Qty", 100], ["Free",100],['Rate', 100],['Merchandise Branch', 100],["Delivery Date",50],['', 50]];
@@ -2182,8 +2242,9 @@ frappe.SalesForm = Class.extend({
 
 			if(form_type == 'new'){
 				if(key == 'Tailoring Item Details'){
+
 					$("<button class='btn btn-small btn-primary' style='margin-bottom:2%' id='"+key+"'>Add To Merchandise</button>")
-					.appendTo($("<td >").appendTo(row))
+					.appendTo($("<td>").appendTo(row1))
 					.click(function() {
 
 						fab_details = {
@@ -2212,7 +2273,8 @@ frappe.SalesForm = Class.extend({
 							});
 					});
 
-		             $("<button  align='center' class='btn btn-small btn-primary' style='margin-bottom:2%' id='"+key+"'><i class='icon-plus'></i></button>")
+		            var row = $("<tr width='100%'>").appendTo(me[key+'_1'].find("tbody"));
+		            $("<button  align='center' class='btn btn-small btn-primary' style='margin-bottom:2%' id='"+key+"'><i class='icon-plus'></i></button>")
 					.appendTo($("<tr align='center'>").appendTo(row))
 					.click(function() {
 						status = 'true'
@@ -2265,7 +2327,7 @@ frappe.SalesForm = Class.extend({
 	},
 	clear_data:function(type){
 		var me = this;
-		data = ['fabric_code','tailoring_size', 'tailoring_qty', 'width', 'fabric_qty', 'fabric_rate', 'tot_amt', 'split_qty', 'tailoring_rate', 'tailoring_price_list', 'tailoring_item_code']
+		data = ['fabric_code','tailoring_size', 'tailoring_qty', 'width', 'fabric_qty', 'fabric_rate', 'tot_amt', 'split_qty', 'tailoring_rate', 'tailoring_price_list', 'tailoring_item_code','expense']
 		if (type == 'Item'){
 			data = ['fabric_code','tailoring_size', 'tailoring_qty', 'width', 'fabric_qty', 'fabric_rate', 'tot_amt', 'split_qty', 'tailoring_rate']
 		}
@@ -2323,7 +2385,6 @@ frappe.SalesForm = Class.extend({
 		var me = this;
 		this.tailoring_item_details = {};
 		this.retrive_data(this.field_list[key])
-		console.log(this.field_list[key])
 		var row = $("<tr>").appendTo(me[key].find("tbody"));
 		
 		$.each(this.tailoring_item_details, function(i, d) {	
@@ -2349,7 +2410,6 @@ frappe.SalesForm = Class.extend({
 		var me = this;
 		$.each(fields, function(i, field) {
 			if(field[4]==1){
-				console.log($('[data-fieldname="'+field[3]+'"]').val())
 				me.tailoring_item_details[field[3]] = $('[data-fieldname="'+field[3]+'"]').val()
 			}
 		})	
@@ -2441,12 +2501,10 @@ frappe.SalesForm = Class.extend({
 				me[tab_name].find('tr').each(function (tr_id, tr_val) {
 					if(tr_id != 0){
 						var $tds = $(this).find('td')
-						console.log($tds)
 						var values = [];
 						for(i=0; i< $tds.length; i++){
 							values.push($tds.eq(i).text())
 						}
-						console.log(values)
 						si_details_list.push(values)
 					}	
 				})
@@ -2473,7 +2531,6 @@ frappe.SalesForm = Class.extend({
 				}
 		
 		if (status==0){
-			console.log(me.invoce_details)
 			frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.create_si",
 			args:{'si_details': me.invoce_details, 'fields':me.field_list, 'reservation_details': JSON.stringify(me.reservation_details)},
@@ -2501,7 +2558,6 @@ frappe.SalesForm = Class.extend({
 				me.si_no = si_no
 				me.render_sales_form(form_type)
 				me.add_values(r.message)
-				console.log(r.message)
 				me.render_tax_struct(r.message['tax_details'])
 				me.calc_total_amt(r.message['tot'])
 			}
@@ -2727,9 +2783,14 @@ frappe.WOForm = Class.extend({
 		$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:5%'><i class='icon-save'></i> Save </button>")
 		.appendTo(me.field_area)
 		.click(function() {
-			me.update_wo()
+			me.update_wo('save')
 			// window.open("#Form/Customer/"+$('[data-fieldname="customer_name"]').val(), "_self");
 		});
+
+
+
+
+
 
 		$("<button class='btn btn-small btn-primary' style='margin-bottom:2%;margin-left:5%'><i class='icon-folder-open'></i> Open </button>")
 		.appendTo(me.field_area)
@@ -2809,6 +2870,21 @@ frappe.WOForm = Class.extend({
 				$("<th>").html(col[0]).css("width", col[1]+"px")
 					.appendTo(me[key].find("thead tr"));
 			});
+
+			if(key == 'Measurement Item'){
+
+			$("<button class='btn btn-small btn-primary' style='margin-bottom:2%; margin-left:5%'><i class='icon-save'></i> Copy To work Order </button>")
+				.appendTo(me.field_area)
+				.click(function() {
+
+			    me.update_wo('copy')
+			// window.open("#Form/Customer/"+$('[data-fieldname="customer_name"]').val(), "_self");
+				});
+			}
+	
+
+
+
 		}
 
 		this.render_data(key);
@@ -2975,10 +3051,10 @@ frappe.WOForm = Class.extend({
 			}
 		})
 	},
-	update_wo: function(){
+	update_wo: function(str){
 		var me = this;
 		this.wo_details = {};
-	
+
 		var wo_details_list = []
 		me['Measurement Item'].find('tr').each(function (tr_id, tr_val) {
 			if(tr_id != 0){
@@ -2992,14 +3068,26 @@ frappe.WOForm = Class.extend({
 			}	
 		})
 		me.wo_details['Measurement Item'] = wo_details_list
-		
-		
+		if(str=='save'){
 		frappe.call({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.update_wo",
 			args:{'wo_details': me.wo_details, 'style_details':me.style_details, 'fields':me.field_list, 'woname': me.woname, 'note': $("[data-fieldname='note']").val(),'measured_by': $("[data-fieldname='measured_by']").val()},
 			callback: function(r){
 				// new frappe.SalesInvoce(me.wrapper)
-			}
-		})
+		    	}
+		  })
+
+		}else if (str=='copy'){
+		frappe.call({
+			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.copy_work_order_details",
+			args:{'wo_details': me.wo_details, 'style_details':me.style_details, 'fields':me.field_list, 'woname': me.woname, 'note': $("[data-fieldname='note']").val(),'measured_by': $("[data-fieldname='measured_by']").val(),'sales_invoice': $("[data-fieldname='sales_invoice_no']").val(),'item_code': $("[data-fieldname='item_code']").val()},
+			callback: function(r){
+				// new frappe.SalesInvoce(me.wrapper)
+		    	}
+		  })
+
+
+		}
+		
 	}
 })
