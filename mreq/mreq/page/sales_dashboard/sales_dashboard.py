@@ -467,7 +467,7 @@ def get_si_list(search_key=None):
 	if search_key and user_branch:
 		cond = "branch = '%s' and (customer like '%%%s%%' or name like '%%%s%%') and"%(user_branch,search_key,search_key)
 			
-	return frappe.db.sql("""select name from `tabSales Invoice`  where  %s  docstatus=1  order by creation desc"""%(cond), as_list=1)
+	return frappe.db.sql("""select name from `tabSales Invoice`  where  %s  docstatus !=2  order by creation desc"""%(cond), as_list=1)
 
 @frappe.whitelist()
 def get_images(name):
@@ -695,7 +695,8 @@ def create_si(si_details, fields, reservation_details):
 	branch  = get_user_branch()
 	if branch:
 		abbr = frappe.db.get_value('Branch',branch,'branch_abbreviation')
-		si.name = make_autoname(abbr)
+		if abbr:
+			si.name = make_autoname(abbr)
 	si.save()
 
 	# si = frappe.get_doc('Sales Invoice', si.name)
