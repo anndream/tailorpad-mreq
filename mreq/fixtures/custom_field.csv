@@ -18,6 +18,14 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","
+Self
+Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice Items-cut_fabric_status""","Sales Invoice Items","Select","Cut Fabric Status","fabric_owner","","Completed
+Pending","","cut_fabric_status",0,0,0,0,"","Pending",0,"",0,0,0,0,0,0
+"","""Sales Invoice Items-total_expenses""","Sales Invoice Items","Data","Total Expenses","delivery_branch","","","","total_expenses",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-fabric_details""","Sales Invoice","Small Text","Fabric Details","sales_invoice_items_one","","","","fabric_details",0,0,0,0,"","",1,"",1,0,0,0,0,1
+"","""Sales Invoice-trial_date""","Sales Invoice","Datetime","Trial Date","customer_name","","","","trial_date",0,0,0,0,"","",1,"",1,0,0,0,0,1
 "","""Process Allotment-total_invoice_amount""","Process Allotment","Data","Total Invoice Amount","total_expense","","","","total_invoice_amount",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Process Allotment-total_expense""","Process Allotment","Data","Total Expense","customer_name","","","","total_expense",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""User-add_validity""","User","Link","Add validity","last_name","","User Validity","","add_validity",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -25,7 +33,6 @@
 "","""Style Item-default""","Style Item","Check","Default","","","","","default",0,0,0,0,"","",1,"",0,0,0,0,1,0
 "","""WO Style-table_view""","WO Style","Select","Table View","extra_text_field","","Right
 Left","","table_view",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-fabric_details""","Sales Invoice","Small Text","Fabric Details","sales_invoice_items_one","","","","fabric_details",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Salary Manager-type_of_salary""","Salary Manager","Select","Type Of Salary","fiscal_year","","
 Monthly
 Weekly
@@ -74,7 +81,6 @@ Yes
 No","if No only Weekly or LumpSum Salary Slips are allowed create. ","has_salary_structure",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Salary Manager-from_date""","Salary Manager","Date","From Date","type_of_salary","","","","from_date",0,0,0,0,"","",0,"eval:doc.type_of_salary =='Weekly' ||doc.type_of_salary ==  'LumpSum'",0,0,0,0,0,0
 "","""Work Order Distribution-expense""","Work Order Distribution","Data","Expense","tailor_work_order","","","","expense",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice Items-total_expenses""","Sales Invoice Items","Data","Total Expenses","delivery_branch","","","","total_expenses",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Stock Entry Detail-sales_invoice_no""","Stock Entry Detail","Link","Sales invoice No","work_order","","Sales Invoice","","sales_invoice_no",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Serial No-gift_voucher_amount""","Serial No","Data","Gift voucher Amount","serial_no","","","This Field applicable for Gift Voucher Only.","gift_voucher_amount",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Company-gift_voucher_account""","Company","Link","Gift Voucher Account","default_income_account","","Account","","gift_voucher_account",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -104,7 +110,6 @@ No","if No only Weekly or LumpSum Salary Slips are allowed create. ","has_salary
 "","""Item-barcode_description""","Item","Data","Barcode Description","barcode_image","","","","barcode_description",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Item-redeem_amount""","Item","Data","Redeem Amount","late_work_cost","","","","redeem_amount",0,0,0,0,"","",0,"eval:doc.item_group=='Gift Voucher'",0,0,0,0,0,0
 "","""Serial No-gift_voucher_no""","Serial No","Link","Gift Voucher No","quality_check","","Gift Voucher","","gift_voucher_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-trial_date""","Sales Invoice","Datetime","Trial Date","customer_name","","","","trial_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Work Order-note""","Work Order","Small Text","Note","","","","","note",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Stock Entry Detail-has_cut_order""","Stock Entry Detail","Select","Has Cut Order","trials","","--------
 Yes
@@ -204,16 +209,11 @@ No","","is_existing_customer",0,0,0,0,"","",0,"",0,0,0,0,0,0
 false
 true","","flag",0,0,0,0,"","false
 ",1,"",0,0,0,0,0,0
-"","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","
-Self
-Customer","","fabric_owner",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-desc""","Item","Column Break","","","","","","desc",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-barcode_image""","Item","Small Text","Barcode Image","barcode_image","","","","barcode_image",0,0,1,0,"","",0,"",0,1,0,0,0,0
 "","""Item-barcode_img""","Item","Data","Barcode IMG","column_break0","","","","barcode_img",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Company-registered_email_id""","Company","Data","Registered email id","email","","","","registered_email_id",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-item_sub_group""","Item","Link","Item Sub Group","item_group","","Sub Groups","","item_sub_group",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice Items-cut_fabric_status""","Sales Invoice Items","Select","Cut Fabric Status","fabric_owner","","Completed
-Pending","","cut_fabric_status",0,0,0,0,"","Pending",0,"",0,0,0,0,0,0
 "","""Task-item_code""","Task","Link","Item Code","process_name","","Item","","item_code",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Task-sales_order_number""","Task","Data","Sales Invoice Number","priority","","","","sales_order_number",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Event-appointment_list""","Event","Table","Appointment List","individuals","","Event Users","","appointment_list",0,0,0,0,"","",0,"",0,0,0,0,0,0
