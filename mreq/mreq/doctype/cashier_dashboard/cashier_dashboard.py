@@ -108,7 +108,7 @@ class CashierDashboard(Document):
 		
 		data = frappe.db.sql("""select * from `tabSales Invoice` b where 
 			docstatus= 1 and (ifnull(outstanding_amount, 0)>0 or name in (select a.sales_invoice_no from `tabWork Order` a where a.sales_invoice_no = b.name and ifnull(a.status, '')<>'Release'))
-			and %s %s order by name desc limit 10 %s """%(cond,self.get_conditions(),self.get_offset()),debug=True, as_dict=1)
+			and %s %s order by name desc limit 10 %s """%(cond,self.get_conditions(),self.get_offset()),as_dict=1)
 
 		if data:
 			for r in data:

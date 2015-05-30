@@ -71,6 +71,7 @@
    "default": "0", 
    "fieldname": "offset", 
    "fieldtype": "Data", 
+   "hidden": 1, 
    "label": "Offset", 
    "permlevel": 0, 
    "precision": ""
@@ -139,7 +140,7 @@
  "is_submittable": 0, 
  "issingle": 1, 
  "istable": 0, 
- "modified": "2015-04-01 04:21:46.620422", 
+ "modified": "2015-05-20 07:03:18.527152", 
  "modified_by": "Administrator", 
  "module": "Mreq", 
  "name": "Cashier Dashboard", 

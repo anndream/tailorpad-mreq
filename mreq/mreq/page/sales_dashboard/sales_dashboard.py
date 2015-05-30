@@ -465,7 +465,7 @@ def get_si_list(search_key=None):
 	if 	search_key:
 		cond = ' customer like "%%%s%%" or name like "%%%s%%" and'%(search_key,search_key)	
 	if search_key and user_branch:
-		cond = "branch = '%s' and (customer like '%%%s%%' or name like '%%%s%%') and"%(user_branch,search_key,search_key)
+		cond = 'branch = "%s" and (customer like "%%%s%%" or name like "%%%s%%") and'%(user_branch,search_key,search_key)
 			
 	return frappe.db.sql("""select name from `tabSales Invoice`  where  %s  docstatus !=2  order by creation desc"""%(cond), as_list=1)
 
@@ -590,6 +590,7 @@ def get_fabric_qty(item_code, width, size):
 	my_dict['total_expense'] = get_expenses(item_code)
 	return my_dict
 
+@frappe.whitelist()
 def get_expenses(item_code):
 	total_expense = 0
 	raw_item_list = frappe.db.sql(""" select raw_item_code,qty from `tabRaw Material Item` where parent='{0}' """.format(item_code),as_list=1)
@@ -635,8 +636,8 @@ def create_si(si_details, fields, reservation_details):
 	for cust in si_details.get('Basic Info'):
 		si.customer = cust[0]
 		# customer_name = cust[0]
-		if cust[3] and si_details.get('Tailoring Item Details'):
-			si.trial_date = datetime.strptime(cust[3], '%d-%m-%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
+		# if cust[3] and si_details.get('Tailoring Item Details'):
+		# 	si.trial_date = datetime.strptime(cust[3], '%d-%m-%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
 		si.currency = frappe.db.get_value('Global Details', None, 'default_currency')
 		# si.delivery_date = datetime.strptime(cust[1] , '%d-%m-%Y').strftime('%Y-%m-%d')
 		si.posting_date = datetime.strptime(cust[1], '%d-%m-%Y').strftime('%Y-%m-%d')
@@ -658,18 +659,22 @@ def create_si(si_details, fields, reservation_details):
 		e.width = tailoring_item[5]
 		e.fabric_qty = flt(tailoring_item[6])
 		e.tailoring_qty = cint(tailoring_item[4])
+		e.previous_quantity = cint(tailoring_item[4])
 		e.tailoring_rate = tailoring_item[7]
-		e.tailoring_amount = flt(tailoring_item[8])
+		e.tailoring_amount = ( flt(tailoring_item[8]) - (  flt(tailoring_item[8]) * flt(tailoring_item[9])/100) )
+		e.tailoring_discount_percentage =  flt(tailoring_item[9])
 		e.tailoring_income_account = accounting_details[0]
 		e.tailoring_cost_center = accounting_details[1]
-		e.total_expenses = tailoring_item[11]
-		e.tailoring_delivery_date = datetime.strptime(tailoring_item[9], '%d-%m-%Y').strftime('%Y-%m-%d')
-		e.tailoring_branch = tailoring_item[10]
-		e.split_qty_dict = tailoring_item[12]
-		if tailoring_item[12]:
+		e.total_expenses = tailoring_item[12]
+		e.tailoring_delivery_date = datetime.strptime(tailoring_item[10], '%d-%m-%Y').strftime('%Y-%m-%d')
+		e.tailoring_branch = tailoring_item[11]
+		e.split_qty_dict = tailoring_item[13]
+		e.reserve_fabric_qty = tailoring_item[14]
+		if tailoring_item[13]:
 			e.check_split_qty = 1
 
 	si.set('merchandise_item', [])
+	
 	for merchandise_item in si_details.get('Merchandise Item Details'):
 		item_details = get_item_details(merchandise_item[1])
 
@@ -681,17 +686,19 @@ def create_si(si_details, fields, reservation_details):
 		e.merchandise_description = item_details[1]
 		e.merchandise_qty = cint(merchandise_item[2])
 		e.merchandise_rate = cint(merchandise_item[4])
-		e.merchandise_amount = flt(merchandise_item[2]) * flt(merchandise_item[4])
+		total_amount =  flt(merchandise_item[2]) * flt(merchandise_item[4]) 
+		e.merchandise_amount = ( total_amount - ( total_amount * flt( merchandise_item[5])/100 ) )
 		e.merchandise_income_account = accounting_details[0]
 		e.merchandise_cost_center = accounting_details[1]
 		e.free = merchandise_item[3]
-		e.merchandise_delivery_date = datetime.strptime(merchandise_item[6], '%d-%m-%Y').strftime('%Y-%m-%d')
-		e.merchandise_branch = merchandise_item[5]
+		e.merchandise_discount_percentage = flt( merchandise_item[5])
+		e.merchandise_delivery_date = datetime.strptime(merchandise_item[7], '%d-%m-%Y').strftime('%Y-%m-%d')
+		e.merchandise_branch = merchandise_item[6]
 
 	for tax in si_details.get('Taxes and Charges'):
 		si.taxes_and_charges = tax[0]
 	
-	si.fabric_details = reservation_details
+	# si.fabric_details = reservation_details
 	branch  = get_user_branch()
 	if branch:
 		abbr = frappe.db.get_value('Branch',branch,'branch_abbreviation')
@@ -772,12 +779,12 @@ def get_si_details(name):
 	tailoring_item = frappe.db.sql("""select  tailoring_price_list,
 										tailoring_item_code, fabric_code, tailoring_size, 
 											tailoring_qty, width, fabric_qty,  
-											tailoring_rate, tailoring_amount,tailoring_delivery_date, tailoring_branch,total_expenses 
+											tailoring_rate, tailoring_amount,tailoring_discount_percentage,tailoring_delivery_date, tailoring_branch,total_expenses 
 									from `tabSales Invoice Items` 
 									where parent = '%s' """%(name), as_list=1)
 
 	merchandise_item = frappe.db.sql("""select merchandise_price_list, merchandise_item_code, 
-											merchandise_qty,free, merchandise_rate, merchandise_delivery_date,merchandise_branch 
+											merchandise_qty,free, merchandise_rate,merchandise_discount_percentage ,merchandise_delivery_date,merchandise_branch 
 										from `tabMerchandise Items` 
 										where parent = '%s'"""%(name), as_list=1)
 
@@ -790,7 +797,7 @@ def get_si_details(name):
 	}
 
 def get_item_details(item):
-	return frappe.db.sql("select item_name, description,item_group from tabItem where name = '%s'"%item, as_list=1)[0]
+	return frappe.db.sql("select item_name, description,item_group from tabItem where name = '%s'"%item, as_list=1)[0][0]
 
 def get_accounting_details():
 	company =  frappe.db.get_value('Global Defaults', None, 'default_company') 
@@ -800,7 +807,7 @@ def get_accounting_details():
 	return ((len(acc_details[0]) > 1) and acc_details[0] or acc_details[0][0]) if acc_details else None
 
 mapper ={
-	'Style Transactions':["field_name", "default_value as text", "abbreviation", "image_viewer image", "'view' as button" ],
+	'Style Transactions':["field_name", "default_value as text", "abbreviation", "image_viewer image", "'view' as button","cost_to_customer" ],
 	'Measurement Item': ['parameter', 'abbreviation', 'value']
 }
 
@@ -813,7 +820,7 @@ tab_mapper = {
 def get_wo_details(tab, woname):
 	
 	if tab in mapper:
-		return frappe.db.sql("""select %s from %s where parent = '%s'"""%(','.join(mapper.get(tab)), tab_mapper.get(tab),
+		return frappe.db.sql("""select 	%s from %s where parent = '%s'"""%(','.join(mapper.get(tab)), tab_mapper.get(tab),
 			 woname.split('\t')[-1].strip()),  as_dict=1)
 
 	else:
@@ -833,10 +840,10 @@ def update_wo(wo_details, fields, woname, style_details,note,measured_by ,args=N
 			if d.field_name == style:
 				frappe.db.sql("""update `tabWO Style` 
 									set image_viewer ='%s', default_value = '%s', 
-										abbreviation = '%s'
+										abbreviation = '%s' ,cost_to_customer = '%s'
 									where parent = '%s' and  field_name = '%s'
 							"""%( cstr(style_details[style].get('image')), cstr(style_details[style].get('value')),
-									cstr(style_details[style].get('abbr')),
+									cstr(style_details[style].get('abbr')), flt(style_details[style].get('customer_cost')),
 									woname, style
 								))
 				frappe.db.sql("commit")
@@ -852,6 +859,7 @@ def update_wo(wo_details, fields, woname, style_details,note,measured_by ,args=N
 				frappe.db.commit()
 
 	# wo.save(1)
+
 	frappe.msgprint("Updated.....")
 
 

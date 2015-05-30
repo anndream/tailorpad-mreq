@@ -17,11 +17,7 @@ class CutOrderDashboard(Document):
 		args = self.get_cut_order_details()
 		if args:
 			for co in args:
-				if co.actual_site == co.fabric_site and co.fabric_site == get_user_branch():
-					self.create_cut_order(co)
-				elif co.fabric_site == get_user_branch():
-					self.create_cut_order(co)
-				elif get_user_branch == self.get_ActualFabric(co):
+				if get_user_branch() == frappe.db.get_value('Sales Invoice',co.invoice_no,'branch'):
 					self.create_cut_order(co)
 		self.save()
 
@@ -58,7 +54,7 @@ class CutOrderDashboard(Document):
 				fabric_code, qty, 
 				article_serial_no, 
 				actual_site, fabric_site, name from `tabCut Order` 
-			where ifnull(docstatus, 0) not in (1,2)  order by invoice_no desc""", as_dict=1)
+			where ifnull(docstatus, 0) not in (1,2)  order by invoice_no desc""", as_dict=1,debug=True)
 
 	def get_wo_serial_nos_of_si(self,sales_invoice_no):
 		if sales_invoice_no:
@@ -74,6 +70,7 @@ class CutOrderDashboard(Document):
 			if cint(item.select) == 1:
 				status, msg = self.validate_actual_qty(item)
 				if status == 'true':
+					self.check_sales_invoice_submitted(item)
 					if item.actual_site == item.fabric_site:
 						# use in same branch
 						name = self.Assign_FabricTo_ProcessAllotment(item)
@@ -85,7 +82,7 @@ class CutOrderDashboard(Document):
 							self.Assign_FabricTo_ProcessAllotment(item)
 						elif get_user_branch() != item.fabric_site:
 							# generate Material Request
-							name = make_material_request(item.sales_invoice_no, item.actual_site, item.fabric_site, item.fabric_code, item.fabric_qty)
+							name = make_material_request(item.invoice_no, item.actual_site, item.fabric_site, item.fabric_code, item.fabric_qty)
 							self.Assign_FabricTo_ProcessAllotment(item)
 					if name:		
 						self.submit_cut_order(item, name)
@@ -97,6 +94,12 @@ class CutOrderDashboard(Document):
 					return {"status": status ,"msg":msg}
 		self.get_invoice_details()
 		return {"status": msg_status ,"msg": msg}
+
+	def check_sales_invoice_submitted(self,args):
+		status = frappe.db.get_value('Sales Invoice',args.invoice_no,'docstatus')
+		if status == 0:
+			frappe.throw("Sales Invoice {0} must be submiited before Cut Order Submission".format(args.invoice_no))
+
 
 	def validate_actual_qty(self, args):
 		if args.actual_cut_qty:
@@ -111,7 +114,7 @@ class CutOrderDashboard(Document):
 		process_allotment = self.get_process_allotment(args)
 		actual_cut_qty = flt(args.actual_cut_qty) / len(process_allotment)
 		for process in process_allotment:
-			obj = frappe.get_doc('Process Allotment', process[0])
+			obj = frappe.get_doc('Process Allotment', process.name)
 			if process_allotment:
 				rm = obj.append('issue_raw_material',{})
 				rm.raw_material_item_code = args.fabric_code
@@ -124,13 +127,13 @@ class CutOrderDashboard(Document):
 		return name
 
 	def get_process_allotment(self, args):
-		process = frappe.db.sql(""" select distinct a.process_data from `tabProcess Log` a, `tabProduction Dashboard Details` b
+		process = frappe.db.sql(""" select distinct a.process_data as name from `tabProcess Log` a, `tabProduction Dashboard Details` b
 			where a.parent = b.name and b.article_code='%s' and b.sales_invoice_no = '%s'
-			and a.actual_fabric = 1"""%(args.article_code, args.invoice_no), as_list=1)
+			and a.actual_fabric = 1"""%(args.article_code, args.invoice_no), as_dict=1)
 		if process:
 			return process
 		else:
-			return frappe.db.get_value('Process Allotment', {'sales_invoice_no': args.invoice_no}, 'name', as_list=1)
+			return [frappe.db.get_value('Process Allotment', {'sales_invoice_no': args.invoice_no}, 'name', as_dict=1)]
 
 	def make_material_issue_list(self, item, issue_list):
 		if item.actual_cut_qty:
@@ -141,7 +144,7 @@ class CutOrderDashboard(Document):
 
 	def make_material_out_list(self, item, out_list):
 		out_list.append([item.invoice_no, item.article_code, 
-				item.fabric_code, item.fabric_qty, 
+				item.fabric_code, item.actual_cut_qty, 
 				item.actual_site, item.fabric_site])
 
 	def make_stock_transfer(self, item, out_list):
@@ -184,7 +187,7 @@ class CutOrderDashboard(Document):
 			sed.item_code = item[2]
 			sed.item_name = fab_details.get('item_name')
 			sed.description = fab_details.get('description')
-			sed.qty = cint(item[3])
+			sed.qty = flt(item[3])
 			sed.stock_uom = fab_details.get('stock_uom')
 			sed.uom = fab_details.get('stock_uom')
 			sed.conversion_factor = 1
