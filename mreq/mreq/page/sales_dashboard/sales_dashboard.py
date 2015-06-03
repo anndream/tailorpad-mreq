@@ -797,7 +797,7 @@ def get_si_details(name):
 	}
 
 def get_item_details(item):
-	return frappe.db.sql("select item_name, description,item_group from tabItem where name = '%s'"%item, as_list=1)[0][0]
+	return frappe.db.sql("select item_name, description,item_group from tabItem where name = '%s'"%item, as_list=1)[0]
 
 def get_accounting_details():
 	company =  frappe.db.get_value('Global Defaults', None, 'default_company') 
