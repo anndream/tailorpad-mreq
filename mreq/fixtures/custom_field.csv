@@ -18,6 +18,8 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Work Order-note""","Work Order","Small Text","Note","delivery_date","","","","note",0,0,0,0,"","",0,"",0,0,1,0,0,0
+"","""Sales Invoice Item-trial_date""","Sales Invoice Item","Datetime","Trial Date","delivery_date","","","","trial_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Event-item_name""","Event","Link","Item name","ref_type","","Item","","item_name",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Event-sales_invoice_no""","Event","Link","Sales Invoice No","branch","","Sales Invoice","","sales_invoice_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","
@@ -112,7 +114,6 @@ No","if No only Weekly or LumpSum Salary Slips are allowed create. ","has_salary
 "","""Item-barcode_description""","Item","Data","Barcode Description","barcode_image","","","","barcode_description",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Item-redeem_amount""","Item","Data","Redeem Amount","late_work_cost","","","","redeem_amount",0,0,0,0,"","",0,"eval:doc.item_group=='Gift Voucher'",0,0,0,0,0,0
 "","""Serial No-gift_voucher_no""","Serial No","Link","Gift Voucher No","quality_check","","Gift Voucher","","gift_voucher_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Work Order-note""","Work Order","Small Text","Note","","","","","note",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Stock Entry Detail-has_cut_order""","Stock Entry Detail","Select","Has Cut Order","trials","","--------
 Yes
 No","","has_cut_order",0,0,0,0,"","",1,"",1,1,0,0,0,1
