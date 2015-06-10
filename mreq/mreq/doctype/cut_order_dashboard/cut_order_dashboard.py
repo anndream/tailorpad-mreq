@@ -35,7 +35,7 @@ class CutOrderDashboard(Document):
 		coi.fabric_code = co['fabric_code']
 		# Suyash 'serial_no_data and work_order_nos added in cut order item'
 		if co['invoice_no']:
-			for row in self.get_wo_serial_nos_of_si(co['invoice_no']):
+			for row in self.get_wo_serial_nos_of_si(co['invoice_no'],co['article_code']):
 				work_order_data = work_order_data + row['name'] + '\n'
 				serial_nos = serial_nos + row['serial_no_data']	+ '\n'   
 			coi.serial_no_data = serial_nos
@@ -44,7 +44,7 @@ class CutOrderDashboard(Document):
 		coi.actual_site = co['actual_site']
 		coi.fabric_site = co['fabric_site']
 		coi.cut_order_id = co['name']
-		self.get_wo_serial_nos_of_si(co['invoice_no'])
+		# self.get_wo_serial_nos_of_si(co['invoice_no'])
 
 	def get_ActualFabric(self, args):
 		return frappe.db.get_value('Sales Invoice', args.invoice_no, 'branch')
@@ -54,11 +54,11 @@ class CutOrderDashboard(Document):
 				fabric_code, qty, 
 				article_serial_no, 
 				actual_site, fabric_site, name from `tabCut Order` 
-			where ifnull(docstatus, 0) not in (1,2)  order by invoice_no desc""", as_dict=1,debug=True)
+			where ifnull(docstatus, 0) not in (1,2)  order by invoice_no desc""", as_dict=1)
 
-	def get_wo_serial_nos_of_si(self,sales_invoice_no):
+	def get_wo_serial_nos_of_si(self,sales_invoice_no,item_code):
 		if sales_invoice_no:
-			return frappe.db.sql(""" select serial_no_data,name from `tabWork Order` where sales_invoice_no='%s'   """%(sales_invoice_no),as_dict=1)
+			return frappe.db.sql(""" select serial_no_data,name from `tabWork Order` where sales_invoice_no='%s' and item_code='%s'  """%(sales_invoice_no,item_code),as_dict=1)
 			
 
 
@@ -112,7 +112,7 @@ class CutOrderDashboard(Document):
 	def Assign_FabricTo_ProcessAllotment(self, args):
 		name = 'Done'
 		process_allotment = self.get_process_allotment(args)
-		actual_cut_qty = flt(args.actual_cut_qty) / len(process_allotment)
+		actual_cut_qty = flt(args.actual_cut_qty)
 		for process in process_allotment:
 			obj = frappe.get_doc('Process Allotment', process.name)
 			if process_allotment:
@@ -127,13 +127,21 @@ class CutOrderDashboard(Document):
 		return name
 
 	def get_process_allotment(self, args):
-		process = frappe.db.sql(""" select distinct a.process_data as name from `tabProcess Log` a, `tabProduction Dashboard Details` b
-			where a.parent = b.name and b.article_code='%s' and b.sales_invoice_no = '%s'
-			and a.actual_fabric = 1"""%(args.article_code, args.invoice_no), as_dict=1)
+		work_order_nos = [wo for wo in args.work_order_nos.split('\n') if wo]
+		process = frappe.db.sql(""" SELECT 
+								    a.name AS name
+								FROM
+								    `tabProcess Allotment` a,
+								    `tabProcess Wise Warehouse Detail` b
+								WHERE
+								    a.work_order = b.parent
+								AND a.work_order IN (%s)
+								AND b.actual_fabric = 1
+								AND b.process = a.process"""%(','.join('"{0}"'.format(w) for w in work_order_nos)), as_dict=1,debug=True)
 		if process:
 			return process
 		else:
-			return [frappe.db.get_value('Process Allotment', {'sales_invoice_no': args.invoice_no}, 'name', as_dict=1)]
+			return frappe.db.sql(""" select work_order,name from `tabProcess Allotment` where sales_invoice_no='%s' and work_order in (%s) group by work_order  """%(args.invoice_no, ','.join('"{0}"'.format(w) for w in work_order_nos) ),as_dict=True)
 
 	def make_material_issue_list(self, item, issue_list):
 		if item.actual_cut_qty:

@@ -2146,7 +2146,7 @@ frappe.SalesForm = Class.extend({
 							'size': $('[data-fieldname="tailoring_size"]').val()
 					},
 				callback: function(r){
-						$('[data-fieldname="fabric_qty"]').val(flt(r.message.fabric_qty) * 1 )
+						$('[data-fieldname="fabric_qty"]').val(parseFloat(r.message.fabric_qty).toFixed(2) * 1 )
 						}
 					})
 
@@ -2494,13 +2494,20 @@ frappe.SalesForm = Class.extend({
 	               });
 						
 						dialog.show();
+						$('div.modal.in').on("hide.bs.modal", function() {
+
+                  			$('div.modal.in').remove()
+            			})
+
+
+
 						$(fd.create_new.input).click(function() {
 							total_qty = 0.0
 							me1.fabric_detail = {}
 							$.each($('input.text_box'),function(){
 								if ($(this).val()){
 								
-									total_qty = parseFloat($(this).val()) + parseFloat(total_qty)
+									total_qty = parseInt($(this).val()) + parseInt(total_qty)
 									me1.fabric_detail[$(this).closest("tr").find('td:first').text()] = [$('[data-fieldname="fabric_code"]').val(), $(this).closest("tr").find('.text_box').val(), $('[data-fieldname="tailoring_item_code"]').val()]
 								}
 							
@@ -2530,7 +2537,7 @@ frappe.SalesForm = Class.extend({
 							me1.fabric_detail = {}
 
 								dialog.hide()
-						  		$('.modal').remove()
+						  			$('div.modal.in').remove()
 
 				         	}
 					

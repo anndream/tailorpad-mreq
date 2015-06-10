@@ -76,19 +76,20 @@ cur_frm.cscript.more = function(doc,cdt,cdn){
 cur_frm.cscript.search = function(doc,cdt,cdn){
     var obj = {'Customer Name':doc.customer_name,'Sales Invoice':doc.sales_invoice}
     
-    $.each(obj,function(key,value){
-        if(!value){
-            alert("Please Enter in  '%s' Field".replace(/%s/g,key))
-            return false
-        }
+    if( !obj['Customer Name'] && !obj['Sales Invoice']){
+         alert("Please Enter in either Customer Name or Sales invoice Field")
+    }
+    else{
 
-    })
     var x='search'
     get_server_fields('show_pending_balance_invoices',x,'',doc,cdt,cdn,1,function(){
         refresh_field('offset')
         refresh_field('payment')
         
     })
+
+    }
+
 
 }
 

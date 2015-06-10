@@ -583,7 +583,7 @@ def get_fabric_qty(item_code, width, size):
 				and parenttype = 'Sales BOM' """%(item_code), as_dict=1)
 			if name:
 				for data in name:
-					fab_qty += flt(frappe.db.get_value('Size Item', {'size': size, 'width': width, 'parent': data.item_code}, 'fabric_qty')) * flt(data.qty)
+					fab_qty += cint(frappe.db.get_value('Size Item', {'size': size, 'width': width, 'parent': data.item_code}, 'fabric_qty')) * cint(data.qty)
 		else:
 			fab_qty = frappe.db.get_value('Size Item', {'size': size, 'width': width, 'parent': item_code}, 'fabric_qty')
 	my_dict['fabric_qty'] = fab_qty
