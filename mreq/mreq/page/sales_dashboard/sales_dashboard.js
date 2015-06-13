@@ -2226,7 +2226,7 @@ frappe.SalesForm = Class.extend({
 				args:{'price_list': $('[data-fieldname="merchandise_price_list"]').val(), 
 					'item_code':$('[data-fieldname="merchandise_item_code"]').val()},
 				callback: function(r){
-					$('[data-fieldname="merchandise_rate"]').attr('value', r.message[0])
+					$('[data-fieldname="merchandise_rate"]').val((r.message[0]).toFixed(2))
 					if(r.message[1]=='Gift Voucher'){
 						$('[data-fieldname="free"]').removeAttr('disabled');
 					}else{
@@ -2496,7 +2496,7 @@ frappe.SalesForm = Class.extend({
 						dialog.show();
 						$('div.modal.in').on("hide.bs.modal", function() {
 
-                  			$('div.modal.in').remove()
+                  			 $('.modal-dialog').remove()
             			})
 
 
@@ -2537,7 +2537,7 @@ frappe.SalesForm = Class.extend({
 							me1.fabric_detail = {}
 
 								dialog.hide()
-						  			$('div.modal.in').remove()
+						  		$('.modal-dialog').remove()
 
 				         	}
 					
