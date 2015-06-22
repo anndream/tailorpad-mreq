@@ -2433,14 +2433,14 @@ frappe.SalesForm = Class.extend({
 		})	
 	},
 	reserve_fabric: function(){
-		var me1 = this;
+		
 
 		if(parseFloat( $('[data-fieldname="fabric_qty"]').val()) ){
 
 				total_qty =0.0
 		
-		var image_data;
-		var dialog = new frappe.ui.Dialog({
+		
+		this.dialog = new frappe.ui.Dialog({
 				title:__('Fabric Details'),
 				fields: [
 					{fieldtype:'HTML', fieldname:'styles_name', label:__('Styles'), reqd:false,
@@ -2448,8 +2448,8 @@ frappe.SalesForm = Class.extend({
 						{fieldtype:'Button', fieldname:'create_new', label:__('Ok') }
 				]
 			})
-		var fd = dialog.fields_dict;
-
+		this.fd = this.dialog.fields_dict;
+		var me1 = this;
 	        // $(fd.styles_name.wrapper).append('<div id="style">Welcome</div>')
 	        return frappe.call({
 				type: "GET",
@@ -2464,7 +2464,7 @@ frappe.SalesForm = Class.extend({
 						this.table = $("<table class='table table-bordered'>\
 	                       <thead><tr></tr></thead>\
 	                       <tbody></tbody>\
-	                       </table>").appendTo($(fd.styles_name.wrapper))
+	                       </table>").appendTo($(me1.fd.styles_name.wrapper))
 
 						columns =[['Branch','40'],['Qty','40'], ['Reserv Qty', 50]]
 						var me = this;
@@ -2493,51 +2493,39 @@ frappe.SalesForm = Class.extend({
 	                    }            
 	               });
 						
-						dialog.show();
-						$('div.modal.in').on("hide.bs.modal", function() {
-
-                  			 $('.modal-dialog').remove()
-            			})
+						me1.dialog.show();
+						
 
 
 
-						$(fd.create_new.input).click(function() {
-							total_qty = 0.0
-							me1.fabric_detail = {}
-							$.each($('input.text_box'),function(){
+						$(me1.fd.create_new.input).click(function() {
+							this.total_qty = 0.0
+							this.fabric_detail = {}
+							var inner_me = this
+							$.each($(me1.fd.styles_name.wrapper).find('input.text_box'),function(){
 								if ($(this).val()){
 								
-									total_qty = parseInt($(this).val()) + parseInt(total_qty)
-									me1.fabric_detail[$(this).closest("tr").find('td:first').text()] = [$('[data-fieldname="fabric_code"]').val(), $(this).closest("tr").find('.text_box').val(), $('[data-fieldname="tailoring_item_code"]').val()]
+									inner_me.total_qty = parseInt($(this).val()) + parseInt(inner_me.total_qty)
+									inner_me.fabric_detail[$(this).closest("tr").find('td:first').text()] = [$('[data-fieldname="fabric_code"]').val(), $(this).closest("tr").find('.text_box').val(), $('[data-fieldname="tailoring_item_code"]').val()]
 								}
-							
+		
 							})
-
-					if (total_qty > parseFloat($('[data-fieldname="fabric_qty"]').val())){
-								alert("Sum of Total Quantity entered i.e {0} is exceeding Fabric Quantity {1}".replace('{1}',$('[data-fieldname="fabric_qty"]').val()).replace('{0}',total_qty))
+		
+					if (this.total_qty > parseFloat($('[data-fieldname="fabric_qty"]').val())){
+								alert("Sum of Total Quantity entered i.e {0} is exceeding Fabric Quantity {1}".replace('{1}',$('[data-fieldname="fabric_qty"]').val()).replace('{0}',this.total_qty))
 										
 					  }
 					else{
 
-							if(parseInt(Object.keys(me1.fabric_detail).length)>= 1){
-								me1.reservation_details = {}
-									me1.reservation_details[$('[data-fieldname="tailoring_item_code"]').val()] = JSON.stringify(me1.fabric_detail)			
-								 	$('[data-fieldname="reserve_qty"]').val(JSON.stringify(me1.reservation_details))
+							if(parseInt(Object.keys(this.fabric_detail).length)>= 1){
+								this.reservation_details = {}
+									this.reservation_details[$('[data-fieldname="tailoring_item_code"]').val()] = JSON.stringify(this.fabric_detail)			
+								 	$('[data-fieldname="reserve_qty"]').val(JSON.stringify(this.reservation_details))
+					
 								}						
 
-						       var $input_check = $('input[type="checkbox"]')
-								$.each($input_check,function(key,value){
-										if($(this).is(':checked') == true){
-												
-												$(this).prop('checked',false) 
-												
-											}
-										})
-						
-							me1.fabric_detail = {}
-
-								dialog.hide()
-						  		$('.modal-dialog').remove()
+								me1.dialog.hide()
+						  	
 
 				         	}
 					
