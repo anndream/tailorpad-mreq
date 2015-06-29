@@ -1024,7 +1024,7 @@ def update_WorkOrder_Trials(name, trial_no, pdd, args):
 			frappe.db.sql(""" update `tabProcess Allotment` set work_order = '%s' where
 				name = '%s'	"""%(name, process_name))
 
-		frappe.db.sql(''' update `tabProcess Allotment` set work_order = "%s" where item_code = "%s"
+		frappe.db.sql(''' update `tabProcess Allotment` set work_order = "%s" where item = "%s"
 			and sales_invoice_no = "%s" and ifnull(process_status, "Open") <> "Closed"'''%(name, args.item_code, args.sales_invoice_no))
 
 		return "Done"
