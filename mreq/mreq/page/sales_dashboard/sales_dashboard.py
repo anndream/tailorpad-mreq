@@ -422,7 +422,7 @@
 # 		return "Done"
 
 import frappe
-from frappe.utils import getdate, flt, cint, nowdate
+from frappe.utils import getdate, flt, cint, nowdate, cstr
 from tools.custom_data_methods import get_user_branch, get_branch_warehouse
 from erpnext.accounts.doctype.pricing_rule.pricing_rule import get_pricing_rule_for_item
 from frappe.model.naming import make_autoname
@@ -896,10 +896,11 @@ def copy_work_order_details(wo_details, fields, woname, style_details,note,measu
 
 @frappe.whitelist()
 def get_amended_name(work_order):
+	from frappe.utils import cstr, cint
 	if '-' in work_order:
 		woname = cstr(work_order).split('-')
 		amend_no = cint(woname[len(woname) - 1]) + 1
-		return work_order +'-'+ amend_no
+		return work_order +'-'+ cstr(amend_no)
 	else:
 		return work_order + '-1'
 
@@ -968,7 +969,7 @@ def create_work_order(wo_details,style_details, fields, woname, note,  args=None
 			create_work_order_style(wo, style_details)
 			create_work_order_measurement(wo, wo_details)
 			create_work_order_process(wo, woname)
-			update_WorkOrder_Trials(wo.work_order_no, wo.trial_no, wo.pdd)
+			update_WorkOrder_Trials(wo.work_order_no, wo.trial_no, wo.pdd, wo)
 			wo.submit()
 			return wo.name, wo.trial_no
  
@@ -1014,7 +1015,7 @@ def get_fabric_code(args, trial_no):
 			return frappe.db.get_value('Production Dashboard Details', args.pdd, 'fabric_code') if cint(data[0][0]) == 1 else args.fabric__code
 		return args.fabric__code
 
-def update_WorkOrder_Trials(name, trial_no, pdd):
+def update_WorkOrder_Trials(name, trial_no, pdd, args):
 	if name:
 		frappe.db.sql(""" update `tabTrial Dates` a, `tabTrials` b set a.work_order = '%s' 
 			where a.parent = b.name and a.trial_no>='%s' and b.pdd = '%s'"""%(name, trial_no, pdd))
@@ -1022,6 +1023,10 @@ def update_WorkOrder_Trials(name, trial_no, pdd):
 		if process_name:
 			frappe.db.sql(""" update `tabProcess Allotment` set work_order = '%s' where
 				name = '%s'	"""%(name, process_name))
+
+		frappe.db.sql(''' update `tabProcess Allotment` set work_order = "%s" where item_code = "%s"
+			and sales_invoice_no = "%s" and ifnull(process_status, "Open") <> "Closed"'''%(name, args.item_code, args.sales_invoice_no))
+
 		return "Done"
 
 
