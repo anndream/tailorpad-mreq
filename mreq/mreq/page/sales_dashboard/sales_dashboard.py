@@ -820,7 +820,7 @@ tab_mapper = {
 def get_wo_details(tab, woname):
 	
 	if tab in mapper:
-		return frappe.db.sql("""select 	%s from %s where parent = '%s'"""%(','.join(mapper.get(tab)), tab_mapper.get(tab),
+		return frappe.db.sql("""select 	%s from %s where parent = '%s' order by idx"""%(','.join(mapper.get(tab)), tab_mapper.get(tab),
 			 woname.split('\t')[-1].strip()),  as_dict=1)
 
 	else:
