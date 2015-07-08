@@ -429,6 +429,8 @@ from frappe.model.naming import make_autoname
 import string
 import random
 import pdb
+import json
+
 @frappe.whitelist()
 def get_customer_list(search_key=None):
 	cond = ''
@@ -670,6 +672,8 @@ def create_si(si_details, fields, reservation_details):
 		e.tailoring_branch = tailoring_item[11]
 		e.split_qty_dict = tailoring_item[13]
 		e.reserve_fabric_qty = tailoring_item[14]
+		obj = frappe.get_doc('Item', e.tailoring_item_code)
+		e.tailoring_item_tax_rate = json.dumps(dict(([d.tax_type, d.tax_rate] for d in obj.get("item_tax"))))
 		if tailoring_item[13]:
 			e.check_split_qty = 1
 
@@ -694,6 +698,8 @@ def create_si(si_details, fields, reservation_details):
 		e.merchandise_discount_percentage = flt( merchandise_item[5])
 		e.merchandise_delivery_date = datetime.strptime(merchandise_item[7], '%d-%m-%Y').strftime('%Y-%m-%d')
 		e.merchandise_branch = merchandise_item[6]
+		obj = frappe.get_doc('Item', e.merchandise_item_code)
+		e.merchandise_item_tax_rate = json.dumps(dict(([d.tax_type, d.tax_rate] for d in obj.get("item_tax"))))
 
 	for tax in si_details.get('Taxes and Charges'):
 		si.taxes_and_charges = tax[0]
@@ -931,16 +937,21 @@ def get_supplier_weise_po_details(item, supp_dic):
 
 def make_po(supp_dic):
 	for supplier in supp_dic:
-		po = frappe.new_doc("Purchase Order")
-		po.supplier = supplier
+		name = frappe.db.get_value('Purchase Order',{'supplier':supplier, 'docstatus':0},'name')
+		if name:
+			po = frappe.get_doc('Purchase Order', name)
+		else:
+			po = frappe.new_doc("Purchase Order")
+			po.supplier = supplier
 
-		po.set('po_details', [])
+		# po.set('po_details', [])
 		for item in supp_dic[supplier]:
 			e = po.append('po_details', {})
 			e.item_code = item[0]
 			e.qty = item[1]
 			e.supplier_item_code = item[2]
 			e.schedule_date = nowdate()
+			e.warehouse = get_branch_warehouse(get_user_branch())
 		po.save()
 
 
