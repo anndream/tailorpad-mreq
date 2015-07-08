@@ -18,6 +18,11 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Stock Entry Detail-trial_date""","Stock Entry Detail","Datetime","Trial Date","customer_name","","","","trial_date",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry Detail-trials""","Stock Entry Detail","Data","Trials","delivery_date","","","","trials",0,0,1,0,"","",0,"",1,1,0,0,0,1
+"","""Stock Entry Detail-sales_invoice_no""","Stock Entry Detail","Link","Sales invoice No","work_order","","Sales Invoice","","sales_invoice_no",0,0,1,0,"","",0,"",0,0,0,0,1,0
+"","""Stock Entry Detail-has_trials""","Stock Entry Detail","Data","Has Trials","process","","","","has_trials",0,0,1,0,"","",1,"",1,1,0,0,0,0
+"","""Stock Entry Detail-delivery_date""","Stock Entry Detail","Date","Delivery Date","trial_date","","","","delivery_date",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-notification_send""","Sales Invoice","Data","Notification Send","against_income_account","","","","notification_send",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Work Order Distribution-expense""","Work Order Distribution","Data","Expense","tailor_work_order","","","","expense",0,0,1,0,"","",0,"",1,0,0,0,0,0
 "","""Sales Invoice Items-fabric_owner""","Sales Invoice Items","Select","Fabric Owner","cut_fabric_status","","
@@ -65,8 +70,6 @@ Production
 Warehouse","","branch_type",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Branch-warehouse""","Branch","Link","Warehouse","branch","","Warehouse","","warehouse",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Branch-stock_entry_bundle_abbreviation""","Branch","Data","Stock Entry Bundle Abbreviation","branch_abbreviation","","","","stock_entry_bundle_abbreviation",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Stock Entry Detail-delivery_date""","Stock Entry Detail","Date","Delivery Date","trial_date","","","","delivery_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Stock Entry Detail-trial_date""","Stock Entry Detail","Datetime","Trial Date","customer_name","","","","trial_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice Item-delivery_date""","Sales Invoice Item","Date","Delivery Date","sales_invoice_branch","","","","delivery_date",0,0,0,0,"","",0,"",0,0,1,0,0,0
 "","""Sales Invoice Item-tailoring_size""","Sales Invoice Item","Link","Tailoring Size","fabric_qty","","Size","","tailoring_size",0,0,1,0,"","",1,"",1,0,0,0,0,0
 "","""Sales Invoice Item-fabric_qty""","Sales Invoice Item","Int","Fabric Qty","fabric_code","","","","fabric_qty",0,0,0,0,"","",0,"",1,0,0,0,0,0
@@ -108,7 +111,6 @@ Regular","","profile_type",0,0,0,0,"","",0,"",0,0,0,0,0,0
 Yes
 No","if No only Weekly or LumpSum Salary Slips are allowed create. ","has_salary_structure",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Salary Manager-from_date""","Salary Manager","Date","From Date","type_of_salary","","","","from_date",0,0,0,0,"","",0,"eval:doc.type_of_salary =='Weekly' ||doc.type_of_salary ==  'LumpSum'",0,0,0,0,0,0
-"","""Stock Entry Detail-sales_invoice_no""","Stock Entry Detail","Link","Sales invoice No","work_order","","Sales Invoice","","sales_invoice_no",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Serial No-gift_voucher_amount""","Serial No","Data","Gift voucher Amount","serial_no","","","This Field applicable for Gift Voucher Only.","gift_voucher_amount",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Company-gift_voucher_account""","Company","Link","Gift Voucher Account","default_income_account","","Account","","gift_voucher_account",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Item-item_group_details""","Item","Section Break","Item Group Details","column_break0","","","","item_group_details",0,0,0,0,"","",1,"",0,0,0,0,0,0
@@ -139,8 +141,6 @@ No","if No only Weekly or LumpSum Salary Slips are allowed create. ","has_salary
 "","""Stock Entry Detail-has_cut_order""","Stock Entry Detail","Select","Has Cut Order","trials","","--------
 Yes
 No","","has_cut_order",0,0,0,0,"","",1,"",1,1,0,0,0,1
-"","""Stock Entry Detail-trials""","Stock Entry Detail","Data","Trials","process","","","","trials",0,0,0,0,"","",1,"",1,1,0,0,0,1
-"","""Stock Entry Detail-has_trials""","Stock Entry Detail","Data","Has Trials","process","","","","has_trials",0,0,1,0,"","",0,"",1,1,0,0,0,0
 "","""Stock Entry Detail-process""","Stock Entry Detail","Data","Process","work_order","","","","process",0,0,0,0,"","",1,"",1,1,0,0,0,1
 "","""Stock Entry Detail-customer_name""","Stock Entry Detail","Data","Customer Name","sales_invoice_no","","","","customer_name",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-select""","Customer","Select","Side View image","select_image","","","","select",0,0,0,0,"","",0,"",0,0,0,0,0,0
