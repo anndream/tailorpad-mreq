@@ -964,6 +964,7 @@ def create_work_order(wo_details,style_details, fields, woname, note,  args=None
 			wo = frappe.new_doc('Work Order')
 			wo.item_code = wo_data.item_code
 			wo.status = wo_data.status
+			wo.delivery_date = wo_data.delivery_date
 			wo.note = note
 			wo.work_order_no = get_amended_name(woname)
 			wo.customer = wo_data.customer
