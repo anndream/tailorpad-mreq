@@ -994,7 +994,7 @@ def create_work_order_style(obj, args):
 				ws = obj.append('wo_style', {})
 				ws.field_name = args[s].get('field_name')
 				ws.abbreviation  = args[s].get('abbreviation')
-				ws.table_view = 'Left' if i % 2 ==1 else 'Right'
+				ws.table_view = 'Right' if i % 2 ==1 else 'Left'
 				ws.default_value = args[s].get('default_value')
 				ws.image_viewer = '<img src="%s" width="100px">'%(args[s].get('image_viewer'))
 				i = i + 1
