@@ -901,14 +901,14 @@ def copy_work_order_details(wo_details, fields, woname, style_details,note,measu
 
 
 @frappe.whitelist()
-def get_amended_name(work_order):
+def get_amended_name(work_order, old_work_order):
 	from frappe.utils import cstr, cint
 	if '-' in work_order:
 		woname = cstr(work_order).split('-')
 		amend_no = cint(woname[len(woname) - 1]) + 1
-		return work_order +'-'+ cstr(amend_no)
+		return old_work_order +'-'+ cstr(amend_no)
 	else:
-		return work_order + '-1'
+		return old_work_order + '-1'
 
 @frappe.whitelist()
 def check_swatch_group(fabric_code):
@@ -966,7 +966,7 @@ def create_work_order(wo_details,style_details, fields, woname, note,  args=None
 			wo.status = wo_data.status
 			wo.delivery_date = wo_data.delivery_date
 			wo.note = note
-			wo.work_order_no = get_amended_name(woname)
+			wo.work_order_no = get_amended_name(woname, wo_data.work_order_name)
 			wo.customer = wo_data.customer
 			wo.sales_invoice_no = wo_data.sales_invoice_no
 			wo.customer_name = wo_data.customer_name
