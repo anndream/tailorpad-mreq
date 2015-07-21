@@ -988,14 +988,16 @@ def create_work_order(wo_details,style_details, fields, woname, note,  args=None
 def create_work_order_style(obj, args):
 	if args:
 		args = eval(args)
+		i = 0 
 		for s in args:
 			if args[s].get('default_value'):
 				ws = obj.append('wo_style', {})
 				ws.field_name = args[s].get('field_name')
 				ws.abbreviation  = args[s].get('abbreviation')
-				ws.table_view = 'Right'
+				ws.table_view = 'Left' if i % 2 ==1 else 'Right'
 				ws.default_value = args[s].get('default_value')
 				ws.image_viewer = '<img src="%s" width="100px">'%(args[s].get('image_viewer'))
+				i = i + 1
 	return True
 
 def create_work_order_measurement(obj, args):
