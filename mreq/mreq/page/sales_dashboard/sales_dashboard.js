@@ -1534,10 +1534,14 @@ frappe.SearchArea = Class.extend({
 		$("<button class='btn btn-small btn-info'><i class='icon-plus'></i></button>")
 			.appendTo($("<td>").appendTo(row))
 			.click(function() {
-				if($(me.area).attr('id') == 'customer')
+				if($(me.area).attr('id') == 'customer'){
 					new frappe.CustomerForm(me.wrapper, 'new')
-				if($(me.area).attr('id') == 'sales_invoice')
+					new frappe.SalesInvoce(me.wrapper,'')
+					$('.bold').removeClass('bold');
+				}
+				if($(me.area).attr('id') == 'sales_invoice'){
 					new frappe.SalesForm(me.wrapper, 'new', me.search_key, '')
+				}
 			});
 
 		if($(me.area).attr('id') == 'sales_invoice'){

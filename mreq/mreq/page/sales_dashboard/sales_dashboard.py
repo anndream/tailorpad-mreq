@@ -495,6 +495,7 @@ def create_customer(cust_details):
 	cust.save()
 
 	create_contact(cust.name, cust_details)
+	return cust.name
 
 def create_contact(name, cust_details):
 	contact = frappe.new_doc('Contact')
