@@ -2115,9 +2115,11 @@ frappe.SalesForm = Class.extend({
 				},
 				callback: function(r){
 					$('[data-fieldname="fabric_rate"]').val(r.message.fc)
-					$('[data-fieldname="tailoring_rate"]').val(r.message.ic)
+					$('[data-fieldname="tailoring_rate"]').val(0)
 					$('[data-fieldname="width"]').val(r.message.fw)
-					$('[data-fieldname="fabric_qty"]').val(r.message.fq)
+					$('[data-fieldname="fabric_qty"]').val(0)
+					$('[data-fieldname="tailoring_qty"]').val(0)
+					$('[data-fieldname="tailoring_size"]').val('')
 					me.set_tot()
 				}
 			})
