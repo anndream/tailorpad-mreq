@@ -994,6 +994,7 @@ def create_work_order_style(obj, args):
 			if args[s].get('default_value'):
 				ws = obj.append('wo_style', {})
 				ws.field_name = args[s].get('field_name')
+				ws.idx = frappe.db.get_value('WO Style', {'parent': obj.work_order_name, 'field_name': ws.field_name}, 'idx')
 				ws.abbreviation  = args[s].get('abbreviation')
 				ws.table_view = 'Right' if i % 2 ==1 else 'Left'
 				ws.default_value = args[s].get('default_value')
