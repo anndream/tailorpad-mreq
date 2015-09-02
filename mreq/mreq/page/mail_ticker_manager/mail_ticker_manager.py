@@ -6,6 +6,8 @@ from frappe.utils.data import getdate
 
 @frappe.whitelist()
 def get_children(from_date, to_date):
+	if frappe.local.site_path.split('/')[1] == 'demo.tailorpad.com':
+		return None
 	args = frappe.local.form_dict
 	if args['parent'] == 'Users':
 		acc = frappe.db.sql("""select name as value, 0 as expandable 
