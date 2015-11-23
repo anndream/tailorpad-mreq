@@ -825,13 +825,12 @@ tab_mapper = {
 
 @frappe.whitelist()
 def get_wo_details(tab, woname):
-	
 	if tab in mapper:
 		return frappe.db.sql("""select 	%s from %s where parent = '%s' order by idx"""%(','.join(mapper.get(tab)), tab_mapper.get(tab),
 			 woname.split('\t')[-1].strip()),  as_dict=1)
 
 	else:
-		return frappe.db.sql(""" select sales_invoice_no, item_code, customer, serial_no_data, note as note from `tabWork Order` 
+		return frappe.db.sql(""" select sales_invoice_no, item_code, customer, serial_no_data, note as note, measured_by from `tabWork Order` 
 					where name = '%s' """%(woname.split('\t')[-1].strip()), as_dict=1)
 
 @frappe.whitelist()
@@ -839,33 +838,27 @@ def update_wo(wo_details, fields, woname, style_details,note,measured_by ,args=N
 	from frappe.utils import cstr
 	wo = frappe.get_doc('Work Order', woname)
 	style_details =  eval(style_details)
-	if note or measured_by:
-		frappe.db.sql(""" update `tabWork Order` set note = '%s', measured_by = '%s' where name = '%s'"""%(note, measured_by,woname))
+	# if note or measured_by:
+	# 	frappe.db.sql(""" update `tabWork Order` set note = '%s', measured_by = '%s' where name = '%s'"""%(note, measured_by,woname))
 
-	for d in wo.get('wo_style'):
+	for d in wo.wo_style:
 		for style in style_details:
 			if d.field_name == style:
-				frappe.db.sql("""update `tabWO Style` 
-									set image_viewer ='%s', default_value = '%s', 
-										abbreviation = '%s' ,cost_to_customer = '%s'
-									where parent = '%s' and  field_name = '%s'
-							"""%( cstr(style_details[style].get('image')), cstr(style_details[style].get('value')),
-									cstr(style_details[style].get('abbr')), flt(style_details[style].get('customer_cost')),
-									woname, style
-								))
-				frappe.db.sql("commit")
+				d.image_viewer = cstr(style_details[style].get('image'))
+				d.default_value =  cstr(style_details[style].get('value'))
+				d.abbreviation = cstr(style_details[style].get('abbr'))
+				d.cost_to_customer = flt(style_details[style].get('customer_cost'))
 
 	wo_details = eval(wo_details)
-	for d in wo.get('measurement_item'):
+	for d in wo.measurement_item:
 		for style in wo_details['Measurement Item']:
-			if d.parameter == style[0]:				
-				frappe.db.sql("""update `tabMeasurement Item` 
-									set value ='%s'
-									where parent = '%s' and  name = '%s'
-							"""%(style[2], woname, d.name))
-				frappe.db.commit()
+			if d.parameter == style[0]:
+				d.value = style[2]
 
-	# wo.save(1)
+	wo.note = note
+	wo.measured_by = measured_by
+	wo.save()
+
 
 	frappe.msgprint("Updated.....")
 
@@ -957,7 +950,7 @@ def make_po(supp_dic):
 
 
 @frappe.whitelist()
-def create_work_order(wo_details,style_details, fields, woname, note,  args=None, type_of_wo=None):
+def create_work_order(wo_details,style_details, fields, woname, note, measured_by,  args=None, type_of_wo=None):
 	if args:
 		args = eval(args)
 		if woname:
@@ -967,6 +960,7 @@ def create_work_order(wo_details,style_details, fields, woname, note,  args=None
 			wo.status = wo_data.status
 			wo.delivery_date = wo_data.delivery_date
 			wo.note = note
+			wo.measured_by = measured_by
 			wo.work_order_no = get_amended_name(woname, wo_data.work_order_name)
 			wo.customer = wo_data.customer
 			wo.sales_invoice_no = wo_data.sales_invoice_no

@@ -2859,6 +2859,7 @@ frappe.WOForm = Class.extend({
 		.appendTo(me.field_area)
 		.click(function() {
 			// me.update_wo()
+			frappe.route_options = { work_order_name: me.woname};
 			window.open("#Form/Work Order/"+me.woname, "_self");
 		});
 	
@@ -2944,10 +2945,6 @@ frappe.WOForm = Class.extend({
 			// window.open("#Form/Customer/"+$('[data-fieldname="customer_name"]').val(), "_self");
 				});
 			}
-	
-
-
-
 		}
 
 		this.render_data(key);
@@ -2973,8 +2970,9 @@ frappe.WOForm = Class.extend({
 
 		if(key == 'Work Order') {
 			$.each(dic, function(key, val){
-				if(key!='note'){
-					$('[data-fieldname="'+key+'"]').attr("disabled","disabled")
+				$('[data-fieldname="'+key+'"]').attr("disabled","disabled")
+				if(key == 'note' || key == 'measured_by'){
+					$('[data-fieldname="'+key+'"]').removeAttr('disabled');
 				}
 				$('[data-fieldname="'+key+'"]').val(val)
 			})
@@ -3139,7 +3137,7 @@ frappe.WOForm = Class.extend({
 			method:"mreq.mreq.page.sales_dashboard.sales_dashboard.update_wo",
 			args:{'wo_details': me.wo_details, 'style_details':me.style_details, 'fields':me.field_list, 'woname': me.woname, 'note': $("[data-fieldname='note']").val(),'measured_by': $("[data-fieldname='measured_by']").val()},
 			callback: function(r){
-				// new frappe.SalesInvoce(me.wrapper)
+					// refresh_field('measured_by')
 		    	}
 		  })
 
