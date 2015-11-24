@@ -2860,7 +2860,7 @@ frappe.WOForm = Class.extend({
 		.click(function() {
 			// me.update_wo()
 			frappe.route_options = { work_order_name: me.woname};
-			window.open("#Form/Work Order/"+me.woname, "_self");
+			frappe.set_route("Form", 'Work Order', me.woname);
 		});
 	
 
