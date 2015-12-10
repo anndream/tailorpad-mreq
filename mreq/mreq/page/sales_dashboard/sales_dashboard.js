@@ -2186,12 +2186,13 @@ frappe.SalesForm = Class.extend({
 				method:"mreq.mreq.page.sales_dashboard.sales_dashboard.check_swatch_group",
 				args:{'fabric_code':$('[data-fieldname="fabric_code"]').val()},
 				callback: function(r){
-					if(r.message == 1){
-						$('#reserve_fabric').hide()
-					}
-					else{
-						$('#reserve_fabric').show()	
-					}
+					var s
+					// if(r.message == 1){
+					// 	$('#reserve_fabric').hide()
+					// }
+					// else{
+					// 	$('#reserve_fabric').show()	
+					// }
 				}
 			})
 		})

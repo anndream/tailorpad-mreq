@@ -1,732 +1,734 @@
-"Data Import Template"
-"Table:","Property Setter"
-""
-""
-"Notes:"
-"Please do not change the template headings."
-"First data column must be blank."
-"If you are uploading new records, leave the ""name"" (ID) column blank."
-"If you are uploading new records, ""Naming Series"" becomes mandatory, if present."
-"Only mandatory fields are necessary for new records. You can delete non-mandatory columns if you wish."
-"For updating, you can update only selective columns."
-"You can only upload upto 5000 records in one go. (may be less in some cases)"
-""
-"DocType:","Property Setter","","","","","","",""
+"Data Import Template",,,,,,,,
+"Table:","Property Setter",,,,,,,
+,,,,,,,,
+,,,,,,,,
+"Notes:",,,,,,,,
+"Please do not change the template headings.",,,,,,,,
+"First data column must be blank.",,,,,,,,
+"If you are uploading new records, leave the ""name"" (ID) column blank.",,,,,,,,
+"If you are uploading new records, ""Naming Series"" becomes mandatory, if present.",,,,,,,,
+"Only mandatory fields are necessary for new records. You can delete non-mandatory columns if you wish.",,,,,,,,
+"For updating, you can update only selective columns.",,,,,,,,
+"You can only upload upto 5000 records in one go. (may be less in some cases)",,,,,,,,
+,,,,,,,,
+"DocType:","Property Setter",,,,,,,
 "Column Labels:","ID","DocType or Field","DocType","Property","Set Value","Field Name","Property Type","Default Value"
 "Column Name:","name","doctype_or_field","doc_type","property","value","field_name","property_type","default_value"
 "Mandatory:","Yes","Yes","Yes","Yes","No","No","No","No"
 "Type:","Data (text)","Select","Link","Data","Text","Data","Data","Data"
-"Info:","","One of: DocField, DocType","Valid DocType","","","","",""
-"Start entering data below this line"
-"","""Sales Invoice-selling_price_list-hidden""","DocField","Sales Invoice","hidden","0","selling_price_list","Check",""
-"","""Sales Invoice-read_only_onload""","DocType","Sales Invoice","read_only_onload","","","Check",""
-"","""Sales Invoice Items-reserve_fabric_qty-hidden""","DocField","Sales Invoice Items","hidden","1","reserve_fabric_qty","Check",""
-"","""Sales Invoice Items-read_only_onload""","DocType","Sales Invoice Items","read_only_onload","","","Check",""
-"","""Sales Invoice-notification_send-previous_field""","DocField","Sales Invoice","previous_field","against_income_account","notification_send","Data",""
-"","""Work Order Distribution-expense-previous_field""","DocField","Work Order Distribution","previous_field","tailor_work_order","expense","Data",""
-"","""Sales Invoice Items-fabric_owner-previous_field""","DocField","Sales Invoice Items","previous_field","cut_fabric_status","fabric_owner","Data",""
-"","""Sales Invoice Items-cut_fabric_status-previous_field""","DocField","Sales Invoice Items","previous_field","fabric_owner","cut_fabric_status","Data",""
-"","""Sales Invoice-_idx""","DocType","Sales Invoice","_idx","[""customer_section"", ""naming_series"", ""customer"", ""customer_name"", ""trial_date"", ""address_display"", ""contact_display"", ""contact_mobile"", ""contact_email"", ""is_multi_mode"", ""mode_of_payment"", ""delivery_mode"", ""delivery_date"", ""authenticated"", ""admin_authentication_note"", ""branch"", ""release"", ""column_break1"", ""is_pos"", ""company"", ""amended_from"", ""posting_date"", ""due_date"", ""from_date"", ""to_date"", ""currency_section"", ""currency"", ""conversion_rate"", ""column_break2"", ""selling_price_list"", ""price_list_currency"", ""plc_conversion_rate"", ""ignore_pricing_rule"", ""items"", ""update_stock"", ""sales_invoice_items_one"", ""merchandise_item"", ""work_order_distribution"", ""fabric_details"", ""entries"", ""packing_list"", ""packing_details"", ""sales_bom_help"", ""section_break_30"", ""total_earned_points"", ""redeem_points"", ""net_total"", ""column_break_32"", ""referral"", ""referral_name"", ""net_total_export"", ""taxes"", ""taxes_and_charges"", ""column_break_38"", ""shipping_rule"", ""section_break_40"", ""other_charges"", ""other_charges_calculation"", ""section_break_43"", ""other_charges_total"", ""column_break_45"", ""other_charges_total_export"", ""discount_amount"", ""totals"", ""grand_total"", ""rounded_total"", ""in_words"", ""total_advance"", ""outstanding_amount"", ""column_break5"", ""grand_total_export"", ""rounded_total_export"", ""in_words_export"", ""gross_profit"", ""gross_profit_percent"", ""advances"", ""get_advances_received"", ""advance_adjustment_details"", ""payments_section"", ""column_break3"", ""paid_amount"", ""cash_bank_account"", ""column_break4"", ""write_off_outstanding_amount_automatically"", ""write_off_amount"", ""write_off_account"", ""write_off_cost_center"", ""fold"", ""terms_section_break"", ""tc_name"", ""terms"", ""contact_section"", ""territory"", ""customer_group"", ""col_break23"", ""customer_address"", ""contact_person"", ""more_info"", ""debit_to"", ""project_name"", ""campaign"", ""source"", ""is_opening"", ""c_form_applicable"", ""c_form_no"", ""column_break8"", ""letter_head"", ""select_print_heading"", ""posting_time"", ""aging_date"", ""fiscal_year"", ""remarks"", ""sales_team_section_break"", ""column_break9"", ""sales_partner"", ""column_break10"", ""commission_rate"", ""total_commission"", ""section_break2"", ""sales_team"", ""recurring_invoice"", ""column_break11"", ""is_recurring"", ""recurring_type"", ""repeat_on_day_of_month"", ""next_date"", ""end_date"", ""column_break12"", ""recurring_id"", ""notification_email_address"", ""against_income_account"", ""notification_send"", ""thank_you""]","","Text",""
-"","""Sales Invoice-referral_name-previous_field""","DocField","Sales Invoice","previous_field","referral","referral_name","Data",""
-"","""Sales Invoice-referral-previous_field""","DocField","Sales Invoice","previous_field","redeem_points","referral","Data",""
-"","""Sales Invoice-redeem_points-previous_field""","DocField","Sales Invoice","previous_field","total_earned_points","redeem_points","Data",""
-"","""Sales Invoice-total_earned_points-previous_field""","DocField","Sales Invoice","previous_field","entries","total_earned_points","Data",""
-"","""Sales Invoice-column_break_32-idx""","DocField","Sales Invoice","idx","48","column_break_32","Int",""
-"","""Sales Invoice-net_total-idx""","DocField","Sales Invoice","idx","47","net_total","Int",""
-"","""Sales Invoice-section_break_30-idx""","DocField","Sales Invoice","idx","44","section_break_30","Int",""
-"","""Sales Invoice-sales_bom_help-idx""","DocField","Sales Invoice","idx","43","sales_bom_help","Int",""
-"","""Sales Invoice-packing_details-idx""","DocField","Sales Invoice","idx","42","packing_details","Int",""
-"","""Sales Invoice-packing_list-idx""","DocField","Sales Invoice","idx","41","packing_list","Int",""
-"","""Sales Invoice-selling_price_list-reqd""","DocField","Sales Invoice","reqd","0","selling_price_list","Check",""
-"","""Sales Invoice-address_display-print_hide""","DocField","Sales Invoice","print_hide","1","address_display","Check",""
-"","""Sales Invoice-update_stock-hidden""","DocField","Sales Invoice","hidden","1","update_stock","Check",""
-"","""Sales Invoice-is_pos-hidden""","DocField","Sales Invoice","hidden","1","is_pos","Check",""
-"","""Sales Invoice-authenticated-previous_field""","DocField","Sales Invoice","previous_field","delivery_date","authenticated","Data",""
-"","""Serial No-barcode_image-previous_field""","DocField","Serial No","previous_field","brand","barcode_image","Data",""
-"","""Item-barcode_img-previous_field""","DocField","Item","previous_field","column_break0","barcode_img","Data",""
-"","""Stock Entry-barcode-previous_field""","DocField","Stock Entry","previous_field","posting_time","barcode","Data",""
-"","""Item-barcode_description-previous_field""","DocField","Item","previous_field","barcode_image","barcode_description","Data",""
-"","""Item-qrcode-previous_field""","DocField","Item","previous_field","brand","qrcode","Data",""
-"","""Sales Invoice-update_stock-default""","DocField","Sales Invoice","default","0","update_stock","Text",""
-"","""Branch-_idx""","DocType","Branch","_idx","[""branch_details"", ""branch"", ""branch_abbreviation"", ""stock_entry_bundle_abbreviation"", ""warehouse"", ""branch_type"", ""holiday_list"", ""cost_center"", ""y"", ""currency"", ""min_advance_payment"", ""payment_modes"", ""branch_manager"", ""address_details"", ""address_1"", ""address_2"", ""address_3"", ""city"", ""state"", ""pin_code"", ""country"", ""z"", ""phone_no_1"", ""phone_no_2"", ""mobile_no"", ""fax_no"", ""drawing_acc""]","","Text",""
-"","""Branch-drawing_acc-previous_field""","DocField","Branch","previous_field","cost_center","drawing_acc","Data",""
-"","""Branch-fax_no-previous_field""","DocField","Branch","previous_field","mobile_no","fax_no","Data",""
-"","""Branch-mobile_no-previous_field""","DocField","Branch","previous_field","phone_no_2","mobile_no","Data",""
-"","""Branch-phone_no_2-previous_field""","DocField","Branch","previous_field","phone_no_1","phone_no_2","Data",""
-"","""Branch-phone_no_1-previous_field""","DocField","Branch","previous_field","z","phone_no_1","Data",""
-"","""Branch-z-previous_field""","DocField","Branch","previous_field","country","z","Data",""
-"","""Branch-country-previous_field""","DocField","Branch","previous_field","pin_code","country","Data",""
-"","""Branch-pin_code-previous_field""","DocField","Branch","previous_field","state","pin_code","Data",""
-"","""Branch-state-previous_field""","DocField","Branch","previous_field","city","state","Data",""
-"","""Branch-city-previous_field""","DocField","Branch","previous_field","address_3","city","Data",""
-"","""Branch-address_3-previous_field""","DocField","Branch","previous_field","address_2","address_3","Data",""
-"","""Branch-address_2-previous_field""","DocField","Branch","previous_field","address_1","address_2","Data",""
-"","""Branch-address_1-previous_field""","DocField","Branch","previous_field","address_details","address_1","Data",""
-"","""Branch-address_details-previous_field""","DocField","Branch","previous_field","holiday_list","address_details","Data",""
-"","""Branch-branch_manager-previous_field""","DocField","Branch","previous_field","payment_modes","branch_manager","Data",""
-"","""Branch-payment_modes-previous_field""","DocField","Branch","previous_field","min_advance_payment","payment_modes","Data",""
-"","""Branch-min_advance_payment-previous_field""","DocField","Branch","previous_field","y","min_advance_payment","Data",""
-"","""Branch-currency-previous_field""","DocField","Branch","previous_field","y","currency","Data",""
-"","""Branch-y-previous_field""","DocField","Branch","previous_field","currency","y","Data",""
-"","""Branch-cost_center-previous_field""","DocField","Branch","previous_field","fax_no","cost_center","Data",""
-"","""Branch-holiday_list-previous_field""","DocField","Branch","previous_field","branch_manager","holiday_list","Data",""
-"","""Branch-branch_type-previous_field""","DocField","Branch","previous_field","warehouse","branch_type","Data",""
-"","""Branch-warehouse-previous_field""","DocField","Branch","previous_field","branch","warehouse","Data",""
-"","""Branch-stock_entry_bundle_abbreviation-previous_field""","DocField","Branch","previous_field","branch_abbreviation","stock_entry_bundle_abbreviation","Data",""
-"","""Stock Entry Detail-delivery_date-previous_field""","DocField","Stock Entry Detail","previous_field","trial_date","delivery_date","Data",""
-"","""Stock Entry Detail-trial_date-previous_field""","DocField","Stock Entry Detail","previous_field","customer_name","trial_date","Data",""
-"","""Sales Invoice Item-delivery_date-previous_field""","DocField","Sales Invoice Item","previous_field","sales_invoice_branch","delivery_date","Data",""
-"","""Sales Invoice Item-tailoring_size-previous_field""","DocField","Sales Invoice Item","previous_field","fabric_qty","tailoring_size","Data",""
-"","""Sales Invoice Item-fabric_qty-previous_field""","DocField","Sales Invoice Item","previous_field","fabric_code","fabric_qty","Data",""
-"","""Sales Invoice Item-fabric_code-previous_field""","DocField","Sales Invoice Item","previous_field","page_break","fabric_code","Data",""
-"","""Sales Invoice Item-trial_date-previous_field""","DocField","Sales Invoice Item","previous_field","delivery_date","trial_date","Data",""
-"","""Employee-employee_number-hidden""","DocField","Employee","hidden","1","employee_number","Check",""
-"","""Employee-employee_number-reqd""","DocField","Employee","reqd","0","employee_number","Check",""
-"","""Employee-naming_series-reqd""","DocField","Employee","reqd","1","naming_series","Check",""
-"","""Employee-naming_series-hidden""","DocField","Employee","hidden","0","naming_series","Check",""
-"","""Delivery Note-sales_bom_help-hidden""","DocField","Delivery Note","hidden","1","sales_bom_help","Check",""
-"","""Delivery Note-read_only_onload""","DocType","Delivery Note","read_only_onload","","","Check",""
-"","""Process Allotment-test_field-label""","DocField","Process Allotment","label","","test_field","Data",""
-"","""Process Allotment-read_only_onload""","DocType","Process Allotment","read_only_onload","","","Check",""
-"","""Process Allotment-_idx""","DocType","Process Allotment","_idx","[""product_details"", ""sales_invoice_no"", ""item"", ""add"", ""process_work_order"", ""serials_data"", ""finished_good_qty"", ""processwise_trial_details"", ""column_break_3"", ""process_status"", ""process"", ""branch"", ""customer_name"", ""total_expense"", ""total_invoice_amount"", ""barcode"", ""qrcode"", ""process_status_changes"", ""skip_process"", ""section_break_11"", ""emp_status"", ""process_tailor"", ""employee_name"", ""serial_no"", ""add_all_serial_no"", ""start_date"", ""from_time"", ""end_date"", ""estimated_time"", ""completed_time"", ""customer_trials"", ""payment"", ""wages_for_single_piece"", ""wages"", ""assigned"", ""column_break_16"", ""process_trials"", ""serial_no_data"", ""qc"", ""work_order"", ""work_qty"", ""task"", ""deduct_late_work"", ""latework"", ""cost"", ""test_field"", ""extra_charge"", ""extra_charge_amount"", ""clear_all"", ""section_break_23"", ""employee_details"", ""section_break_19"", ""trials_transaction"", ""section_break_6"", ""wo_process"", ""issue_raw_material"", ""make_stock_entry"", ""section_break_5"", ""column_break_7"", ""stock_entry"", ""section_break_17"", ""process_no"", ""has_trials"", ""pdd"", ""trial_dates"", ""qi_status"", ""amended_from"", ""serial_no_list""]","","Text",""
-"","""Process Allotment-serial_no_list-idx""","DocField","Process Allotment","idx","68","serial_no_list","Int",""
-"","""Process Allotment-amended_from-idx""","DocField","Process Allotment","idx","67","amended_from","Int",""
-"","""Process Allotment-qi_status-idx""","DocField","Process Allotment","idx","66","qi_status","Int",""
-"","""Process Allotment-trial_dates-idx""","DocField","Process Allotment","idx","65","trial_dates","Int",""
-"","""Process Allotment-pdd-idx""","DocField","Process Allotment","idx","64","pdd","Int",""
-"","""Process Allotment-has_trials-idx""","DocField","Process Allotment","idx","63","has_trials","Int",""
-"","""Process Allotment-process_no-idx""","DocField","Process Allotment","idx","62","process_no","Int",""
-"","""Process Allotment-section_break_17-idx""","DocField","Process Allotment","idx","61","section_break_17","Int",""
-"","""Process Allotment-stock_entry-idx""","DocField","Process Allotment","idx","60","stock_entry","Int",""
-"","""Process Allotment-column_break_7-idx""","DocField","Process Allotment","idx","59","column_break_7","Int",""
-"","""Process Allotment-section_break_5-idx""","DocField","Process Allotment","idx","58","section_break_5","Int",""
-"","""Process Allotment-make_stock_entry-idx""","DocField","Process Allotment","idx","57","make_stock_entry","Int",""
-"","""Process Allotment-issue_raw_material-idx""","DocField","Process Allotment","idx","56","issue_raw_material","Int",""
-"","""Process Allotment-wo_process-idx""","DocField","Process Allotment","idx","55","wo_process","Int",""
-"","""Process Allotment-section_break_6-idx""","DocField","Process Allotment","idx","54","section_break_6","Int",""
-"","""Process Allotment-trials_transaction-idx""","DocField","Process Allotment","idx","53","trials_transaction","Int",""
-"","""Process Allotment-section_break_19-idx""","DocField","Process Allotment","idx","52","section_break_19","Int",""
-"","""Process Allotment-employee_details-idx""","DocField","Process Allotment","idx","51","employee_details","Int",""
-"","""Process Allotment-section_break_23-idx""","DocField","Process Allotment","idx","50","section_break_23","Int",""
-"","""Process Allotment-clear_all-idx""","DocField","Process Allotment","idx","49","clear_all","Int",""
-"","""Process Allotment-extra_charge_amount-idx""","DocField","Process Allotment","idx","48","extra_charge_amount","Int",""
-"","""Process Allotment-extra_charge-idx""","DocField","Process Allotment","idx","47","extra_charge","Int",""
-"","""Process Allotment-test_field-idx""","DocField","Process Allotment","idx","46","test_field","Int",""
-"","""Work Order-note-previous_field""","DocField","Work Order","previous_field","delivery_date","note","Data",""
-"","""Stock Entry-purpose-hidden""","DocField","Stock Entry","hidden","1","purpose","Check",""
-"","""Stock Entry-read_only_onload""","DocType","Stock Entry","read_only_onload","","","Check",""
-"","""Event-item_name-previous_field""","DocField","Event","previous_field","ref_type","item_name","Data",""
-"","""Event-sales_invoice_no-previous_field""","DocField","Event","previous_field","branch","sales_invoice_no","Data",""
-"","""Sales Invoice Items-split_qty_dict-report_hide""","DocField","Sales Invoice Items","report_hide","1","split_qty_dict","Check",""
-"","""Sales Invoice Items-split_qty_dict-hidden""","DocField","Sales Invoice Items","hidden","1","split_qty_dict","Check",""
-"","""Sales Invoice Items-split_qty_dict-print_hide""","DocField","Sales Invoice Items","print_hide","1","split_qty_dict","Check",""
-"","""Sales Invoice Items-delivery_branch-report_hide""","DocField","Sales Invoice Items","report_hide","1","delivery_branch","Check",""
-"","""Sales Invoice Items-delivery_branch-hidden""","DocField","Sales Invoice Items","hidden","1","delivery_branch","Check",""
-"","""Sales Invoice Items-delivery_branch-print_hide""","DocField","Sales Invoice Items","print_hide","1","delivery_branch","Check",""
-"","""Sales Invoice Items-total_expenses-previous_field""","DocField","Sales Invoice Items","previous_field","delivery_branch","total_expenses","Data",""
-"","""Sales Invoice Items-reserve_fabric_qty-report_hide""","DocField","Sales Invoice Items","report_hide","1","reserve_fabric_qty","Check",""
-"","""Sales Invoice Items-reserve_fabric_qty-print_hide""","DocField","Sales Invoice Items","print_hide","1","reserve_fabric_qty","Check",""
-"","""Sales Invoice-fabric_details-previous_field""","DocField","Sales Invoice","previous_field","sales_invoice_items_one","fabric_details","Data",""
-"","""Sales Invoice-trial_date-previous_field""","DocField","Sales Invoice","previous_field","customer_name","trial_date","Data",""
-"","""Sales Invoice-entries-allow_on_submit""","DocField","Sales Invoice","allow_on_submit","0","entries","Check",""
-"","""Process Allotment-total_invoice_amount-previous_field""","DocField","Process Allotment","previous_field","total_expense","total_invoice_amount","Data",""
-"","""Process Allotment-total_expense-previous_field""","DocField","Process Allotment","previous_field","customer_name","total_expense","Data",""
-"","""Process Allotment-cost-idx""","DocField","Process Allotment","idx","45","cost","Int",""
-"","""Process Allotment-latework-idx""","DocField","Process Allotment","idx","44","latework","Int",""
-"","""Process Allotment-deduct_late_work-idx""","DocField","Process Allotment","idx","43","deduct_late_work","Int",""
-"","""Process Allotment-task-idx""","DocField","Process Allotment","idx","42","task","Int",""
-"","""Process Allotment-work_qty-idx""","DocField","Process Allotment","idx","41","work_qty","Int",""
-"","""Process Allotment-work_order-idx""","DocField","Process Allotment","idx","40","work_order","Int",""
-"","""Process Allotment-qc-idx""","DocField","Process Allotment","idx","39","qc","Int",""
-"","""Process Allotment-serial_no_data-idx""","DocField","Process Allotment","idx","38","serial_no_data","Int",""
-"","""Process Allotment-process_trials-idx""","DocField","Process Allotment","idx","37","process_trials","Int",""
-"","""Process Allotment-column_break_16-idx""","DocField","Process Allotment","idx","36","column_break_16","Int",""
-"","""Process Allotment-assigned-idx""","DocField","Process Allotment","idx","35","assigned","Int",""
-"","""Process Allotment-wages-idx""","DocField","Process Allotment","idx","34","wages","Int",""
-"","""Process Allotment-wages_for_single_piece-idx""","DocField","Process Allotment","idx","33","wages_for_single_piece","Int",""
-"","""Process Allotment-payment-idx""","DocField","Process Allotment","idx","32","payment","Int",""
-"","""Process Allotment-customer_trials-idx""","DocField","Process Allotment","idx","31","customer_trials","Int",""
-"","""Process Allotment-completed_time-idx""","DocField","Process Allotment","idx","30","completed_time","Int",""
-"","""Process Allotment-estimated_time-idx""","DocField","Process Allotment","idx","29","estimated_time","Int",""
-"","""Process Allotment-end_date-idx""","DocField","Process Allotment","idx","28","end_date","Int",""
-"","""Process Allotment-from_time-idx""","DocField","Process Allotment","idx","27","from_time","Int",""
-"","""Process Allotment-start_date-idx""","DocField","Process Allotment","idx","26","start_date","Int",""
-"","""Process Allotment-add_all_serial_no-idx""","DocField","Process Allotment","idx","25","add_all_serial_no","Int",""
-"","""Process Allotment-serial_no-idx""","DocField","Process Allotment","idx","24","serial_no","Int",""
-"","""Process Allotment-employee_name-idx""","DocField","Process Allotment","idx","23","employee_name","Int",""
-"","""Process Allotment-process_tailor-idx""","DocField","Process Allotment","idx","22","process_tailor","Int",""
-"","""Process Allotment-emp_status-idx""","DocField","Process Allotment","idx","21","emp_status","Int",""
-"","""Process Allotment-section_break_11-idx""","DocField","Process Allotment","idx","20","section_break_11","Int",""
-"","""Process Allotment-skip_process-idx""","DocField","Process Allotment","idx","19","skip_process","Int",""
-"","""Process Allotment-process_status_changes-idx""","DocField","Process Allotment","idx","18","process_status_changes","Int",""
-"","""Process Allotment-qrcode-idx""","DocField","Process Allotment","idx","17","qrcode","Int",""
-"","""Process Allotment-barcode-idx""","DocField","Process Allotment","idx","16","barcode","Int",""
-"","""User-add_validity-previous_field""","DocField","User","previous_field","last_name","add_validity","Data",""
-"","""Sales Invoice-work_order_distribution-previous_field""","DocField","Sales Invoice","previous_field","merchandise_item","work_order_distribution","Data",""
-"","""Customer-naming_series-hidden""","DocField","Customer","hidden","1","naming_series","Check",""
-"","""Customer-naming_series-reqd""","DocField","Customer","reqd","0","naming_series","Check",""
-"","""Style Item-_idx""","DocType","Style Item","_idx","[""default_values"", ""default"", ""style"", ""default_value"", ""add_image"", ""define_cost_to_tailor"", ""image_viewer"", ""column_break_5"", ""abbreviation"", ""cost_to_customer"", ""cost_to_tailor"", ""note"", ""process_wise_tailor_cost""]","","Text",""
-"","""Style Item-note-idx""","DocField","Style Item","idx","12","note","Int",""
-"","""Style Item-cost_to_tailor-idx""","DocField","Style Item","idx","11","cost_to_tailor","Int",""
-"","""Style Item-cost_to_customer-idx""","DocField","Style Item","idx","10","cost_to_customer","Int",""
-"","""Style Item-abbreviation-idx""","DocField","Style Item","idx","9","abbreviation","Int",""
-"","""Style Item-column_break_5-idx""","DocField","Style Item","idx","8","column_break_5","Int",""
-"","""Style Item-image_viewer-idx""","DocField","Style Item","idx","7","image_viewer","Int",""
-"","""Style Item-add_image-idx""","DocField","Style Item","idx","5","add_image","Int",""
-"","""Style Item-default_value-idx""","DocField","Style Item","idx","4","default_value","Int",""
-"","""Style Item-style-idx""","DocField","Style Item","idx","3","style","Int",""
-"","""Style Item-read_only_onload""","DocType","Style Item","read_only_onload","","","Check",""
-"","""WO Style-process_wise_tailor_cost-idx""","DocField","WO Style","idx","14","process_wise_tailor_cost","Int",""
-"","""WO Style-read_only_onload""","DocType","WO Style","read_only_onload","","","Check",""
-"","""WO Style-_idx""","DocType","WO Style","_idx","[""field_name"", ""abbreviation"", ""view"", ""define_cost_to_tailor"", ""add_image"", ""image_viewer"", ""column_break_7"", ""default_value"", ""cost_to_customer"", ""cost_to_tailor"", ""extra_text_field"", ""table_view"", ""note"", ""process_wise_trial_cost_""]","","Text",""
-"","""WO Style-add_image-idx""","DocField","WO Style","idx","5","add_image","Int",""
-"","""WO Style-define_cost_to_tailor-idx""","DocField","WO Style","idx","4","define_cost_to_tailor","Int",""
-"","""WO Style-table_view-previous_field""","DocField","WO Style","previous_field","extra_text_field","table_view","Data",""
-"","""Delivery Note-rounded_total_export-print_hide""","DocField","Delivery Note","print_hide","0","rounded_total_export","Check",""
-"","""Delivery Note-rounded_total_export-hidden""","DocField","Delivery Note","hidden","0","rounded_total_export","Check",""
-"","""Delivery Note-rounded_total-print_hide""","DocField","Delivery Note","print_hide","1","rounded_total","Check",""
-"","""Delivery Note-rounded_total-hidden""","DocField","Delivery Note","hidden","0","rounded_total","Check",""
-"","""Sales Invoice-rounded_total_export-print_hide""","DocField","Sales Invoice","print_hide","0","rounded_total_export","Check",""
-"","""Sales Invoice-rounded_total_export-hidden""","DocField","Sales Invoice","hidden","0","rounded_total_export","Check",""
-"","""Sales Invoice-rounded_total-print_hide""","DocField","Sales Invoice","print_hide","1","rounded_total","Check",""
-"","""Sales Invoice-rounded_total-hidden""","DocField","Sales Invoice","hidden","0","rounded_total","Check",""
-"","""Sales Order-rounded_total_export-print_hide""","DocField","Sales Order","print_hide","0","rounded_total_export","Check",""
-"","""Sales Order-rounded_total_export-hidden""","DocField","Sales Order","hidden","0","rounded_total_export","Check",""
-"","""Sales Order-rounded_total-print_hide""","DocField","Sales Order","print_hide","1","rounded_total","Check",""
-"","""Sales Order-rounded_total-hidden""","DocField","Sales Order","hidden","0","rounded_total","Check",""
-"","""Quotation-rounded_total_export-print_hide""","DocField","Quotation","print_hide","0","rounded_total_export","Check",""
-"","""Quotation-rounded_total_export-hidden""","DocField","Quotation","hidden","0","rounded_total_export","Check",""
-"","""Quotation-rounded_total-print_hide""","DocField","Quotation","print_hide","1","rounded_total","Check",""
-"","""Quotation-rounded_total-hidden""","DocField","Quotation","hidden","0","rounded_total","Check",""
-"","""Customer-lead_name-hidden""","DocField","Customer","hidden","1","lead_name","Check",""
-"","""Salary Manager-type_of_salary-previous_field""","DocField","Salary Manager","previous_field","fiscal_year","type_of_salary","Data",""
-"","""Branch-branch_abbreviation-previous_field""","DocField","Branch","previous_field","branch","branch_abbreviation","Data",""
-"","""Branch-branch_details-previous_field""","DocField","Branch","previous_field","branch_type","branch_details","Data",""
-"","""Employee-type_of_salary-previous_field""","DocField","Employee","previous_field","has_salary_structure","type_of_salary","Data",""
-"","""Employee-_idx""","DocType","Employee","_idx","[""basic_information"", ""column_break0"", ""image_view"", ""image"", ""employee"", ""naming_series"", ""salutation"", ""employee_name"", ""column_break1"", ""user_id"", ""employee_number"", ""date_of_joining"", ""date_of_birth"", ""gender"", ""company"", ""employment_details"", ""col_break_21"", ""status"", ""employment_type"", ""col_break_22"", ""scheduled_confirmation_date"", ""final_confirmation_date"", ""contract_end_date"", ""date_of_retirement"", ""job_profile"", ""column_break2"", ""branch"", ""department"", ""designation"", ""company_email"", ""notice_number_of_days"", ""salary_information"", ""salary_mode"", ""has_salary_structure"", ""type_of_salary"", ""holiday_list"", ""bank_name"", ""bank_ac_no"", ""organization_profile"", ""reports_to"", ""employee_leave_approvers"", ""contact_details"", ""column_break3"", ""cell_number"", ""personal_email"", ""unsubscribed"", ""emergency_contact_details"", ""person_to_be_contacted"", ""relation"", ""emergency_phone_number"", ""column_break4"", ""permanent_accommodation_type"", ""permanent_address"", ""current_accommodation_type"", ""current_address"", ""sb53"", ""bio"", ""personal_details"", ""column_break5"", ""passport_number"", ""date_of_issue"", ""valid_upto"", ""place_of_issue"", ""visa_number"", ""issue_date"", ""expiry_date"", ""column_break6"", ""marital_status"", ""blood_group"", ""family_background"", ""health_details"", ""educational_qualification"", ""educational_qualification_details"", ""previous_work_experience"", ""previous_experience_details"", ""history_in_company"", ""experience_in_company_details"", ""exit"", ""column_break7"", ""resignation_letter_date"", ""relieving_date"", ""reason_for_leaving"", ""leave_encashed"", ""encashment_date"", ""exit_interview_details"", ""held_on"", ""reason_for_resignation"", ""new_workplace"", ""feedback"", ""profile_type"", ""skills"", ""employeeskills"", ""skills_html""]","","Text",""
-"","""Employee-skills_html-previous_field""","DocField","Employee","previous_field","skills","skills_html","Data",""
-"","""Employee-skills-previous_field""","DocField","Employee","previous_field","profile_type","skills","Data",""
-"","""Employee-profile_type-previous_field""","DocField","Employee","previous_field","date_of_retirement","profile_type","Data",""
-"","""Employee-expiry_date-previous_field""","DocField","Employee","previous_field","issue_date","expiry_date","Data",""
-"","""Employee-issue_date-previous_field""","DocField","Employee","previous_field","visa_number","issue_date","Data",""
-"","""Employee-visa_number-previous_field""","DocField","Employee","previous_field","place_of_issue","visa_number","Data",""
-"","""Employee-feedback-idx""","DocField","Employee","idx","89","feedback","Int",""
-"","""Employee-new_workplace-idx""","DocField","Employee","idx","88","new_workplace","Int",""
-"","""Employee-reason_for_resignation-idx""","DocField","Employee","idx","87","reason_for_resignation","Int",""
-"","""Employee-held_on-idx""","DocField","Employee","idx","86","held_on","Int",""
-"","""Employee-exit_interview_details-idx""","DocField","Employee","idx","85","exit_interview_details","Int",""
-"","""Employee-encashment_date-idx""","DocField","Employee","idx","84","encashment_date","Int",""
-"","""Employee-leave_encashed-idx""","DocField","Employee","idx","83","leave_encashed","Int",""
-"","""Employee-reason_for_leaving-idx""","DocField","Employee","idx","82","reason_for_leaving","Int",""
-"","""Employee-relieving_date-idx""","DocField","Employee","idx","81","relieving_date","Int",""
-"","""Employee-resignation_letter_date-idx""","DocField","Employee","idx","80","resignation_letter_date","Int",""
-"","""Employee-column_break7-idx""","DocField","Employee","idx","79","column_break7","Int",""
-"","""Employee-exit-idx""","DocField","Employee","idx","78","exit","Int",""
-"","""Employee-experience_in_company_details-idx""","DocField","Employee","idx","77","experience_in_company_details","Int",""
-"","""Employee-history_in_company-idx""","DocField","Employee","idx","76","history_in_company","Int",""
-"","""Employee-previous_experience_details-idx""","DocField","Employee","idx","75","previous_experience_details","Int",""
-"","""Employee-previous_work_experience-idx""","DocField","Employee","idx","74","previous_work_experience","Int",""
-"","""Employee-educational_qualification_details-idx""","DocField","Employee","idx","73","educational_qualification_details","Int",""
-"","""Employee-educational_qualification-idx""","DocField","Employee","idx","72","educational_qualification","Int",""
-"","""Employee-health_details-idx""","DocField","Employee","idx","71","health_details","Int",""
-"","""Employee-family_background-idx""","DocField","Employee","idx","70","family_background","Int",""
-"","""Employee-blood_group-idx""","DocField","Employee","idx","69","blood_group","Int",""
-"","""Employee-marital_status-idx""","DocField","Employee","idx","68","marital_status","Int",""
-"","""Employee-column_break6-idx""","DocField","Employee","idx","67","column_break6","Int",""
-"","""Employee-place_of_issue-idx""","DocField","Employee","idx","63","place_of_issue","Int",""
-"","""Employee-valid_upto-idx""","DocField","Employee","idx","62","valid_upto","Int",""
-"","""Employee-date_of_issue-idx""","DocField","Employee","idx","61","date_of_issue","Int",""
-"","""Employee-passport_number-idx""","DocField","Employee","idx","60","passport_number","Int",""
-"","""Employee-column_break5-idx""","DocField","Employee","idx","59","column_break5","Int",""
-"","""Employee-personal_details-idx""","DocField","Employee","idx","58","personal_details","Int",""
-"","""Employee-bio-idx""","DocField","Employee","idx","57","bio","Int",""
-"","""Employee-sb53-idx""","DocField","Employee","idx","56","sb53","Int",""
-"","""Employee-current_address-idx""","DocField","Employee","idx","55","current_address","Int",""
-"","""Employee-current_accommodation_type-idx""","DocField","Employee","idx","54","current_accommodation_type","Int",""
-"","""Employee-permanent_address-idx""","DocField","Employee","idx","53","permanent_address","Int",""
-"","""Employee-permanent_accommodation_type-idx""","DocField","Employee","idx","52","permanent_accommodation_type","Int",""
-"","""Employee-column_break4-idx""","DocField","Employee","idx","51","column_break4","Int",""
-"","""Employee-emergency_phone_number-idx""","DocField","Employee","idx","50","emergency_phone_number","Int",""
-"","""Employee-relation-idx""","DocField","Employee","idx","49","relation","Int",""
-"","""Employee-person_to_be_contacted-idx""","DocField","Employee","idx","48","person_to_be_contacted","Int",""
-"","""Employee-emergency_contact_details-idx""","DocField","Employee","idx","47","emergency_contact_details","Int",""
-"","""Employee-unsubscribed-idx""","DocField","Employee","idx","46","unsubscribed","Int",""
-"","""Employee-personal_email-idx""","DocField","Employee","idx","45","personal_email","Int",""
-"","""Employee-cell_number-idx""","DocField","Employee","idx","44","cell_number","Int",""
-"","""Employee-column_break3-idx""","DocField","Employee","idx","43","column_break3","Int",""
-"","""Employee-contact_details-idx""","DocField","Employee","idx","42","contact_details","Int",""
-"","""Employee-employee_leave_approvers-idx""","DocField","Employee","idx","41","employee_leave_approvers","Int",""
-"","""Employee-reports_to-idx""","DocField","Employee","idx","40","reports_to","Int",""
-"","""Employee-organization_profile-idx""","DocField","Employee","idx","39","organization_profile","Int",""
-"","""Employee-bank_ac_no-idx""","DocField","Employee","idx","38","bank_ac_no","Int",""
-"","""Employee-bank_name-idx""","DocField","Employee","idx","37","bank_name","Int",""
-"","""Employee-holiday_list-idx""","DocField","Employee","idx","36","holiday_list","Int",""
-"","""Selling Settings-allow_user_to_calculate_expenses_-previous_field""","DocField","Selling Settings","previous_field","show_sales_invoice_release_option","allow_user_to_calculate_expenses_","Data",""
-"","""Salary Manager-to_date-previous_field""","DocField","Salary Manager","previous_field","from_date","to_date","Data",""
-"","""Employee-has_salary_structure-previous_field""","DocField","Employee","previous_field","salary_mode","has_salary_structure","Data",""
-"","""Salary Manager-from_date-previous_field""","DocField","Salary Manager","previous_field","type_of_salary","from_date","Data",""
-"","""Stock Entry Detail-sales_invoice_no-previous_field""","DocField","Stock Entry Detail","previous_field","work_order","sales_invoice_no","Data",""
-"","""EmployeeSkill-_idx""","DocType","EmployeeSkill","_idx","[""process"", ""item_code"", ""time"", ""column_break_5"", ""type_of_payment"", ""cost"", ""total_percentage""]","","Text",""
-"","""EmployeeSkill-read_only_onload""","DocType","EmployeeSkill","read_only_onload","","","Check",""
-"","""Serial No-gift_voucher_amount-previous_field""","DocField","Serial No","previous_field","serial_no","gift_voucher_amount","Data",""
-"","""Company-gift_voucher_account-previous_field""","DocField","Company","previous_field","default_income_account","gift_voucher_account","Data",""
-"","""Item-naming_series-idx""","DocField","Item","idx","118","naming_series","Int",""
-"","""Item-column_break0-idx""","DocField","Item","idx","117","column_break0","Int",""
-"","""Item-parent_website_route-idx""","DocField","Item","idx","115","parent_website_route","Int",""
-"","""Item-web_long_description-idx""","DocField","Item","idx","114","web_long_description","Int",""
-"","""Item-item_website_specifications-idx""","DocField","Item","idx","113","item_website_specifications","Int",""
-"","""Item-copy_from_item_group-idx""","DocField","Item","idx","112","copy_from_item_group","Int",""
-"","""Item-sb72-idx""","DocField","Item","idx","111","sb72","Int",""
-"","""Item-website_item_groups-idx""","DocField","Item","idx","110","website_item_groups","Int",""
-"","""Item-website_warehouse-idx""","DocField","Item","idx","109","website_warehouse","Int",""
-"","""Item-cb72-idx""","DocField","Item","idx","108","cb72","Int",""
-"","""Item-website_image-idx""","DocField","Item","idx","107","website_image","Int",""
-"","""Item-slideshow-idx""","DocField","Item","idx","106","slideshow","Int",""
-"","""Item-weightage-idx""","DocField","Item","idx","105","weightage","Int",""
-"","""Item-page_name-idx""","DocField","Item","idx","104","page_name","Int",""
-"","""Item-show_in_website-idx""","DocField","Item","idx","103","show_in_website","Int",""
-"","""Item-website_section-idx""","DocField","Item","idx","102","website_section","Int",""
-"","""Item-customer_code-idx""","DocField","Item","idx","101","customer_code","Int",""
-"","""Item-is_sub_contracted_item-idx""","DocField","Item","idx","100","is_sub_contracted_item","Int",""
-"","""Item-is_pro_applicable-idx""","DocField","Item","idx","99","is_pro_applicable","Int",""
-"","""Item-default_bom-idx""","DocField","Item","idx","98","default_bom","Int",""
-"","""Item-is_manufactured_item-idx""","DocField","Item","idx","97","is_manufactured_item","Int",""
-"","""Item-manufacturing-idx""","DocField","Item","idx","96","manufacturing","Int",""
-"","""Item-item_specification_details-idx""","DocField","Item","idx","95","item_specification_details","Int",""
-"","""Item-inspection_required-idx""","DocField","Item","idx","94","inspection_required","Int",""
-"","""Item-inspection_criteria-idx""","DocField","Item","idx","93","inspection_criteria","Int",""
-"","""Item-item_tax-idx""","DocField","Item","idx","92","item_tax","Int",""
-"","""Item-item_tax_section_break-idx""","DocField","Item","idx","91","item_tax_section_break","Int",""
-"","""Item-item_customer_details-idx""","DocField","Item","idx","90","item_customer_details","Int",""
-"","""Item-column_break3-idx""","DocField","Item","idx","89","column_break3","Int",""
-"","""Item-selling_cost_center-idx""","DocField","Item","idx","88","selling_cost_center","Int",""
-"","""Item-income_account-idx""","DocField","Item","idx","87","income_account","Int",""
-"","""Item-max_discount-idx""","DocField","Item","idx","86","max_discount","Int",""
-"","""Item-is_service_item-idx""","DocField","Item","idx","85","is_service_item","Int",""
-"","""Item-is_sales_item-idx""","DocField","Item","idx","84","is_sales_item","Int",""
-"","""Item-sales_details-idx""","DocField","Item","idx","83","sales_details","Int",""
-"","""Item-item_supplier_details-idx""","DocField","Item","idx","82","item_supplier_details","Int",""
-"","""Item-manufacturer_part_no-idx""","DocField","Item","idx","81","manufacturer_part_no","Int",""
-"","""Item-manufacturer-idx""","DocField","Item","idx","80","manufacturer","Int",""
-"","""Item-uom_conversion_details-idx""","DocField","Item","idx","79","uom_conversion_details","Int",""
-"","""Item-column_break2-idx""","DocField","Item","idx","78","column_break2","Int",""
-"","""Item-last_purchase_rate-idx""","DocField","Item","idx","77","last_purchase_rate","Int",""
-"","""Item-buying_cost_center-idx""","DocField","Item","idx","76","buying_cost_center","Int",""
-"","""Item-expense_account-idx""","DocField","Item","idx","75","expense_account","Int",""
-"","""Item-lead_time_days-idx""","DocField","Item","idx","74","lead_time_days","Int",""
-"","""Item-default_supplier-idx""","DocField","Item","idx","73","default_supplier","Int",""
-"","""Item-is_purchase_item-idx""","DocField","Item","idx","72","is_purchase_item","Int",""
-"","""Item-purchase_details-idx""","DocField","Item","idx","71","purchase_details","Int",""
-"","""Item-item_reorder-idx""","DocField","Item","idx","70","item_reorder","Int",""
-"","""Item-section_break_31-idx""","DocField","Item","idx","69","section_break_31","Int",""
-"","""Item-re_order_qty-idx""","DocField","Item","idx","68","re_order_qty","Int",""
-"","""Item-re_order_level-idx""","DocField","Item","idx","67","re_order_level","Int",""
-"","""Item-reorder_section-idx""","DocField","Item","idx","66","reorder_section","Int",""
-"","""Item-weight_uom-idx""","DocField","Item","idx","63","weight_uom","Int",""
-"","""Item-net_weight-idx""","DocField","Item","idx","62","net_weight","Int",""
-"","""Item-end_of_life-idx""","DocField","Item","idx","61","end_of_life","Int",""
-"","""Item-warranty_period-idx""","DocField","Item","idx","60","warranty_period","Int",""
-"","""Item-serial_no_series-idx""","DocField","Item","idx","59","serial_no_series","Int",""
-"","""Item-has_serial_no-idx""","DocField","Item","idx","58","has_serial_no","Int",""
-"","""Item-has_batch_no-idx""","DocField","Item","idx","57","has_batch_no","Int",""
-"","""Item-is_asset_item-idx""","DocField","Item","idx","56","is_asset_item","Int",""
-"","""Item-column_break1-idx""","DocField","Item","idx","55","column_break1","Int",""
-"","""Item-min_order_qty-idx""","DocField","Item","idx","54","min_order_qty","Int",""
-"","""Item-valuation_method-idx""","DocField","Item","idx","53","valuation_method","Int",""
-"","""Item-tolerance-idx""","DocField","Item","idx","52","tolerance","Int",""
-"","""Item-default_warehouse-idx""","DocField","Item","idx","51","default_warehouse","Int",""
-"","""Item-is_stock_item-idx""","DocField","Item","idx","48","is_stock_item","Int",""
-"","""Item-inventory-idx""","DocField","Item","idx","47","inventory","Int",""
-"","""Item-description_html-idx""","DocField","Item","idx","28","description_html","Int",""
-"","""Item-add_image-idx""","DocField","Item","idx","27","add_image","Int",""
-"","""Item-_idx""","DocType","Item","_idx","[""name_and_description_section"", ""barcode_img"", ""item_group"", ""item_sub_group"", ""series"", ""supplier_code"", ""swatch_id"", ""item_code"", ""item_name"", ""barcode_image"", ""description"", ""desc"", ""image"", ""image_view"", ""stock_uom"", ""brand"", ""qrcode"", ""fabric_width"", ""fabric_color"", ""barcode"", ""supplier_item_code"", ""size_for_merchandise"", ""items_image"", ""late_work_cost"", ""redeem_amount"", ""barcode_description"", ""add_image"", ""description_html"", ""process_details"", ""process_item"", ""more_details"", ""size_item"", ""measurement_formula"", ""measurement_template"", ""c"", ""measurement_formula_template"", ""s_"", ""test_label"", ""measurement_item"", ""style_item"", ""item_costing"", ""service"", ""fabric_costing"", ""costing_item"", ""raw_material"", ""raw_material_item"", ""inventory"", ""is_stock_item"", ""is_clubbed_product"", ""default_branch"", ""default_warehouse"", ""tolerance"", ""valuation_method"", ""min_order_qty"", ""column_break1"", ""is_asset_item"", ""has_batch_no"", ""has_serial_no"", ""serial_no_series"", ""warranty_period"", ""end_of_life"", ""net_weight"", ""weight_uom"", ""x"", ""sales_bom_item"", ""reorder_section"", ""re_order_level"", ""re_order_qty"", ""section_break_31"", ""item_reorder"", ""purchase_details"", ""is_purchase_item"", ""default_supplier"", ""lead_time_days"", ""expense_account"", ""buying_cost_center"", ""last_purchase_rate"", ""column_break2"", ""uom_conversion_details"", ""manufacturer"", ""manufacturer_part_no"", ""item_supplier_details"", ""sales_details"", ""is_sales_item"", ""is_service_item"", ""max_discount"", ""income_account"", ""selling_cost_center"", ""column_break3"", ""item_customer_details"", ""item_tax_section_break"", ""item_tax"", ""inspection_criteria"", ""inspection_required"", ""item_specification_details"", ""manufacturing"", ""is_manufactured_item"", ""default_bom"", ""is_pro_applicable"", ""is_sub_contracted_item"", ""customer_code"", ""website_section"", ""show_in_website"", ""page_name"", ""weightage"", ""slideshow"", ""website_image"", ""cb72"", ""website_warehouse"", ""website_item_groups"", ""sb72"", ""copy_from_item_group"", ""item_website_specifications"", ""web_long_description"", ""parent_website_route"", ""item_group_details"", ""column_break0"", ""naming_series""]","","Text",""
-"","""Item-item_group_details-previous_field""","DocField","Item","previous_field","column_break0","item_group_details","Data",""
-"","""Item-sales_bom_item-previous_field""","DocField","Item","previous_field","x","sales_bom_item","Data",""
-"","""Item-x-previous_field""","DocField","Item","previous_field","weight_uom","x","Data",""
-"","""Item-default_branch-previous_field""","DocField","Item","previous_field","is_stock_item","default_branch","Data",""
-"","""Item-is_clubbed_product-previous_field""","DocField","Item","previous_field","is_stock_item","is_clubbed_product","Data",""
-"","""Item-raw_material_item-previous_field""","DocField","Item","previous_field","raw_material","raw_material_item","Data",""
-"","""Item-raw_material-previous_field""","DocField","Item","previous_field","costing_item","raw_material","Data",""
-"","""Item-costing_item-previous_field""","DocField","Item","previous_field","service","costing_item","Data",""
-"","""Item-fabric_costing-previous_field""","DocField","Item","previous_field","item_costing","fabric_costing","Data",""
-"","""Item-service-previous_field""","DocField","Item","previous_field","item_costing","service","Data",""
-"","""Item-item_costing-previous_field""","DocField","Item","previous_field","raw_material_item","item_costing","Data",""
-"","""Item-style_item-previous_field""","DocField","Item","previous_field","measurement_item","style_item","Data",""
-"","""Item-measurement_item-previous_field""","DocField","Item","previous_field","s_","measurement_item","Data",""
-"","""Item-s_-previous_field""","DocField","Item","previous_field","measurement_formula_template","s_","Data",""
-"","""Item-measurement_formula_template-previous_field""","DocField","Item","previous_field","c","measurement_formula_template","Data",""
-"","""Item-c-previous_field""","DocField","Item","previous_field","measurement_template","c","Data",""
-"","""Item-measurement_template-previous_field""","DocField","Item","previous_field","measurement_formula","measurement_template","Data",""
-"","""Item-measurement_formula-previous_field""","DocField","Item","previous_field","size_item","measurement_formula","Data",""
-"","""Item-size_item-previous_field""","DocField","Item","previous_field","more_details","size_item","Data",""
-"","""Item-more_details-previous_field""","DocField","Item","previous_field","add_image","more_details","Data",""
-"","""Item-process_item-previous_field""","DocField","Item","previous_field","style_item","process_item","Data",""
-"","""Item-redeem_amount-previous_field""","DocField","Item","previous_field","late_work_cost","redeem_amount","Data",""
-"","""Serial No-gift_voucher_no-previous_field""","DocField","Serial No","previous_field","quality_check","gift_voucher_no","Data",""
-"","""Work Order-_idx""","DocType","Work Order","_idx","[""work_order"", ""naming_series"", ""work_order_no"", ""status"", ""sales_invoice_no"", ""item_code"", ""barcode"", ""item_qty"", ""fabric__code"", ""trial_no"", ""trial_date"", ""delivery_date"", ""note"", ""other_work_orders"", ""column_break_4"", ""customer"", ""customer_name"", ""branch"", ""serial_no_data"", ""pdd"", ""qrcode"", ""trial_serial_no"", ""measured_by"", ""company"", ""section_break_5"", ""style_work_order"", ""wo_style"", ""measurement_details"", ""work_orders"", ""cb26"", ""fetch_measurement_details"", ""sb28"", ""measurement_item"", ""process_wise_warehouse_detail"", ""amended_from"", ""parent_item_code"", ""current_process"", ""total_process"", ""work_order_name""]","","Text",""
-"","""Work Order-work_order_name-idx""","DocField","Work Order","idx","39","work_order_name","Int",""
-"","""Work Order-total_process-idx""","DocField","Work Order","idx","38","total_process","Int",""
-"","""Work Order-current_process-idx""","DocField","Work Order","idx","37","current_process","Int",""
-"","""Work Order-parent_item_code-idx""","DocField","Work Order","idx","36","parent_item_code","Int",""
-"","""Work Order-amended_from-idx""","DocField","Work Order","idx","35","amended_from","Int",""
-"","""Work Order-measurement_item-idx""","DocField","Work Order","idx","33","measurement_item","Int",""
-"","""Work Order-sb28-idx""","DocField","Work Order","idx","32","sb28","Int",""
-"","""Work Order-fetch_measurement_details-idx""","DocField","Work Order","idx","31","fetch_measurement_details","Int",""
-"","""Work Order-cb26-idx""","DocField","Work Order","idx","30","cb26","Int",""
-"","""Work Order-work_orders-idx""","DocField","Work Order","idx","29","work_orders","Int",""
-"","""Work Order-measurement_details-idx""","DocField","Work Order","idx","28","measurement_details","Int",""
-"","""Work Order-wo_style-idx""","DocField","Work Order","idx","27","wo_style","Int",""
-"","""Work Order-style_work_order-idx""","DocField","Work Order","idx","26","style_work_order","Int",""
-"","""Work Order-section_break_5-idx""","DocField","Work Order","idx","25","section_break_5","Int",""
-"","""Work Order-company-idx""","DocField","Work Order","idx","24","company","Int",""
-"","""Work Order-measured_by-idx""","DocField","Work Order","idx","23","measured_by","Int",""
-"","""Work Order-delivery_date-idx""","DocField","Work Order","idx","12","delivery_date","Int",""
-"","""Work Order-read_only_onload""","DocType","Work Order","read_only_onload","","","Check",""
-"","""Stock Entry Detail-has_cut_order-previous_field""","DocField","Stock Entry Detail","previous_field","trials","has_cut_order","Data",""
-"","""Stock Entry Detail-trials-previous_field""","DocField","Stock Entry Detail","previous_field","process","trials","Data",""
-"","""Stock Entry Detail-has_trials-previous_field""","DocField","Stock Entry Detail","previous_field","process","has_trials","Data",""
-"","""Stock Entry Detail-process-previous_field""","DocField","Stock Entry Detail","previous_field","work_order","process","Data",""
-"","""Stock Entry Detail-customer_name-previous_field""","DocField","Stock Entry Detail","previous_field","sales_invoice_no","customer_name","Data",""
-"","""Customer-select-previous_field""","DocField","Customer","previous_field","select_image","select","Data",""
-"","""Task-process_allotment_number-previous_field""","DocField","Task","previous_field","sales_order_number","process_allotment_number","Data",""
-"","""Selling Settings-show_sales_invoice_release_option-previous_field""","DocField","Selling Settings","previous_field","editable_price_list_rate","show_sales_invoice_release_option","Data",""
-"","""Item-item_code-reqd""","DocField","Item","reqd","1","item_code","Check",""
-"","""Item-item_code-hidden""","DocField","Item","hidden","0","item_code","Check",""
-"","""Item-naming_series-hidden""","DocField","Item","hidden","1","naming_series","Check",""
-"","""Item-naming_series-reqd""","DocField","Item","reqd","0","naming_series","Check",""
-"","""Sales Invoice-ignore_pricing_rule-hidden""","DocField","Sales Invoice","hidden","1","ignore_pricing_rule","Check",""
-"","""Sales Invoice-mode_of_payment-hidden""","DocField","Sales Invoice","hidden","1","mode_of_payment","Check",""
-"","""Sales Invoice-thank_you-previous_field""","DocField","Sales Invoice","previous_field","notification_send","thank_you","Data",""
-"","""Sales Invoice-merchandise_item-previous_field""","DocField","Sales Invoice","previous_field","sales_invoice_items_one","merchandise_item","Data",""
-"","""Sales Invoice-sales_invoice_items_one-previous_field""","DocField","Sales Invoice","previous_field","update_stock","sales_invoice_items_one","Data",""
-"","""Sales Invoice-release-previous_field""","DocField","Sales Invoice","previous_field","authenticated","release","Data",""
-"","""Sales Invoice-branch-previous_field""","DocField","Sales Invoice","previous_field","admin_authentication_note","branch","Data",""
-"","""Sales Invoice-admin_authentication_note-previous_field""","DocField","Sales Invoice","previous_field","authenticated","admin_authentication_note","Data",""
-"","""Sales Invoice-delivery_date-previous_field""","DocField","Sales Invoice","previous_field","mode_of_payment","delivery_date","Data",""
-"","""Sales Invoice-delivery_mode-previous_field""","DocField","Sales Invoice","previous_field","mode_of_payment","delivery_mode","Data",""
-"","""Sales Invoice-is_multi_mode-previous_field""","DocField","Sales Invoice","previous_field","contact_email","is_multi_mode","Data",""
-"","""Stock Entry-stock_in-previous_field""","DocField","Stock Entry","previous_field","purpose","stock_in","Data",""
-"","""Stock Entry-process-previous_field""","DocField","Stock Entry","previous_field","refer_doctype_name","process","Data",""
-"","""Stock Entry-refer_doctype_name-previous_field""","DocField","Stock Entry","previous_field","sales_invoice","refer_doctype_name","Data",""
-"","""Stock Entry-sales_invoice-previous_field""","DocField","Stock Entry","previous_field","select_print_heading","sales_invoice","Data",""
-"","""Stock Entry-t_branch-previous_field""","DocField","Stock Entry","previous_field","to_warehouse","t_branch","Data",""
-"","""Stock Entry-f_branch-previous_field""","DocField","Stock Entry","previous_field","from_warehouse","f_branch","Data",""
-"","""Stock Entry-qrcode-previous_field""","DocField","Stock Entry","previous_field","barcode","qrcode","Data",""
-"","""Stock Entry-branch-previous_field""","DocField","Stock Entry","previous_field","stock_in","branch","Data",""
-"","""Stock Entry-purpose_type-previous_field""","DocField","Stock Entry","previous_field","naming_series","purpose_type","Data",""
-"","""Quality Inspection-sales_invoice_no-previous_field""","DocField","Quality Inspection","previous_field","item_serial_no","sales_invoice_no","Data",""
-"","""Quality Inspection-customer_name-previous_field""","DocField","Quality Inspection","previous_field","item_serial_no","customer_name","Data",""
-"","""Quality Inspection-work_order-previous_field""","DocField","Quality Inspection","previous_field","serial_no_data","work_order","Data",""
-"","""File Data-type_of_file-previous_field""","DocField","File Data","previous_field","content_hash","type_of_file","Data",""
-"","""Item-late_work_cost-previous_field""","DocField","Item","previous_field","items_image","late_work_cost","Data",""
-"","""Item-items_image-previous_field""","DocField","Item","previous_field","size_for_merchandise","items_image","Data",""
-"","""Item-size_for_merchandise-previous_field""","DocField","Item","previous_field","items_image","size_for_merchandise","Data",""
-"","""Item-supplier_item_code-previous_field""","DocField","Item","previous_field","barcode","supplier_item_code","Data",""
-"","""Item-fabric_width-previous_field""","DocField","Item","previous_field","fabric_color","fabric_width","Data",""
-"","""Item-barcode-idx""","DocField","Item","idx","20","barcode","Int",""
-"","""Cut Order Item-customer-previous_field""","DocField","Cut Order Item","previous_field","select","customer","Data",""
-"","""Sales Invoice Item-sales_invoice_branch-previous_field""","DocField","Sales Invoice Item","previous_field","warehouse","sales_invoice_branch","Data",""
-"","""Sales Invoice Item-serial_no-print_hide""","DocField","Sales Invoice Item","print_hide","1","serial_no","Check",""
-"","""Production Details-select-hidden""","DocField","Production Details","hidden","1","select","Check",""
-"","""Production Details-read_only_onload""","DocType","Production Details","read_only_onload","","","Check",""
-"","""Production Details-fabric_qty-hidden""","DocField","Production Details","hidden","1","fabric_qty","Check",""
-"","""Production Details-actual_qty-hidden""","DocField","Production Details","hidden","1","actual_qty","Check",""
-"","""Production Details-size-hidden""","DocField","Production Details","hidden","1","size","Check",""
-"","""Stock Entry Detail-work_order-previous_field""","DocField","Stock Entry Detail","previous_field","material_request_item","work_order","Data",""
-"","""Stock Entry Detail-invoice_no-previous_field""","DocField","Stock Entry Detail","previous_field","incoming_rate","invoice_no","Data",""
-"","""Stock Entry Detail-target_warehouse-previous_field""","DocField","Stock Entry Detail","previous_field","t_warehouse","target_warehouse","Data",""
-"","""Stock Entry Detail-target_branch-previous_field""","DocField","Stock Entry Detail","previous_field","col_break1","target_branch","Data",""
-"","""Stock Entry Detail-source_warehouse-previous_field""","DocField","Stock Entry Detail","previous_field","s_warehouse","source_warehouse","Data",""
-"","""Work Order-branch-options""","DocField","Work Order","options","Branch","branch","Text",""
-"","""Quality Inspection-item_serial_no-hidden""","DocField","Quality Inspection","hidden","1","item_serial_no","Check",""
-"","""Quality Inspection-serial_no_data-previous_field""","DocField","Quality Inspection","previous_field","batch_no","serial_no_data","Data",""
-"","""Quality Inspection-trial_no-previous_field""","DocField","Quality Inspection","previous_field","process","trial_no","Data",""
-"","""Quality Inspection-process-previous_field""","DocField","Quality Inspection","previous_field","pdd","process","Data",""
-"","""Quality Inspection-sample_size-print_hide""","DocField","Quality Inspection","print_hide","1","sample_size","Check",""
-"","""Quality Inspection-naming_series-print_hide""","DocField","Quality Inspection","print_hide","1","naming_series","Check",""
-"","""Quality Inspection-tdd-previous_field""","DocField","Quality Inspection","previous_field","trial_no","tdd","Data",""
-"","""Task-process_name-previous_field""","DocField","Task","previous_field","exp_end_date","process_name","Data",""
-"","""EmployeeSkill-cost-label""","DocField","EmployeeSkill","label","Piece Rate","cost","Data",""
-"","""Item-swatch_id-previous_field""","DocField","Item","previous_field","item_sub_group","swatch_id","Data",""
-"","""Item-supplier_code-previous_field""","DocField","Item","previous_field","brand","supplier_code","Data",""
-"","""Customer-_idx""","DocType","Customer","_idx","[""basic_info"", ""naming_series"", ""take_image"", ""select_image"", ""image1"", ""select"", ""image2"", ""cb"", ""customer_name"", ""customer_type"", ""lead_name"", ""customer_group"", ""territory"", ""country"", ""date_of_birth"", ""anniversary_date"", ""measurement_details"", ""body_measurements"", ""address_contacts"", ""address_html"", ""column_break1"", ""contact_html"", ""communication_history"", ""communication_html"", ""more_info"", ""column_break2"", ""company"", ""customer_details"", ""column_break3"", ""default_currency"", ""default_price_list"", ""default_taxes_and_charges"", ""credit_days"", ""credit_limit"", ""website"", ""referral_details"", ""is_existing_customer"", ""referral"", ""referral_name"", ""phone_number"", ""referral_lead"", ""sales_team_section_break"", ""default_sales_partner"", ""default_commission_rate"", ""sales_team"", ""communications"", ""column_break0""]","","Text",""
-"","""Customer-referral_lead-previous_field""","DocField","Customer","previous_field","phone_number","referral_lead","Data",""
-"","""Customer-phone_number-previous_field""","DocField","Customer","previous_field","referral_name","phone_number","Data",""
-"","""Customer-referral_name-previous_field""","DocField","Customer","previous_field","referral","referral_name","Data",""
-"","""Customer-referral-previous_field""","DocField","Customer","previous_field","is_existing_customer","referral","Data",""
-"","""Customer-is_existing_customer-previous_field""","DocField","Customer","previous_field","referral_details","is_existing_customer","Data",""
-"","""Customer-referral_details-previous_field""","DocField","Customer","previous_field","website","referral_details","Data",""
-"","""Customer-column_break0-idx""","DocField","Customer","idx","47","column_break0","Int",""
-"","""Customer-communications-idx""","DocField","Customer","idx","46","communications","Int",""
-"","""Customer-sales_team-idx""","DocField","Customer","idx","45","sales_team","Int",""
-"","""Customer-default_commission_rate-idx""","DocField","Customer","idx","44","default_commission_rate","Int",""
-"","""Customer-default_sales_partner-idx""","DocField","Customer","idx","43","default_sales_partner","Int",""
-"","""Customer-sales_team_section_break-idx""","DocField","Customer","idx","42","sales_team_section_break","Int",""
-"","""Journal Voucher Detail-mode-previous_field""","DocField","Journal Voucher Detail","previous_field","balance","mode","Data",""
-"","""Customer-image2-previous_field""","DocField","Customer","previous_field","select","image2","Data",""
-"","""Customer-image1-previous_field""","DocField","Customer","previous_field","select_image","image1","Data",""
-"","""Customer-select_image-previous_field""","DocField","Customer","previous_field","lead_name","select_image","Data",""
-"","""Customer-default_print_format""","DocType","Customer","default_print_format","","","Data",""
-"","""Customer-body_measurements-previous_field""","DocField","Customer","previous_field","measurement_details","body_measurements","Data",""
-"","""Customer-measurement_details-previous_field""","DocField","Customer","previous_field","anniversary_date","measurement_details","Data",""
-"","""Customer-anniversary_date-previous_field""","DocField","Customer","previous_field","date_of_birth","anniversary_date","Data",""
-"","""Customer-date_of_birth-previous_field""","DocField","Customer","previous_field","country","date_of_birth","Data",""
-"","""Customer-take_image-previous_field""","DocField","Customer","previous_field","naming_series","take_image","Data",""
-"","""Customer-website-idx""","DocField","Customer","idx","35","website","Int",""
-"","""Customer-credit_limit-idx""","DocField","Customer","idx","34","credit_limit","Int",""
-"","""Customer-credit_days-idx""","DocField","Customer","idx","33","credit_days","Int",""
-"","""Customer-default_taxes_and_charges-idx""","DocField","Customer","idx","32","default_taxes_and_charges","Int",""
-"","""Customer-default_price_list-idx""","DocField","Customer","idx","31","default_price_list","Int",""
-"","""Customer-default_currency-idx""","DocField","Customer","idx","30","default_currency","Int",""
-"","""Customer-column_break3-idx""","DocField","Customer","idx","29","column_break3","Int",""
-"","""Customer-customer_details-idx""","DocField","Customer","idx","28","customer_details","Int",""
-"","""Customer-company-idx""","DocField","Customer","idx","27","company","Int",""
-"","""Customer-column_break2-idx""","DocField","Customer","idx","26","column_break2","Int",""
-"","""Customer-more_info-idx""","DocField","Customer","idx","25","more_info","Int",""
-"","""Customer-communication_html-idx""","DocField","Customer","idx","24","communication_html","Int",""
-"","""Customer-communication_history-idx""","DocField","Customer","idx","23","communication_history","Int",""
-"","""Customer-contact_html-idx""","DocField","Customer","idx","22","contact_html","Int",""
-"","""Customer-column_break1-idx""","DocField","Customer","idx","21","column_break1","Int",""
-"","""Customer-address_html-idx""","DocField","Customer","idx","20","address_html","Int",""
-"","""Customer-address_contacts-idx""","DocField","Customer","idx","19","address_contacts","Int",""
-"","""Customer-country-idx""","DocField","Customer","idx","14","country","Int",""
-"","""Customer-territory-idx""","DocField","Customer","idx","13","territory","Int",""
-"","""Customer-customer_group-idx""","DocField","Customer","idx","12","customer_group","Int",""
-"","""Customer-lead_name-idx""","DocField","Customer","idx","11","lead_name","Int",""
-"","""Customer-customer_type-idx""","DocField","Customer","idx","10","customer_type","Int",""
-"","""Customer-customer_name-idx""","DocField","Customer","idx","9","customer_name","Int",""
-"","""Item-series-previous_field""","DocField","Item","previous_field","item_sub_group","series","Data",""
-"","""Item-max_discount-precision""","DocField","Item","precision","2","max_discount","Select",""
-"","""Support Ticket-flag-previous_field""","DocField","Support Ticket","previous_field","raised_by","flag","Data",""
-"","""Employee-employee_name-idx""","DocField","Employee","idx","8","employee_name","Int",""
-"","""Employee-salutation-idx""","DocField","Employee","idx","7","salutation","Int",""
-"","""Employee-naming_series-idx""","DocField","Employee","idx","6","naming_series","Int",""
-"","""Employee-employee-idx""","DocField","Employee","idx","5","employee","Int",""
-"","""Employee-image-idx""","DocField","Employee","idx","4","image","Int",""
-"","""Employee-salutation-options""","DocField","Employee","options","
+"Info:",,"One of: DocField, DocType","Valid DocType",,,,,
+"Start entering data below this line",,,,,,,,
+,"""Quality Inspection-trial_no-previous_field""","DocField","Quality Inspection","previous_field","process","trial_no","Data",
+,"""Quality Inspection-tdd-previous_field""","DocField","Quality Inspection","previous_field","trial_no","tdd","Data",
+,"""Quality Inspection-process-previous_field""","DocField","Quality Inspection","previous_field","pdd","process","Data",
+,"""Quality Inspection-work_order-previous_field""","DocField","Quality Inspection","previous_field","serial_no_data","work_order","Data",
+,"""Quality Inspection-serial_no_data-previous_field""","DocField","Quality Inspection","previous_field","batch_no","serial_no_data","Data",
+,"""Quality Inspection-customer_name-previous_field""","DocField","Quality Inspection","previous_field","item_serial_no","customer_name","Data",
+,"""Quality Inspection-sales_invoice_no-previous_field""","DocField","Quality Inspection","previous_field","item_serial_no","sales_invoice_no","Data",
+,"""Sales Invoice-read_only_onload""","DocType","Sales Invoice","read_only_onload",,,"Check",
+,"""Process Allotment-total_expense-previous_field""","DocField","Process Allotment","previous_field","customer_name","total_expense","Data",
+,"""Sales Invoice-trial_date-previous_field""","DocField","Sales Invoice","previous_field","customer_name","trial_date","Data",
+,"""Stock Entry-naming_series-options""","DocField","Stock Entry","options","STE-","naming_series","Text",
+,"""Lead-naming_series-options""","DocField","Lead","options","LEAD-","naming_series","Text",
+,"""Employee-naming_series-options""","DocField","Employee","options","EMP/","naming_series","Text",
+,"""Stock Entry Detail-trial_date-previous_field""","DocField","Stock Entry Detail","previous_field","customer_name","trial_date","Data",
+,"""Stock Entry Detail-trials-previous_field""","DocField","Stock Entry Detail","previous_field","delivery_date","trials","Data",
+,"""Stock Entry Detail-sales_invoice_no-previous_field""","DocField","Stock Entry Detail","previous_field","work_order","sales_invoice_no","Data",
+,"""Stock Entry Detail-has_trials-previous_field""","DocField","Stock Entry Detail","previous_field","process","has_trials","Data",
+,"""Stock Entry Detail-delivery_date-previous_field""","DocField","Stock Entry Detail","previous_field","trial_date","delivery_date","Data",
+,"""Sales Invoice Item-item_tax_rate-hidden""","DocField","Sales Invoice Item","hidden","0","item_tax_rate","Check",
+,"""Sales Invoice Items-read_only_onload""","DocType","Sales Invoice Items","read_only_onload",,,"Check",
+,"""WO Style-process_wise_tailor_cost-hidden""","DocField","WO Style","hidden","0","process_wise_tailor_cost","Check",
+,"""WO Style-read_only_onload""","DocType","WO Style","read_only_onload",,,"Check",
+,"""Sales Invoice-selling_price_list-hidden""","DocField","Sales Invoice","hidden","0","selling_price_list","Check",
+,"""Sales Invoice-notification_send-previous_field""","DocField","Sales Invoice","previous_field","against_income_account","notification_send","Data",
+,"""Work Order Distribution-expense-previous_field""","DocField","Work Order Distribution","previous_field","tailor_work_order","expense","Data",
+,"""Sales Invoice Items-fabric_owner-previous_field""","DocField","Sales Invoice Items","previous_field","cut_fabric_status","fabric_owner","Data",
+,"""Sales Invoice Items-cut_fabric_status-previous_field""","DocField","Sales Invoice Items","previous_field","fabric_owner","cut_fabric_status","Data",
+,"""Sales Invoice-_idx""","DocType","Sales Invoice","_idx","[""customer_section"", ""naming_series"", ""customer"", ""customer_name"", ""trial_date"", ""address_display"", ""contact_display"", ""contact_mobile"", ""contact_email"", ""is_multi_mode"", ""mode_of_payment"", ""delivery_mode"", ""delivery_date"", ""authenticated"", ""admin_authentication_note"", ""branch"", ""release"", ""column_break1"", ""is_pos"", ""company"", ""amended_from"", ""posting_date"", ""due_date"", ""from_date"", ""to_date"", ""currency_section"", ""currency"", ""conversion_rate"", ""column_break2"", ""selling_price_list"", ""price_list_currency"", ""plc_conversion_rate"", ""ignore_pricing_rule"", ""items"", ""update_stock"", ""sales_invoice_items_one"", ""merchandise_item"", ""work_order_distribution"", ""fabric_details"", ""entries"", ""packing_list"", ""packing_details"", ""sales_bom_help"", ""section_break_30"", ""total_earned_points"", ""redeem_points"", ""net_total"", ""column_break_32"", ""referral"", ""referral_name"", ""net_total_export"", ""taxes"", ""taxes_and_charges"", ""column_break_38"", ""shipping_rule"", ""section_break_40"", ""other_charges"", ""other_charges_calculation"", ""section_break_43"", ""other_charges_total"", ""column_break_45"", ""other_charges_total_export"", ""discount_amount"", ""totals"", ""grand_total"", ""rounded_total"", ""in_words"", ""total_advance"", ""outstanding_amount"", ""column_break5"", ""grand_total_export"", ""rounded_total_export"", ""in_words_export"", ""gross_profit"", ""gross_profit_percent"", ""advances"", ""get_advances_received"", ""advance_adjustment_details"", ""payments_section"", ""column_break3"", ""paid_amount"", ""cash_bank_account"", ""column_break4"", ""write_off_outstanding_amount_automatically"", ""write_off_amount"", ""write_off_account"", ""write_off_cost_center"", ""fold"", ""terms_section_break"", ""tc_name"", ""terms"", ""contact_section"", ""territory"", ""customer_group"", ""col_break23"", ""customer_address"", ""contact_person"", ""more_info"", ""debit_to"", ""project_name"", ""campaign"", ""source"", ""is_opening"", ""c_form_applicable"", ""c_form_no"", ""column_break8"", ""letter_head"", ""select_print_heading"", ""posting_time"", ""aging_date"", ""fiscal_year"", ""remarks"", ""sales_team_section_break"", ""column_break9"", ""sales_partner"", ""column_break10"", ""commission_rate"", ""total_commission"", ""section_break2"", ""sales_team"", ""recurring_invoice"", ""column_break11"", ""is_recurring"", ""recurring_type"", ""repeat_on_day_of_month"", ""next_date"", ""end_date"", ""column_break12"", ""recurring_id"", ""notification_email_address"", ""against_income_account"", ""notification_send"", ""thank_you""]",,"Text",
+,"""Sales Invoice-referral_name-previous_field""","DocField","Sales Invoice","previous_field","referral","referral_name","Data",
+,"""Sales Invoice-referral-previous_field""","DocField","Sales Invoice","previous_field","redeem_points","referral","Data",
+,"""Sales Invoice-redeem_points-previous_field""","DocField","Sales Invoice","previous_field","total_earned_points","redeem_points","Data",
+,"""Sales Invoice-total_earned_points-previous_field""","DocField","Sales Invoice","previous_field","entries","total_earned_points","Data",
+,"""Sales Invoice-column_break_32-idx""","DocField","Sales Invoice","idx","48","column_break_32","Int",
+,"""Sales Invoice-net_total-idx""","DocField","Sales Invoice","idx","47","net_total","Int",
+,"""Sales Invoice-section_break_30-idx""","DocField","Sales Invoice","idx","44","section_break_30","Int",
+,"""Sales Invoice-sales_bom_help-idx""","DocField","Sales Invoice","idx","43","sales_bom_help","Int",
+,"""Sales Invoice-packing_details-idx""","DocField","Sales Invoice","idx","42","packing_details","Int",
+,"""Sales Invoice-packing_list-idx""","DocField","Sales Invoice","idx","41","packing_list","Int",
+,"""Sales Invoice-selling_price_list-reqd""","DocField","Sales Invoice","reqd","0","selling_price_list","Check",
+,"""Sales Invoice-address_display-print_hide""","DocField","Sales Invoice","print_hide","1","address_display","Check",
+,"""Sales Invoice-update_stock-hidden""","DocField","Sales Invoice","hidden","1","update_stock","Check",
+,"""Sales Invoice-is_pos-hidden""","DocField","Sales Invoice","hidden","1","is_pos","Check",
+,"""Sales Invoice-authenticated-previous_field""","DocField","Sales Invoice","previous_field","delivery_date","authenticated","Data",
+,"""Serial No-barcode_image-previous_field""","DocField","Serial No","previous_field","brand","barcode_image","Data",
+,"""Item-barcode_img-previous_field""","DocField","Item","previous_field","column_break0","barcode_img","Data",
+,"""Stock Entry-barcode-previous_field""","DocField","Stock Entry","previous_field","posting_time","barcode","Data",
+,"""Item-barcode_description-previous_field""","DocField","Item","previous_field","barcode_image","barcode_description","Data",
+,"""Item-qrcode-previous_field""","DocField","Item","previous_field","brand","qrcode","Data",
+,"""Sales Invoice-update_stock-default""","DocField","Sales Invoice","default","0","update_stock","Text",
+,"""Branch-_idx""","DocType","Branch","_idx","[""branch_details"", ""branch"", ""branch_abbreviation"", ""stock_entry_bundle_abbreviation"", ""warehouse"", ""branch_type"", ""holiday_list"", ""cost_center"", ""y"", ""currency"", ""min_advance_payment"", ""payment_modes"", ""branch_manager"", ""address_details"", ""address_1"", ""address_2"", ""address_3"", ""city"", ""state"", ""pin_code"", ""country"", ""z"", ""phone_no_1"", ""phone_no_2"", ""mobile_no"", ""fax_no"", ""drawing_acc""]",,"Text",
+,"""Branch-drawing_acc-previous_field""","DocField","Branch","previous_field","cost_center","drawing_acc","Data",
+,"""Branch-fax_no-previous_field""","DocField","Branch","previous_field","mobile_no","fax_no","Data",
+,"""Branch-mobile_no-previous_field""","DocField","Branch","previous_field","phone_no_2","mobile_no","Data",
+,"""Branch-phone_no_2-previous_field""","DocField","Branch","previous_field","phone_no_1","phone_no_2","Data",
+,"""Branch-phone_no_1-previous_field""","DocField","Branch","previous_field","z","phone_no_1","Data",
+,"""Branch-z-previous_field""","DocField","Branch","previous_field","country","z","Data",
+,"""Branch-country-previous_field""","DocField","Branch","previous_field","pin_code","country","Data",
+,"""Branch-pin_code-previous_field""","DocField","Branch","previous_field","state","pin_code","Data",
+,"""Branch-state-previous_field""","DocField","Branch","previous_field","city","state","Data",
+,"""Branch-city-previous_field""","DocField","Branch","previous_field","address_3","city","Data",
+,"""Branch-address_3-previous_field""","DocField","Branch","previous_field","address_2","address_3","Data",
+,"""Branch-address_2-previous_field""","DocField","Branch","previous_field","address_1","address_2","Data",
+,"""Branch-address_1-previous_field""","DocField","Branch","previous_field","address_details","address_1","Data",
+,"""Branch-address_details-previous_field""","DocField","Branch","previous_field","holiday_list","address_details","Data",
+,"""Branch-branch_manager-previous_field""","DocField","Branch","previous_field","payment_modes","branch_manager","Data",
+,"""Branch-payment_modes-previous_field""","DocField","Branch","previous_field","min_advance_payment","payment_modes","Data",
+,"""Branch-min_advance_payment-previous_field""","DocField","Branch","previous_field","y","min_advance_payment","Data",
+,"""Branch-currency-previous_field""","DocField","Branch","previous_field","y","currency","Data",
+,"""Branch-y-previous_field""","DocField","Branch","previous_field","currency","y","Data",
+,"""Branch-cost_center-previous_field""","DocField","Branch","previous_field","fax_no","cost_center","Data",
+,"""Branch-holiday_list-previous_field""","DocField","Branch","previous_field","branch_manager","holiday_list","Data",
+,"""Branch-branch_type-previous_field""","DocField","Branch","previous_field","warehouse","branch_type","Data",
+,"""Branch-warehouse-previous_field""","DocField","Branch","previous_field","branch","warehouse","Data",
+,"""Branch-stock_entry_bundle_abbreviation-previous_field""","DocField","Branch","previous_field","branch_abbreviation","stock_entry_bundle_abbreviation","Data",
+,"""Sales Invoice Item-delivery_date-previous_field""","DocField","Sales Invoice Item","previous_field","sales_invoice_branch","delivery_date","Data",
+,"""Sales Invoice Item-tailoring_size-previous_field""","DocField","Sales Invoice Item","previous_field","fabric_qty","tailoring_size","Data",
+,"""Sales Invoice Item-fabric_qty-previous_field""","DocField","Sales Invoice Item","previous_field","fabric_code","fabric_qty","Data",
+,"""Sales Invoice Item-fabric_code-previous_field""","DocField","Sales Invoice Item","previous_field","page_break","fabric_code","Data",
+,"""Sales Invoice Item-trial_date-previous_field""","DocField","Sales Invoice Item","previous_field","delivery_date","trial_date","Data",
+,"""Employee-employee_number-hidden""","DocField","Employee","hidden","1","employee_number","Check",
+,"""Employee-employee_number-reqd""","DocField","Employee","reqd","0","employee_number","Check",
+,"""Employee-naming_series-reqd""","DocField","Employee","reqd","1","naming_series","Check",
+,"""Employee-naming_series-hidden""","DocField","Employee","hidden","0","naming_series","Check",
+,"""Delivery Note-sales_bom_help-hidden""","DocField","Delivery Note","hidden","1","sales_bom_help","Check",
+,"""Delivery Note-read_only_onload""","DocType","Delivery Note","read_only_onload",,,"Check",
+,"""Process Allotment-test_field-label""","DocField","Process Allotment","label",,"test_field","Data",
+,"""Process Allotment-read_only_onload""","DocType","Process Allotment","read_only_onload",,,"Check",
+,"""Process Allotment-_idx""","DocType","Process Allotment","_idx","[""product_details"", ""sales_invoice_no"", ""item"", ""add"", ""process_work_order"", ""serials_data"", ""finished_good_qty"", ""processwise_trial_details"", ""column_break_3"", ""process_status"", ""process"", ""branch"", ""customer_name"", ""total_expense"", ""total_invoice_amount"", ""barcode"", ""qrcode"", ""process_status_changes"", ""skip_process"", ""section_break_11"", ""emp_status"", ""process_tailor"", ""employee_name"", ""serial_no"", ""add_all_serial_no"", ""start_date"", ""from_time"", ""end_date"", ""estimated_time"", ""completed_time"", ""customer_trials"", ""payment"", ""wages_for_single_piece"", ""wages"", ""assigned"", ""column_break_16"", ""process_trials"", ""serial_no_data"", ""qc"", ""work_order"", ""work_qty"", ""task"", ""deduct_late_work"", ""latework"", ""cost"", ""test_field"", ""extra_charge"", ""extra_charge_amount"", ""clear_all"", ""section_break_23"", ""employee_details"", ""section_break_19"", ""trials_transaction"", ""section_break_6"", ""wo_process"", ""issue_raw_material"", ""make_stock_entry"", ""section_break_5"", ""column_break_7"", ""stock_entry"", ""section_break_17"", ""process_no"", ""has_trials"", ""pdd"", ""trial_dates"", ""qi_status"", ""amended_from"", ""serial_no_list""]",,"Text",
+,"""Process Allotment-serial_no_list-idx""","DocField","Process Allotment","idx","68","serial_no_list","Int",
+,"""Process Allotment-amended_from-idx""","DocField","Process Allotment","idx","67","amended_from","Int",
+,"""Process Allotment-qi_status-idx""","DocField","Process Allotment","idx","66","qi_status","Int",
+,"""Process Allotment-trial_dates-idx""","DocField","Process Allotment","idx","65","trial_dates","Int",
+,"""Process Allotment-pdd-idx""","DocField","Process Allotment","idx","64","pdd","Int",
+,"""Process Allotment-has_trials-idx""","DocField","Process Allotment","idx","63","has_trials","Int",
+,"""Process Allotment-process_no-idx""","DocField","Process Allotment","idx","62","process_no","Int",
+,"""Process Allotment-section_break_17-idx""","DocField","Process Allotment","idx","61","section_break_17","Int",
+,"""Process Allotment-stock_entry-idx""","DocField","Process Allotment","idx","60","stock_entry","Int",
+,"""Process Allotment-column_break_7-idx""","DocField","Process Allotment","idx","59","column_break_7","Int",
+,"""Process Allotment-section_break_5-idx""","DocField","Process Allotment","idx","58","section_break_5","Int",
+,"""Process Allotment-make_stock_entry-idx""","DocField","Process Allotment","idx","57","make_stock_entry","Int",
+,"""Process Allotment-issue_raw_material-idx""","DocField","Process Allotment","idx","56","issue_raw_material","Int",
+,"""Process Allotment-wo_process-idx""","DocField","Process Allotment","idx","55","wo_process","Int",
+,"""Process Allotment-section_break_6-idx""","DocField","Process Allotment","idx","54","section_break_6","Int",
+,"""Process Allotment-trials_transaction-idx""","DocField","Process Allotment","idx","53","trials_transaction","Int",
+,"""Process Allotment-section_break_19-idx""","DocField","Process Allotment","idx","52","section_break_19","Int",
+,"""Process Allotment-employee_details-idx""","DocField","Process Allotment","idx","51","employee_details","Int",
+,"""Process Allotment-section_break_23-idx""","DocField","Process Allotment","idx","50","section_break_23","Int",
+,"""Process Allotment-clear_all-idx""","DocField","Process Allotment","idx","49","clear_all","Int",
+,"""Process Allotment-extra_charge_amount-idx""","DocField","Process Allotment","idx","48","extra_charge_amount","Int",
+,"""Process Allotment-extra_charge-idx""","DocField","Process Allotment","idx","47","extra_charge","Int",
+,"""Process Allotment-test_field-idx""","DocField","Process Allotment","idx","46","test_field","Int",
+,"""Work Order-note-previous_field""","DocField","Work Order","previous_field","delivery_date","note","Data",
+,"""Stock Entry-purpose-hidden""","DocField","Stock Entry","hidden","1","purpose","Check",
+,"""Stock Entry-read_only_onload""","DocType","Stock Entry","read_only_onload",,,"Check",
+,"""Event-item_name-previous_field""","DocField","Event","previous_field","ref_type","item_name","Data",
+,"""Event-sales_invoice_no-previous_field""","DocField","Event","previous_field","branch","sales_invoice_no","Data",
+,"""Sales Invoice Items-split_qty_dict-report_hide""","DocField","Sales Invoice Items","report_hide","1","split_qty_dict","Check",
+,"""Sales Invoice Items-split_qty_dict-hidden""","DocField","Sales Invoice Items","hidden","1","split_qty_dict","Check",
+,"""Sales Invoice Items-split_qty_dict-print_hide""","DocField","Sales Invoice Items","print_hide","1","split_qty_dict","Check",
+,"""Sales Invoice Items-delivery_branch-report_hide""","DocField","Sales Invoice Items","report_hide","1","delivery_branch","Check",
+,"""Sales Invoice Items-delivery_branch-hidden""","DocField","Sales Invoice Items","hidden","1","delivery_branch","Check",
+,"""Sales Invoice Items-delivery_branch-print_hide""","DocField","Sales Invoice Items","print_hide","1","delivery_branch","Check",
+,"""Sales Invoice Items-total_expenses-previous_field""","DocField","Sales Invoice Items","previous_field","delivery_branch","total_expenses","Data",
+,"""Sales Invoice Items-reserve_fabric_qty-report_hide""","DocField","Sales Invoice Items","report_hide","1","reserve_fabric_qty","Check",
+,"""Sales Invoice Items-reserve_fabric_qty-print_hide""","DocField","Sales Invoice Items","print_hide","1","reserve_fabric_qty","Check",
+,"""Sales Invoice-fabric_details-previous_field""","DocField","Sales Invoice","previous_field","sales_invoice_items_one","fabric_details","Data",
+,"""Sales Invoice-entries-allow_on_submit""","DocField","Sales Invoice","allow_on_submit","0","entries","Check",
+,"""Process Allotment-total_invoice_amount-previous_field""","DocField","Process Allotment","previous_field","total_expense","total_invoice_amount","Data",
+,"""Process Allotment-cost-idx""","DocField","Process Allotment","idx","45","cost","Int",
+,"""Process Allotment-latework-idx""","DocField","Process Allotment","idx","44","latework","Int",
+,"""Process Allotment-deduct_late_work-idx""","DocField","Process Allotment","idx","43","deduct_late_work","Int",
+,"""Process Allotment-task-idx""","DocField","Process Allotment","idx","42","task","Int",
+,"""Process Allotment-work_qty-idx""","DocField","Process Allotment","idx","41","work_qty","Int",
+,"""Process Allotment-work_order-idx""","DocField","Process Allotment","idx","40","work_order","Int",
+,"""Process Allotment-qc-idx""","DocField","Process Allotment","idx","39","qc","Int",
+,"""Process Allotment-serial_no_data-idx""","DocField","Process Allotment","idx","38","serial_no_data","Int",
+,"""Process Allotment-process_trials-idx""","DocField","Process Allotment","idx","37","process_trials","Int",
+,"""Process Allotment-column_break_16-idx""","DocField","Process Allotment","idx","36","column_break_16","Int",
+,"""Process Allotment-assigned-idx""","DocField","Process Allotment","idx","35","assigned","Int",
+,"""Process Allotment-wages-idx""","DocField","Process Allotment","idx","34","wages","Int",
+,"""Process Allotment-wages_for_single_piece-idx""","DocField","Process Allotment","idx","33","wages_for_single_piece","Int",
+,"""Process Allotment-payment-idx""","DocField","Process Allotment","idx","32","payment","Int",
+,"""Process Allotment-customer_trials-idx""","DocField","Process Allotment","idx","31","customer_trials","Int",
+,"""Process Allotment-completed_time-idx""","DocField","Process Allotment","idx","30","completed_time","Int",
+,"""Process Allotment-estimated_time-idx""","DocField","Process Allotment","idx","29","estimated_time","Int",
+,"""Process Allotment-end_date-idx""","DocField","Process Allotment","idx","28","end_date","Int",
+,"""Process Allotment-from_time-idx""","DocField","Process Allotment","idx","27","from_time","Int",
+,"""Process Allotment-start_date-idx""","DocField","Process Allotment","idx","26","start_date","Int",
+,"""Process Allotment-add_all_serial_no-idx""","DocField","Process Allotment","idx","25","add_all_serial_no","Int",
+,"""Process Allotment-serial_no-idx""","DocField","Process Allotment","idx","24","serial_no","Int",
+,"""Process Allotment-employee_name-idx""","DocField","Process Allotment","idx","23","employee_name","Int",
+,"""Process Allotment-process_tailor-idx""","DocField","Process Allotment","idx","22","process_tailor","Int",
+,"""Process Allotment-emp_status-idx""","DocField","Process Allotment","idx","21","emp_status","Int",
+,"""Process Allotment-section_break_11-idx""","DocField","Process Allotment","idx","20","section_break_11","Int",
+,"""Process Allotment-skip_process-idx""","DocField","Process Allotment","idx","19","skip_process","Int",
+,"""Process Allotment-process_status_changes-idx""","DocField","Process Allotment","idx","18","process_status_changes","Int",
+,"""Process Allotment-qrcode-idx""","DocField","Process Allotment","idx","17","qrcode","Int",
+,"""Process Allotment-barcode-idx""","DocField","Process Allotment","idx","16","barcode","Int",
+,"""User-add_validity-previous_field""","DocField","User","previous_field","last_name","add_validity","Data",
+,"""Sales Invoice-work_order_distribution-previous_field""","DocField","Sales Invoice","previous_field","merchandise_item","work_order_distribution","Data",
+,"""Style Item-_idx""","DocType","Style Item","_idx","[""default_values"", ""default"", ""style"", ""default_value"", ""add_image"", ""define_cost_to_tailor"", ""image_viewer"", ""column_break_5"", ""abbreviation"", ""cost_to_customer"", ""cost_to_tailor"", ""note"", ""process_wise_tailor_cost""]",,"Text",
+,"""Style Item-note-idx""","DocField","Style Item","idx","12","note","Int",
+,"""Style Item-cost_to_tailor-idx""","DocField","Style Item","idx","11","cost_to_tailor","Int",
+,"""Style Item-cost_to_customer-idx""","DocField","Style Item","idx","10","cost_to_customer","Int",
+,"""Style Item-abbreviation-idx""","DocField","Style Item","idx","9","abbreviation","Int",
+,"""Style Item-column_break_5-idx""","DocField","Style Item","idx","8","column_break_5","Int",
+,"""Style Item-image_viewer-idx""","DocField","Style Item","idx","7","image_viewer","Int",
+,"""Style Item-add_image-idx""","DocField","Style Item","idx","5","add_image","Int",
+,"""Style Item-default_value-idx""","DocField","Style Item","idx","4","default_value","Int",
+,"""Style Item-style-idx""","DocField","Style Item","idx","3","style","Int",
+,"""Style Item-read_only_onload""","DocType","Style Item","read_only_onload",,,"Check",
+,"""WO Style-process_wise_tailor_cost-idx""","DocField","WO Style","idx","14","process_wise_tailor_cost","Int",
+,"""WO Style-_idx""","DocType","WO Style","_idx","[""field_name"", ""abbreviation"", ""view"", ""define_cost_to_tailor"", ""add_image"", ""image_viewer"", ""column_break_7"", ""default_value"", ""cost_to_customer"", ""cost_to_tailor"", ""extra_text_field"", ""table_view"", ""note"", ""process_wise_trial_cost_""]",,"Text",
+,"""WO Style-add_image-idx""","DocField","WO Style","idx","5","add_image","Int",
+,"""WO Style-define_cost_to_tailor-idx""","DocField","WO Style","idx","4","define_cost_to_tailor","Int",
+,"""WO Style-table_view-previous_field""","DocField","WO Style","previous_field","extra_text_field","table_view","Data",
+,"""Delivery Note-rounded_total_export-print_hide""","DocField","Delivery Note","print_hide","0","rounded_total_export","Check",
+,"""Delivery Note-rounded_total_export-hidden""","DocField","Delivery Note","hidden","0","rounded_total_export","Check",
+,"""Delivery Note-rounded_total-print_hide""","DocField","Delivery Note","print_hide","1","rounded_total","Check",
+,"""Delivery Note-rounded_total-hidden""","DocField","Delivery Note","hidden","0","rounded_total","Check",
+,"""Sales Invoice-rounded_total_export-print_hide""","DocField","Sales Invoice","print_hide","0","rounded_total_export","Check",
+,"""Sales Invoice-rounded_total_export-hidden""","DocField","Sales Invoice","hidden","0","rounded_total_export","Check",
+,"""Sales Invoice-rounded_total-print_hide""","DocField","Sales Invoice","print_hide","1","rounded_total","Check",
+,"""Sales Invoice-rounded_total-hidden""","DocField","Sales Invoice","hidden","0","rounded_total","Check",
+,"""Sales Order-rounded_total_export-print_hide""","DocField","Sales Order","print_hide","0","rounded_total_export","Check",
+,"""Sales Order-rounded_total_export-hidden""","DocField","Sales Order","hidden","0","rounded_total_export","Check",
+,"""Sales Order-rounded_total-print_hide""","DocField","Sales Order","print_hide","1","rounded_total","Check",
+,"""Sales Order-rounded_total-hidden""","DocField","Sales Order","hidden","0","rounded_total","Check",
+,"""Quotation-rounded_total_export-print_hide""","DocField","Quotation","print_hide","0","rounded_total_export","Check",
+,"""Quotation-rounded_total_export-hidden""","DocField","Quotation","hidden","0","rounded_total_export","Check",
+,"""Quotation-rounded_total-print_hide""","DocField","Quotation","print_hide","1","rounded_total","Check",
+,"""Quotation-rounded_total-hidden""","DocField","Quotation","hidden","0","rounded_total","Check",
+,"""Customer-lead_name-hidden""","DocField","Customer","hidden","1","lead_name","Check",
+,"""Salary Manager-type_of_salary-previous_field""","DocField","Salary Manager","previous_field","fiscal_year","type_of_salary","Data",
+,"""Branch-branch_abbreviation-previous_field""","DocField","Branch","previous_field","branch","branch_abbreviation","Data",
+,"""Branch-branch_details-previous_field""","DocField","Branch","previous_field","branch_type","branch_details","Data",
+,"""Employee-type_of_salary-previous_field""","DocField","Employee","previous_field","has_salary_structure","type_of_salary","Data",
+,"""Employee-_idx""","DocType","Employee","_idx","[""basic_information"", ""column_break0"", ""image_view"", ""image"", ""employee"", ""naming_series"", ""salutation"", ""employee_name"", ""column_break1"", ""user_id"", ""employee_number"", ""date_of_joining"", ""date_of_birth"", ""gender"", ""company"", ""employment_details"", ""col_break_21"", ""status"", ""employment_type"", ""col_break_22"", ""scheduled_confirmation_date"", ""final_confirmation_date"", ""contract_end_date"", ""date_of_retirement"", ""job_profile"", ""column_break2"", ""branch"", ""department"", ""designation"", ""company_email"", ""notice_number_of_days"", ""salary_information"", ""salary_mode"", ""has_salary_structure"", ""type_of_salary"", ""holiday_list"", ""bank_name"", ""bank_ac_no"", ""organization_profile"", ""reports_to"", ""employee_leave_approvers"", ""contact_details"", ""column_break3"", ""cell_number"", ""personal_email"", ""unsubscribed"", ""emergency_contact_details"", ""person_to_be_contacted"", ""relation"", ""emergency_phone_number"", ""column_break4"", ""permanent_accommodation_type"", ""permanent_address"", ""current_accommodation_type"", ""current_address"", ""sb53"", ""bio"", ""personal_details"", ""column_break5"", ""passport_number"", ""date_of_issue"", ""valid_upto"", ""place_of_issue"", ""visa_number"", ""issue_date"", ""expiry_date"", ""column_break6"", ""marital_status"", ""blood_group"", ""family_background"", ""health_details"", ""educational_qualification"", ""educational_qualification_details"", ""previous_work_experience"", ""previous_experience_details"", ""history_in_company"", ""experience_in_company_details"", ""exit"", ""column_break7"", ""resignation_letter_date"", ""relieving_date"", ""reason_for_leaving"", ""leave_encashed"", ""encashment_date"", ""exit_interview_details"", ""held_on"", ""reason_for_resignation"", ""new_workplace"", ""feedback"", ""profile_type"", ""skills"", ""employeeskills"", ""skills_html""]",,"Text",
+,"""Employee-skills_html-previous_field""","DocField","Employee","previous_field","skills","skills_html","Data",
+,"""Employee-skills-previous_field""","DocField","Employee","previous_field","profile_type","skills","Data",
+,"""Employee-profile_type-previous_field""","DocField","Employee","previous_field","date_of_retirement","profile_type","Data",
+,"""Employee-expiry_date-previous_field""","DocField","Employee","previous_field","issue_date","expiry_date","Data",
+,"""Employee-issue_date-previous_field""","DocField","Employee","previous_field","visa_number","issue_date","Data",
+,"""Employee-visa_number-previous_field""","DocField","Employee","previous_field","place_of_issue","visa_number","Data",
+,"""Employee-feedback-idx""","DocField","Employee","idx","89","feedback","Int",
+,"""Employee-new_workplace-idx""","DocField","Employee","idx","88","new_workplace","Int",
+,"""Employee-reason_for_resignation-idx""","DocField","Employee","idx","87","reason_for_resignation","Int",
+,"""Employee-held_on-idx""","DocField","Employee","idx","86","held_on","Int",
+,"""Employee-exit_interview_details-idx""","DocField","Employee","idx","85","exit_interview_details","Int",
+,"""Employee-encashment_date-idx""","DocField","Employee","idx","84","encashment_date","Int",
+,"""Employee-leave_encashed-idx""","DocField","Employee","idx","83","leave_encashed","Int",
+,"""Employee-reason_for_leaving-idx""","DocField","Employee","idx","82","reason_for_leaving","Int",
+,"""Employee-relieving_date-idx""","DocField","Employee","idx","81","relieving_date","Int",
+,"""Employee-resignation_letter_date-idx""","DocField","Employee","idx","80","resignation_letter_date","Int",
+,"""Employee-column_break7-idx""","DocField","Employee","idx","79","column_break7","Int",
+,"""Employee-exit-idx""","DocField","Employee","idx","78","exit","Int",
+,"""Employee-experience_in_company_details-idx""","DocField","Employee","idx","77","experience_in_company_details","Int",
+,"""Employee-history_in_company-idx""","DocField","Employee","idx","76","history_in_company","Int",
+,"""Employee-previous_experience_details-idx""","DocField","Employee","idx","75","previous_experience_details","Int",
+,"""Employee-previous_work_experience-idx""","DocField","Employee","idx","74","previous_work_experience","Int",
+,"""Employee-educational_qualification_details-idx""","DocField","Employee","idx","73","educational_qualification_details","Int",
+,"""Employee-educational_qualification-idx""","DocField","Employee","idx","72","educational_qualification","Int",
+,"""Employee-health_details-idx""","DocField","Employee","idx","71","health_details","Int",
+,"""Employee-family_background-idx""","DocField","Employee","idx","70","family_background","Int",
+,"""Employee-blood_group-idx""","DocField","Employee","idx","69","blood_group","Int",
+,"""Employee-marital_status-idx""","DocField","Employee","idx","68","marital_status","Int",
+,"""Employee-column_break6-idx""","DocField","Employee","idx","67","column_break6","Int",
+,"""Employee-place_of_issue-idx""","DocField","Employee","idx","63","place_of_issue","Int",
+,"""Employee-valid_upto-idx""","DocField","Employee","idx","62","valid_upto","Int",
+,"""Employee-date_of_issue-idx""","DocField","Employee","idx","61","date_of_issue","Int",
+,"""Employee-passport_number-idx""","DocField","Employee","idx","60","passport_number","Int",
+,"""Employee-column_break5-idx""","DocField","Employee","idx","59","column_break5","Int",
+,"""Employee-personal_details-idx""","DocField","Employee","idx","58","personal_details","Int",
+,"""Employee-bio-idx""","DocField","Employee","idx","57","bio","Int",
+,"""Employee-sb53-idx""","DocField","Employee","idx","56","sb53","Int",
+,"""Employee-current_address-idx""","DocField","Employee","idx","55","current_address","Int",
+,"""Employee-current_accommodation_type-idx""","DocField","Employee","idx","54","current_accommodation_type","Int",
+,"""Employee-permanent_address-idx""","DocField","Employee","idx","53","permanent_address","Int",
+,"""Employee-permanent_accommodation_type-idx""","DocField","Employee","idx","52","permanent_accommodation_type","Int",
+,"""Employee-column_break4-idx""","DocField","Employee","idx","51","column_break4","Int",
+,"""Employee-emergency_phone_number-idx""","DocField","Employee","idx","50","emergency_phone_number","Int",
+,"""Employee-relation-idx""","DocField","Employee","idx","49","relation","Int",
+,"""Employee-person_to_be_contacted-idx""","DocField","Employee","idx","48","person_to_be_contacted","Int",
+,"""Employee-emergency_contact_details-idx""","DocField","Employee","idx","47","emergency_contact_details","Int",
+,"""Employee-unsubscribed-idx""","DocField","Employee","idx","46","unsubscribed","Int",
+,"""Employee-personal_email-idx""","DocField","Employee","idx","45","personal_email","Int",
+,"""Employee-cell_number-idx""","DocField","Employee","idx","44","cell_number","Int",
+,"""Employee-column_break3-idx""","DocField","Employee","idx","43","column_break3","Int",
+,"""Employee-contact_details-idx""","DocField","Employee","idx","42","contact_details","Int",
+,"""Employee-employee_leave_approvers-idx""","DocField","Employee","idx","41","employee_leave_approvers","Int",
+,"""Employee-reports_to-idx""","DocField","Employee","idx","40","reports_to","Int",
+,"""Employee-organization_profile-idx""","DocField","Employee","idx","39","organization_profile","Int",
+,"""Employee-bank_ac_no-idx""","DocField","Employee","idx","38","bank_ac_no","Int",
+,"""Employee-bank_name-idx""","DocField","Employee","idx","37","bank_name","Int",
+,"""Employee-holiday_list-idx""","DocField","Employee","idx","36","holiday_list","Int",
+,"""Selling Settings-allow_user_to_calculate_expenses_-previous_field""","DocField","Selling Settings","previous_field","show_sales_invoice_release_option","allow_user_to_calculate_expenses_","Data",
+,"""Salary Manager-to_date-previous_field""","DocField","Salary Manager","previous_field","from_date","to_date","Data",
+,"""Employee-has_salary_structure-previous_field""","DocField","Employee","previous_field","salary_mode","has_salary_structure","Data",
+,"""Salary Manager-from_date-previous_field""","DocField","Salary Manager","previous_field","type_of_salary","from_date","Data",
+,"""EmployeeSkill-_idx""","DocType","EmployeeSkill","_idx","[""process"", ""item_code"", ""time"", ""column_break_5"", ""type_of_payment"", ""cost"", ""total_percentage""]",,"Text",
+,"""EmployeeSkill-read_only_onload""","DocType","EmployeeSkill","read_only_onload",,,"Check",
+,"""Serial No-gift_voucher_amount-previous_field""","DocField","Serial No","previous_field","serial_no","gift_voucher_amount","Data",
+,"""Company-gift_voucher_account-previous_field""","DocField","Company","previous_field","default_income_account","gift_voucher_account","Data",
+,"""Item-naming_series-idx""","DocField","Item","idx","118","naming_series","Int",
+,"""Item-column_break0-idx""","DocField","Item","idx","117","column_break0","Int",
+,"""Item-parent_website_route-idx""","DocField","Item","idx","115","parent_website_route","Int",
+,"""Item-web_long_description-idx""","DocField","Item","idx","114","web_long_description","Int",
+,"""Item-item_website_specifications-idx""","DocField","Item","idx","113","item_website_specifications","Int",
+,"""Item-copy_from_item_group-idx""","DocField","Item","idx","112","copy_from_item_group","Int",
+,"""Item-sb72-idx""","DocField","Item","idx","111","sb72","Int",
+,"""Item-website_item_groups-idx""","DocField","Item","idx","110","website_item_groups","Int",
+,"""Item-website_warehouse-idx""","DocField","Item","idx","109","website_warehouse","Int",
+,"""Item-cb72-idx""","DocField","Item","idx","108","cb72","Int",
+,"""Item-website_image-idx""","DocField","Item","idx","107","website_image","Int",
+,"""Item-slideshow-idx""","DocField","Item","idx","106","slideshow","Int",
+,"""Item-weightage-idx""","DocField","Item","idx","105","weightage","Int",
+,"""Item-page_name-idx""","DocField","Item","idx","104","page_name","Int",
+,"""Item-show_in_website-idx""","DocField","Item","idx","103","show_in_website","Int",
+,"""Item-website_section-idx""","DocField","Item","idx","102","website_section","Int",
+,"""Item-customer_code-idx""","DocField","Item","idx","101","customer_code","Int",
+,"""Item-is_sub_contracted_item-idx""","DocField","Item","idx","100","is_sub_contracted_item","Int",
+,"""Item-is_pro_applicable-idx""","DocField","Item","idx","99","is_pro_applicable","Int",
+,"""Item-default_bom-idx""","DocField","Item","idx","98","default_bom","Int",
+,"""Item-is_manufactured_item-idx""","DocField","Item","idx","97","is_manufactured_item","Int",
+,"""Item-manufacturing-idx""","DocField","Item","idx","96","manufacturing","Int",
+,"""Item-item_specification_details-idx""","DocField","Item","idx","95","item_specification_details","Int",
+,"""Item-inspection_required-idx""","DocField","Item","idx","94","inspection_required","Int",
+,"""Item-inspection_criteria-idx""","DocField","Item","idx","93","inspection_criteria","Int",
+,"""Item-item_tax-idx""","DocField","Item","idx","92","item_tax","Int",
+,"""Item-item_tax_section_break-idx""","DocField","Item","idx","91","item_tax_section_break","Int",
+,"""Item-item_customer_details-idx""","DocField","Item","idx","90","item_customer_details","Int",
+,"""Item-column_break3-idx""","DocField","Item","idx","89","column_break3","Int",
+,"""Item-selling_cost_center-idx""","DocField","Item","idx","88","selling_cost_center","Int",
+,"""Item-income_account-idx""","DocField","Item","idx","87","income_account","Int",
+,"""Item-max_discount-idx""","DocField","Item","idx","86","max_discount","Int",
+,"""Item-is_service_item-idx""","DocField","Item","idx","85","is_service_item","Int",
+,"""Item-is_sales_item-idx""","DocField","Item","idx","84","is_sales_item","Int",
+,"""Item-sales_details-idx""","DocField","Item","idx","83","sales_details","Int",
+,"""Item-item_supplier_details-idx""","DocField","Item","idx","82","item_supplier_details","Int",
+,"""Item-manufacturer_part_no-idx""","DocField","Item","idx","81","manufacturer_part_no","Int",
+,"""Item-manufacturer-idx""","DocField","Item","idx","80","manufacturer","Int",
+,"""Item-uom_conversion_details-idx""","DocField","Item","idx","79","uom_conversion_details","Int",
+,"""Item-column_break2-idx""","DocField","Item","idx","78","column_break2","Int",
+,"""Item-last_purchase_rate-idx""","DocField","Item","idx","77","last_purchase_rate","Int",
+,"""Item-buying_cost_center-idx""","DocField","Item","idx","76","buying_cost_center","Int",
+,"""Item-expense_account-idx""","DocField","Item","idx","75","expense_account","Int",
+,"""Item-lead_time_days-idx""","DocField","Item","idx","74","lead_time_days","Int",
+,"""Item-default_supplier-idx""","DocField","Item","idx","73","default_supplier","Int",
+,"""Item-is_purchase_item-idx""","DocField","Item","idx","72","is_purchase_item","Int",
+,"""Item-purchase_details-idx""","DocField","Item","idx","71","purchase_details","Int",
+,"""Item-item_reorder-idx""","DocField","Item","idx","70","item_reorder","Int",
+,"""Item-section_break_31-idx""","DocField","Item","idx","69","section_break_31","Int",
+,"""Item-re_order_qty-idx""","DocField","Item","idx","68","re_order_qty","Int",
+,"""Item-re_order_level-idx""","DocField","Item","idx","67","re_order_level","Int",
+,"""Item-reorder_section-idx""","DocField","Item","idx","66","reorder_section","Int",
+,"""Item-weight_uom-idx""","DocField","Item","idx","63","weight_uom","Int",
+,"""Item-net_weight-idx""","DocField","Item","idx","62","net_weight","Int",
+,"""Item-end_of_life-idx""","DocField","Item","idx","61","end_of_life","Int",
+,"""Item-warranty_period-idx""","DocField","Item","idx","60","warranty_period","Int",
+,"""Item-serial_no_series-idx""","DocField","Item","idx","59","serial_no_series","Int",
+,"""Item-has_serial_no-idx""","DocField","Item","idx","58","has_serial_no","Int",
+,"""Item-has_batch_no-idx""","DocField","Item","idx","57","has_batch_no","Int",
+,"""Item-is_asset_item-idx""","DocField","Item","idx","56","is_asset_item","Int",
+,"""Item-column_break1-idx""","DocField","Item","idx","55","column_break1","Int",
+,"""Item-min_order_qty-idx""","DocField","Item","idx","54","min_order_qty","Int",
+,"""Item-valuation_method-idx""","DocField","Item","idx","53","valuation_method","Int",
+,"""Item-tolerance-idx""","DocField","Item","idx","52","tolerance","Int",
+,"""Item-default_warehouse-idx""","DocField","Item","idx","51","default_warehouse","Int",
+,"""Item-is_stock_item-idx""","DocField","Item","idx","48","is_stock_item","Int",
+,"""Item-inventory-idx""","DocField","Item","idx","47","inventory","Int",
+,"""Item-description_html-idx""","DocField","Item","idx","28","description_html","Int",
+,"""Item-add_image-idx""","DocField","Item","idx","27","add_image","Int",
+,"""Item-_idx""","DocType","Item","_idx","[""name_and_description_section"", ""barcode_img"", ""item_group"", ""item_sub_group"", ""series"", ""supplier_code"", ""swatch_id"", ""item_code"", ""item_name"", ""barcode_image"", ""description"", ""desc"", ""image"", ""image_view"", ""stock_uom"", ""brand"", ""qrcode"", ""fabric_width"", ""fabric_color"", ""barcode"", ""supplier_item_code"", ""size_for_merchandise"", ""items_image"", ""late_work_cost"", ""redeem_amount"", ""barcode_description"", ""add_image"", ""description_html"", ""process_details"", ""process_item"", ""more_details"", ""size_item"", ""measurement_formula"", ""measurement_template"", ""c"", ""measurement_formula_template"", ""s_"", ""test_label"", ""measurement_item"", ""style_item"", ""item_costing"", ""service"", ""fabric_costing"", ""costing_item"", ""raw_material"", ""raw_material_item"", ""inventory"", ""is_stock_item"", ""is_clubbed_product"", ""default_branch"", ""default_warehouse"", ""tolerance"", ""valuation_method"", ""min_order_qty"", ""column_break1"", ""is_asset_item"", ""has_batch_no"", ""has_serial_no"", ""serial_no_series"", ""warranty_period"", ""end_of_life"", ""net_weight"", ""weight_uom"", ""x"", ""sales_bom_item"", ""reorder_section"", ""re_order_level"", ""re_order_qty"", ""section_break_31"", ""item_reorder"", ""purchase_details"", ""is_purchase_item"", ""default_supplier"", ""lead_time_days"", ""expense_account"", ""buying_cost_center"", ""last_purchase_rate"", ""column_break2"", ""uom_conversion_details"", ""manufacturer"", ""manufacturer_part_no"", ""item_supplier_details"", ""sales_details"", ""is_sales_item"", ""is_service_item"", ""max_discount"", ""income_account"", ""selling_cost_center"", ""column_break3"", ""item_customer_details"", ""item_tax_section_break"", ""item_tax"", ""inspection_criteria"", ""inspection_required"", ""item_specification_details"", ""manufacturing"", ""is_manufactured_item"", ""default_bom"", ""is_pro_applicable"", ""is_sub_contracted_item"", ""customer_code"", ""website_section"", ""show_in_website"", ""page_name"", ""weightage"", ""slideshow"", ""website_image"", ""cb72"", ""website_warehouse"", ""website_item_groups"", ""sb72"", ""copy_from_item_group"", ""item_website_specifications"", ""web_long_description"", ""parent_website_route"", ""item_group_details"", ""column_break0"", ""naming_series""]",,"Text",
+,"""Item-item_group_details-previous_field""","DocField","Item","previous_field","column_break0","item_group_details","Data",
+,"""Item-sales_bom_item-previous_field""","DocField","Item","previous_field","x","sales_bom_item","Data",
+,"""Item-x-previous_field""","DocField","Item","previous_field","weight_uom","x","Data",
+,"""Item-default_branch-previous_field""","DocField","Item","previous_field","is_stock_item","default_branch","Data",
+,"""Item-is_clubbed_product-previous_field""","DocField","Item","previous_field","is_stock_item","is_clubbed_product","Data",
+,"""Item-raw_material_item-previous_field""","DocField","Item","previous_field","raw_material","raw_material_item","Data",
+,"""Item-raw_material-previous_field""","DocField","Item","previous_field","costing_item","raw_material","Data",
+,"""Item-costing_item-previous_field""","DocField","Item","previous_field","service","costing_item","Data",
+,"""Item-fabric_costing-previous_field""","DocField","Item","previous_field","item_costing","fabric_costing","Data",
+,"""Item-service-previous_field""","DocField","Item","previous_field","item_costing","service","Data",
+,"""Item-item_costing-previous_field""","DocField","Item","previous_field","raw_material_item","item_costing","Data",
+,"""Item-style_item-previous_field""","DocField","Item","previous_field","measurement_item","style_item","Data",
+,"""Item-measurement_item-previous_field""","DocField","Item","previous_field","s_","measurement_item","Data",
+,"""Item-s_-previous_field""","DocField","Item","previous_field","measurement_formula_template","s_","Data",
+,"""Item-measurement_formula_template-previous_field""","DocField","Item","previous_field","c","measurement_formula_template","Data",
+,"""Item-c-previous_field""","DocField","Item","previous_field","measurement_template","c","Data",
+,"""Item-measurement_template-previous_field""","DocField","Item","previous_field","measurement_formula","measurement_template","Data",
+,"""Item-measurement_formula-previous_field""","DocField","Item","previous_field","size_item","measurement_formula","Data",
+,"""Item-size_item-previous_field""","DocField","Item","previous_field","more_details","size_item","Data",
+,"""Item-more_details-previous_field""","DocField","Item","previous_field","add_image","more_details","Data",
+,"""Item-process_item-previous_field""","DocField","Item","previous_field","style_item","process_item","Data",
+,"""Item-redeem_amount-previous_field""","DocField","Item","previous_field","late_work_cost","redeem_amount","Data",
+,"""Serial No-gift_voucher_no-previous_field""","DocField","Serial No","previous_field","quality_check","gift_voucher_no","Data",
+,"""Work Order-_idx""","DocType","Work Order","_idx","[""work_order"", ""naming_series"", ""work_order_no"", ""status"", ""sales_invoice_no"", ""item_code"", ""barcode"", ""item_qty"", ""fabric__code"", ""trial_no"", ""trial_date"", ""delivery_date"", ""note"", ""other_work_orders"", ""column_break_4"", ""customer"", ""customer_name"", ""branch"", ""serial_no_data"", ""pdd"", ""qrcode"", ""trial_serial_no"", ""measured_by"", ""company"", ""section_break_5"", ""style_work_order"", ""wo_style"", ""measurement_details"", ""work_orders"", ""cb26"", ""fetch_measurement_details"", ""sb28"", ""measurement_item"", ""process_wise_warehouse_detail"", ""amended_from"", ""parent_item_code"", ""current_process"", ""total_process"", ""work_order_name""]",,"Text",
+,"""Work Order-work_order_name-idx""","DocField","Work Order","idx","39","work_order_name","Int",
+,"""Work Order-total_process-idx""","DocField","Work Order","idx","38","total_process","Int",
+,"""Work Order-current_process-idx""","DocField","Work Order","idx","37","current_process","Int",
+,"""Work Order-parent_item_code-idx""","DocField","Work Order","idx","36","parent_item_code","Int",
+,"""Work Order-amended_from-idx""","DocField","Work Order","idx","35","amended_from","Int",
+,"""Work Order-measurement_item-idx""","DocField","Work Order","idx","33","measurement_item","Int",
+,"""Work Order-sb28-idx""","DocField","Work Order","idx","32","sb28","Int",
+,"""Work Order-fetch_measurement_details-idx""","DocField","Work Order","idx","31","fetch_measurement_details","Int",
+,"""Work Order-cb26-idx""","DocField","Work Order","idx","30","cb26","Int",
+,"""Work Order-work_orders-idx""","DocField","Work Order","idx","29","work_orders","Int",
+,"""Work Order-measurement_details-idx""","DocField","Work Order","idx","28","measurement_details","Int",
+,"""Work Order-wo_style-idx""","DocField","Work Order","idx","27","wo_style","Int",
+,"""Work Order-style_work_order-idx""","DocField","Work Order","idx","26","style_work_order","Int",
+,"""Work Order-section_break_5-idx""","DocField","Work Order","idx","25","section_break_5","Int",
+,"""Work Order-company-idx""","DocField","Work Order","idx","24","company","Int",
+,"""Work Order-measured_by-idx""","DocField","Work Order","idx","23","measured_by","Int",
+,"""Work Order-delivery_date-idx""","DocField","Work Order","idx","12","delivery_date","Int",
+,"""Work Order-read_only_onload""","DocType","Work Order","read_only_onload",,,"Check",
+,"""Stock Entry Detail-has_cut_order-previous_field""","DocField","Stock Entry Detail","previous_field","trials","has_cut_order","Data",
+,"""Stock Entry Detail-process-previous_field""","DocField","Stock Entry Detail","previous_field","work_order","process","Data",
+,"""Stock Entry Detail-customer_name-previous_field""","DocField","Stock Entry Detail","previous_field","sales_invoice_no","customer_name","Data",
+,"""Customer-select-previous_field""","DocField","Customer","previous_field","select_image","select","Data",
+,"""Task-process_allotment_number-previous_field""","DocField","Task","previous_field","sales_order_number","process_allotment_number","Data",
+,"""Selling Settings-show_sales_invoice_release_option-previous_field""","DocField","Selling Settings","previous_field","editable_price_list_rate","show_sales_invoice_release_option","Data",
+,"""Item-item_code-reqd""","DocField","Item","reqd","1","item_code","Check",
+,"""Item-item_code-hidden""","DocField","Item","hidden","0","item_code","Check",
+,"""Item-naming_series-hidden""","DocField","Item","hidden","1","naming_series","Check",
+,"""Item-naming_series-reqd""","DocField","Item","reqd","0","naming_series","Check",
+,"""Sales Invoice-ignore_pricing_rule-hidden""","DocField","Sales Invoice","hidden","1","ignore_pricing_rule","Check",
+,"""Sales Invoice-mode_of_payment-hidden""","DocField","Sales Invoice","hidden","1","mode_of_payment","Check",
+,"""Sales Invoice-thank_you-previous_field""","DocField","Sales Invoice","previous_field","notification_send","thank_you","Data",
+,"""Sales Invoice-merchandise_item-previous_field""","DocField","Sales Invoice","previous_field","sales_invoice_items_one","merchandise_item","Data",
+,"""Sales Invoice-sales_invoice_items_one-previous_field""","DocField","Sales Invoice","previous_field","update_stock","sales_invoice_items_one","Data",
+,"""Sales Invoice-release-previous_field""","DocField","Sales Invoice","previous_field","authenticated","release","Data",
+,"""Sales Invoice-branch-previous_field""","DocField","Sales Invoice","previous_field","admin_authentication_note","branch","Data",
+,"""Sales Invoice-admin_authentication_note-previous_field""","DocField","Sales Invoice","previous_field","authenticated","admin_authentication_note","Data",
+,"""Sales Invoice-delivery_date-previous_field""","DocField","Sales Invoice","previous_field","mode_of_payment","delivery_date","Data",
+,"""Sales Invoice-delivery_mode-previous_field""","DocField","Sales Invoice","previous_field","mode_of_payment","delivery_mode","Data",
+,"""Sales Invoice-is_multi_mode-previous_field""","DocField","Sales Invoice","previous_field","contact_email","is_multi_mode","Data",
+,"""Stock Entry-stock_in-previous_field""","DocField","Stock Entry","previous_field","purpose","stock_in","Data",
+,"""Stock Entry-process-previous_field""","DocField","Stock Entry","previous_field","refer_doctype_name","process","Data",
+,"""Stock Entry-refer_doctype_name-previous_field""","DocField","Stock Entry","previous_field","sales_invoice","refer_doctype_name","Data",
+,"""Stock Entry-sales_invoice-previous_field""","DocField","Stock Entry","previous_field","select_print_heading","sales_invoice","Data",
+,"""Stock Entry-t_branch-previous_field""","DocField","Stock Entry","previous_field","to_warehouse","t_branch","Data",
+,"""Stock Entry-f_branch-previous_field""","DocField","Stock Entry","previous_field","from_warehouse","f_branch","Data",
+,"""Stock Entry-qrcode-previous_field""","DocField","Stock Entry","previous_field","barcode","qrcode","Data",
+,"""Stock Entry-branch-previous_field""","DocField","Stock Entry","previous_field","stock_in","branch","Data",
+,"""Stock Entry-purpose_type-previous_field""","DocField","Stock Entry","previous_field","naming_series","purpose_type","Data",
+,"""File Data-type_of_file-previous_field""","DocField","File Data","previous_field","content_hash","type_of_file","Data",
+,"""Item-late_work_cost-previous_field""","DocField","Item","previous_field","items_image","late_work_cost","Data",
+,"""Item-items_image-previous_field""","DocField","Item","previous_field","size_for_merchandise","items_image","Data",
+,"""Item-size_for_merchandise-previous_field""","DocField","Item","previous_field","items_image","size_for_merchandise","Data",
+,"""Item-supplier_item_code-previous_field""","DocField","Item","previous_field","barcode","supplier_item_code","Data",
+,"""Item-fabric_width-previous_field""","DocField","Item","previous_field","fabric_color","fabric_width","Data",
+,"""Item-barcode-idx""","DocField","Item","idx","20","barcode","Int",
+,"""Cut Order Item-customer-previous_field""","DocField","Cut Order Item","previous_field","select","customer","Data",
+,"""Sales Invoice Item-sales_invoice_branch-previous_field""","DocField","Sales Invoice Item","previous_field","warehouse","sales_invoice_branch","Data",
+,"""Sales Invoice Item-serial_no-print_hide""","DocField","Sales Invoice Item","print_hide","1","serial_no","Check",
+,"""Production Details-select-hidden""","DocField","Production Details","hidden","1","select","Check",
+,"""Production Details-read_only_onload""","DocType","Production Details","read_only_onload",,,"Check",
+,"""Production Details-fabric_qty-hidden""","DocField","Production Details","hidden","1","fabric_qty","Check",
+,"""Production Details-actual_qty-hidden""","DocField","Production Details","hidden","1","actual_qty","Check",
+,"""Production Details-size-hidden""","DocField","Production Details","hidden","1","size","Check",
+,"""Stock Entry Detail-work_order-previous_field""","DocField","Stock Entry Detail","previous_field","material_request_item","work_order","Data",
+,"""Stock Entry Detail-invoice_no-previous_field""","DocField","Stock Entry Detail","previous_field","incoming_rate","invoice_no","Data",
+,"""Stock Entry Detail-target_warehouse-previous_field""","DocField","Stock Entry Detail","previous_field","t_warehouse","target_warehouse","Data",
+,"""Stock Entry Detail-target_branch-previous_field""","DocField","Stock Entry Detail","previous_field","col_break1","target_branch","Data",
+,"""Stock Entry Detail-source_warehouse-previous_field""","DocField","Stock Entry Detail","previous_field","s_warehouse","source_warehouse","Data",
+,"""Work Order-branch-options""","DocField","Work Order","options","Branch","branch","Text",
+,"""Quality Inspection-item_serial_no-hidden""","DocField","Quality Inspection","hidden","1","item_serial_no","Check",
+,"""Quality Inspection-sample_size-print_hide""","DocField","Quality Inspection","print_hide","1","sample_size","Check",
+,"""Quality Inspection-naming_series-print_hide""","DocField","Quality Inspection","print_hide","1","naming_series","Check",
+,"""Task-process_name-previous_field""","DocField","Task","previous_field","exp_end_date","process_name","Data",
+,"""EmployeeSkill-cost-label""","DocField","EmployeeSkill","label","Piece Rate","cost","Data",
+,"""Item-swatch_id-previous_field""","DocField","Item","previous_field","item_sub_group","swatch_id","Data",
+,"""Item-supplier_code-previous_field""","DocField","Item","previous_field","brand","supplier_code","Data",
+,"""Customer-_idx""","DocType","Customer","_idx","[""basic_info"", ""naming_series"", ""take_image"", ""select_image"", ""image1"", ""select"", ""image2"", ""cb"", ""customer_name"", ""customer_type"", ""lead_name"", ""customer_group"", ""territory"", ""country"", ""date_of_birth"", ""anniversary_date"", ""measurement_details"", ""body_measurements"", ""address_contacts"", ""address_html"", ""column_break1"", ""contact_html"", ""communication_history"", ""communication_html"", ""more_info"", ""column_break2"", ""company"", ""customer_details"", ""column_break3"", ""default_currency"", ""default_price_list"", ""default_taxes_and_charges"", ""credit_days"", ""credit_limit"", ""website"", ""referral_details"", ""is_existing_customer"", ""referral"", ""referral_name"", ""phone_number"", ""referral_lead"", ""sales_team_section_break"", ""default_sales_partner"", ""default_commission_rate"", ""sales_team"", ""communications"", ""column_break0""]",,"Text",
+,"""Customer-referral_lead-previous_field""","DocField","Customer","previous_field","phone_number","referral_lead","Data",
+,"""Customer-phone_number-previous_field""","DocField","Customer","previous_field","referral_name","phone_number","Data",
+,"""Customer-referral_name-previous_field""","DocField","Customer","previous_field","referral","referral_name","Data",
+,"""Customer-referral-previous_field""","DocField","Customer","previous_field","is_existing_customer","referral","Data",
+,"""Customer-is_existing_customer-previous_field""","DocField","Customer","previous_field","referral_details","is_existing_customer","Data",
+,"""Customer-referral_details-previous_field""","DocField","Customer","previous_field","website","referral_details","Data",
+,"""Customer-column_break0-idx""","DocField","Customer","idx","47","column_break0","Int",
+,"""Customer-communications-idx""","DocField","Customer","idx","46","communications","Int",
+,"""Customer-sales_team-idx""","DocField","Customer","idx","45","sales_team","Int",
+,"""Customer-default_commission_rate-idx""","DocField","Customer","idx","44","default_commission_rate","Int",
+,"""Customer-default_sales_partner-idx""","DocField","Customer","idx","43","default_sales_partner","Int",
+,"""Customer-sales_team_section_break-idx""","DocField","Customer","idx","42","sales_team_section_break","Int",
+,"""Journal Voucher Detail-mode-previous_field""","DocField","Journal Voucher Detail","previous_field","balance","mode","Data",
+,"""Customer-image2-previous_field""","DocField","Customer","previous_field","select","image2","Data",
+,"""Customer-image1-previous_field""","DocField","Customer","previous_field","select_image","image1","Data",
+,"""Customer-select_image-previous_field""","DocField","Customer","previous_field","lead_name","select_image","Data",
+,"""Customer-default_print_format""","DocType","Customer","default_print_format",,,"Data",
+,"""Customer-body_measurements-previous_field""","DocField","Customer","previous_field","measurement_details","body_measurements","Data",
+,"""Customer-measurement_details-previous_field""","DocField","Customer","previous_field","anniversary_date","measurement_details","Data",
+,"""Customer-anniversary_date-previous_field""","DocField","Customer","previous_field","date_of_birth","anniversary_date","Data",
+,"""Customer-date_of_birth-previous_field""","DocField","Customer","previous_field","country","date_of_birth","Data",
+,"""Customer-take_image-previous_field""","DocField","Customer","previous_field","naming_series","take_image","Data",
+,"""Customer-website-idx""","DocField","Customer","idx","35","website","Int",
+,"""Customer-credit_limit-idx""","DocField","Customer","idx","34","credit_limit","Int",
+,"""Customer-credit_days-idx""","DocField","Customer","idx","33","credit_days","Int",
+,"""Customer-default_taxes_and_charges-idx""","DocField","Customer","idx","32","default_taxes_and_charges","Int",
+,"""Customer-default_price_list-idx""","DocField","Customer","idx","31","default_price_list","Int",
+,"""Customer-default_currency-idx""","DocField","Customer","idx","30","default_currency","Int",
+,"""Customer-column_break3-idx""","DocField","Customer","idx","29","column_break3","Int",
+,"""Customer-customer_details-idx""","DocField","Customer","idx","28","customer_details","Int",
+,"""Customer-company-idx""","DocField","Customer","idx","27","company","Int",
+,"""Customer-column_break2-idx""","DocField","Customer","idx","26","column_break2","Int",
+,"""Customer-more_info-idx""","DocField","Customer","idx","25","more_info","Int",
+,"""Customer-communication_html-idx""","DocField","Customer","idx","24","communication_html","Int",
+,"""Customer-communication_history-idx""","DocField","Customer","idx","23","communication_history","Int",
+,"""Customer-contact_html-idx""","DocField","Customer","idx","22","contact_html","Int",
+,"""Customer-column_break1-idx""","DocField","Customer","idx","21","column_break1","Int",
+,"""Customer-address_html-idx""","DocField","Customer","idx","20","address_html","Int",
+,"""Customer-address_contacts-idx""","DocField","Customer","idx","19","address_contacts","Int",
+,"""Customer-country-idx""","DocField","Customer","idx","14","country","Int",
+,"""Customer-territory-idx""","DocField","Customer","idx","13","territory","Int",
+,"""Customer-customer_group-idx""","DocField","Customer","idx","12","customer_group","Int",
+,"""Customer-lead_name-idx""","DocField","Customer","idx","11","lead_name","Int",
+,"""Customer-customer_type-idx""","DocField","Customer","idx","10","customer_type","Int",
+,"""Customer-customer_name-idx""","DocField","Customer","idx","9","customer_name","Int",
+,"""Item-series-previous_field""","DocField","Item","previous_field","item_sub_group","series","Data",
+,"""Item-max_discount-precision""","DocField","Item","precision","2","max_discount","Select",
+,"""Support Ticket-flag-previous_field""","DocField","Support Ticket","previous_field","raised_by","flag","Data",
+,"""Employee-employee_name-idx""","DocField","Employee","idx","8","employee_name","Int",
+,"""Employee-salutation-idx""","DocField","Employee","idx","7","salutation","Int",
+,"""Employee-naming_series-idx""","DocField","Employee","idx","6","naming_series","Int",
+,"""Employee-employee-idx""","DocField","Employee","idx","5","employee","Int",
+,"""Employee-image-idx""","DocField","Employee","idx","4","image","Int",
+,"""Employee-salutation-options""","DocField","Employee","options","
 Mr
 Ms
 Prof
 Er
 Dr
 Sk
-Md","salutation","Text",""
-"","""EmployeeSkill-time-idx""","DocField","EmployeeSkill","idx","3","time","Int",""
-"","""EmployeeSkill-item_name-hidden""","DocField","EmployeeSkill","hidden","1","item_name","Check",""
-"","""Item-brand-depends_on""","DocField","Item","depends_on","eval:doc.item_group!='Tailoring'","brand","Data",""
-"","""Item-barcode_image-previous_field""","DocField","Item","previous_field","barcode_image","barcode_image","Data",""
-"","""Item-brand-idx""","DocField","Item","idx","16","brand","Int",""
-"","""Item-stock_uom-idx""","DocField","Item","idx","15","stock_uom","Int",""
-"","""Item-image_view-idx""","DocField","Item","idx","14","image_view","Int",""
-"","""Item-image-idx""","DocField","Item","idx","13","image","Int",""
-"","""Item-description-idx""","DocField","Item","idx","11","description","Int",""
-"","""Item-item_name-idx""","DocField","Item","idx","9","item_name","Int",""
-"","""Item-item_code-idx""","DocField","Item","idx","8","item_code","Int",""
-"","""Company-registered_email_id-previous_field""","DocField","Company","previous_field","email","registered_email_id","Data",""
-"","""Item-add_image-hidden""","DocField","Item","hidden","1","add_image","Check",""
-"","""Item-item_sub_group-previous_field""","DocField","Item","previous_field","item_group","item_sub_group","Data",""
-"","""Item-naming_series-options""","DocField","Item","options","TRO-
+Md","salutation","Text",
+,"""EmployeeSkill-time-idx""","DocField","EmployeeSkill","idx","3","time","Int",
+,"""EmployeeSkill-item_name-hidden""","DocField","EmployeeSkill","hidden","1","item_name","Check",
+,"""Item-brand-depends_on""","DocField","Item","depends_on","eval:doc.item_group!='Tailoring'","brand","Data",
+,"""Item-barcode_image-previous_field""","DocField","Item","previous_field","barcode_image","barcode_image","Data",
+,"""Item-brand-idx""","DocField","Item","idx","16","brand","Int",
+,"""Item-stock_uom-idx""","DocField","Item","idx","15","stock_uom","Int",
+,"""Item-image_view-idx""","DocField","Item","idx","14","image_view","Int",
+,"""Item-image-idx""","DocField","Item","idx","13","image","Int",
+,"""Item-description-idx""","DocField","Item","idx","11","description","Int",
+,"""Item-item_name-idx""","DocField","Item","idx","9","item_name","Int",
+,"""Item-item_code-idx""","DocField","Item","idx","8","item_code","Int",
+,"""Company-registered_email_id-previous_field""","DocField","Company","previous_field","email","registered_email_id","Data",
+,"""Item-add_image-hidden""","DocField","Item","hidden","1","add_image","Check",
+,"""Item-item_sub_group-previous_field""","DocField","Item","previous_field","item_group","item_sub_group","Data",
+,"""Item-naming_series-options""","DocField","Item","options","TRO-
 SHI-
 JAC-
-FAB-","naming_series","Text",""
-"","""Item-naming_series-default""","DocField","Item","default","TRO-","naming_series","Text",""
-"","""Item-item_group-idx""","DocField","Item","idx","3","item_group","Int",""
-"","""DocField-in_list_view-width""","DocField","DocField","width","223","in_list_view","",""
-"","""Branch-branch-idx""","DocField","Branch","idx","2","branch","Int",""
-"","""Employee-col_break_22-idx""","DocField","Employee","idx","20","col_break_22","Int",""
-"","""Employee-scheduled_confirmation_date-idx""","DocField","Employee","idx","21","scheduled_confirmation_date","Int",""
-"","""Employee-final_confirmation_date-idx""","DocField","Employee","idx","22","final_confirmation_date","Int",""
-"","""Employee-contract_end_date-idx""","DocField","Employee","idx","23","contract_end_date","Int",""
-"","""Employee-date_of_retirement-idx""","DocField","Employee","idx","24","date_of_retirement","Int",""
-"","""Employee-job_profile-idx""","DocField","Employee","idx","25","job_profile","Int",""
-"","""Employee-column_break2-idx""","DocField","Employee","idx","26","column_break2","Int",""
-"","""Employee-branch-idx""","DocField","Employee","idx","27","branch","Int",""
-"","""Employee-department-idx""","DocField","Employee","idx","28","department","Int",""
-"","""Employee-designation-idx""","DocField","Employee","idx","29","designation","Int",""
-"","""Employee-company_email-idx""","DocField","Employee","idx","30","company_email","Int",""
-"","""Employee-notice_number_of_days-idx""","DocField","Employee","idx","31","notice_number_of_days","Int",""
-"","""Employee-salary_information-idx""","DocField","Employee","idx","32","salary_information","Int",""
-"","""Employee-salary_mode-idx""","DocField","Employee","idx","33","salary_mode","Int",""
-"","""Company-registration_info-idx""","DocField","Company","idx","46","registration_info","Int",""
-"","""Company-registration_details-idx""","DocField","Company","idx","47","registration_details","Int",""
-"","""Sales Invoice Item-warehouse_and_reference-hidden""","DocField","Sales Invoice Item","hidden","0","warehouse_and_reference","Check",""
-"","""Employee-employeeskills-previous_field""","DocField","Employee","previous_field","skills_assigned_to_employee","employeeskills","Data",""
-"","""Task-item_code-previous_field""","DocField","Task","previous_field","process_name","item_code","Data",""
-"","""Task-sales_order_number-previous_field""","DocField","Task","previous_field","priority","sales_order_number","Data",""
-"","""Event-appointment_list-previous_field""","DocField","Event","previous_field","individuals","appointment_list","Data",""
-"","""Company-website2-previous_field""","DocField","Company","previous_field","business_id_","website2","Data",""
-"","""Company-business_id_-previous_field""","DocField","Company","previous_field","fax_no","business_id_","Data",""
-"","""Company-fax_no-previous_field""","DocField","Company","previous_field","mobile_number","fax_no","Data",""
-"","""Company-mobile_number-previous_field""","DocField","Company","previous_field","phone_number_2","mobile_number","Data",""
-"","""Company-phone_number_2-previous_field""","DocField","Company","previous_field","phone_number_1","phone_number_2","Data",""
-"","""Company-phone_number_1-previous_field""","DocField","Company","previous_field","columbrk","phone_number_1","Data",""
-"","""Company-columbrk-previous_field""","DocField","Company","previous_field","country2","columbrk","Data",""
-"","""Company-section-previous_field""","DocField","Company","previous_field","company_logo","section","Data",""
-"","""Company-correspondence_email_id-previous_field""","DocField","Company","previous_field","registered_email_id","correspondence_email_id","Data",""
-"","""Company-country2-previous_field""","DocField","Company","previous_field","state","country2","Data",""
-"","""Company-pincode-previous_field""","DocField","Company","previous_field","state","pincode","Data",""
-"","""Company-state-previous_field""","DocField","Company","previous_field","city","state","Data",""
-"","""Company-city-previous_field""","DocField","Company","previous_field","address_line_3","city","Data",""
-"","""Company-company_logo-previous_field""","DocField","Company","previous_field","info","company_logo","Data",""
-"","""Company-info-previous_field""","DocField","Company","previous_field","address_line_3","info","Data",""
-"","""Company-address_line_3-previous_field""","DocField","Company","previous_field","address_line_2","address_line_3","Data",""
-"","""Company-address_line_2-previous_field""","DocField","Company","previous_field","address_line_1","address_line_2","Data",""
-"","""Company-address_line_1-previous_field""","DocField","Company","previous_field","business_owner_name","address_line_1","Data",""
-"","""Company-business_owner_name-previous_field""","DocField","Company","previous_field","company_profie","business_owner_name","Data",""
-"","""Company-company_profie-previous_field""","DocField","Company","previous_field","website","company_profie","Data",""
-"","""Task-item_name-previous_field""","DocField","Task","previous_field","process_name","item_name","Data",""
-"","""Stock Entry-delivery_note_no-depends_on""","DocField","Stock Entry","depends_on","eval:doc.purpose_type==""Sales Return""","delivery_note_no","Data",""
-"","""Stock Entry-sales_invoice_no-depends_on""","DocField","Stock Entry","depends_on","eval:doc.purpose_type==""Sales Return""","sales_invoice_no","Data",""
-"","""Stock Entry-purchase_receipt_no-depends_on""","DocField","Stock Entry","depends_on","eval:doc.purpose_type==""Purchase Return""","purchase_receipt_no","Data",""
-"","""Item Price-customer_rate_details-previous_field""","DocField","Item Price","previous_field","item_description","customer_rate_details","Data",""
-"","""Item Price-customer_rate-previous_field""","DocField","Item Price","previous_field","customer_rate_details","customer_rate","Data",""
-"","""Sales BOM Item-description-hidden""","DocField","Sales BOM Item","hidden","1","description","Check",""
-"","""Sales BOM Item-uom-hidden""","DocField","Sales BOM Item","hidden","1","uom","Check",""
-"","""Item-default_warehouse-hidden""","DocField","Item","hidden","1","default_warehouse","Check",""
-"","""Pricing Rule-for_price_list-label""","DocField","Pricing Rule","label","For Services","for_price_list","Data",""
-"","""Purchase Invoice Item-invoice_branch-previous_field""","DocField","Purchase Invoice Item","previous_field","description","invoice_branch","Data",""
-"","""Material Request Item-warehouse-idx""","DocField","Material Request Item","idx","9","warehouse","Int",""
-"","""Material Request Item-_idx""","DocType","Material Request Item","_idx","[""item_code"", ""item_name"", ""col_break1"", ""description"", ""quantity_and_warehouse"", ""qty"", ""uom"", ""for_branch"", ""warehouse"", ""from_branch"", ""from_warehouse"", ""col_break2"", ""schedule_date"", ""more_info"", ""item_group"", ""brand"", ""lead_time_date"", ""sales_order_no"", ""col_break3"", ""min_order_qty"", ""projected_qty"", ""ordered_qty"", ""page_break""]","","Text",""
-"","""Material Request Item-from_branch-previous_field""","DocField","Material Request Item","previous_field","for_branch","from_branch","Data",""
-"","""Material Request Item-for_branch-previous_field""","DocField","Material Request Item","previous_field","uom","for_branch","Data",""
-"","""Material Request Item-warehouse-in_list_view""","DocField","Material Request Item","in_list_view","0","warehouse","Check",""
-"","""Material Request Item-warehouse-hidden""","DocField","Material Request Item","hidden","1","warehouse","Check",""
-"","""Material Request Item-from_warehouse-previous_field""","DocField","Material Request Item","previous_field","warehouse","from_warehouse","Data",""
-"","""Event-branch-previous_field""","DocField","Event","previous_field","ref_name","branch","Data",""
-"","""Purchase Order-branch-previous_field""","DocField","Purchase Order","previous_field","supplier_name","branch","Data",""
-"","""Purchase Receipt-branch-previous_field""","DocField","Purchase Receipt","previous_field","supplier_section","branch","Data",""
-"","""Attendance-branch-previous_field""","DocField","Attendance","previous_field","company","branch","Data",""
-"","""Journal Voucher-branch-previous_field""","DocField","Journal Voucher","previous_field","posting_date","branch","Data",""
-"","""Supplier-naming_series-hidden""","DocField","Supplier","hidden","0","naming_series","Check",""
-"","""Supplier-naming_series-reqd""","DocField","Supplier","reqd","1","naming_series","Check",""
-"","""Purchase Invoice-read_only_onload""","DocType","Purchase Invoice","read_only_onload","","","Check",""
-"","""Purchase Invoice-due_date-idx""","DocField","Purchase Invoice","idx","13","due_date","Int",""
-"","""Purchase Invoice-bill_no-idx""","DocField","Purchase Invoice","idx","14","bill_no","Int",""
-"","""Purchase Invoice-bill_date-idx""","DocField","Purchase Invoice","idx","15","bill_date","Int",""
-"","""Purchase Invoice-amended_from-idx""","DocField","Purchase Invoice","idx","16","amended_from","Int",""
-"","""Purchase Invoice-company-idx""","DocField","Purchase Invoice","idx","17","company","Int",""
-"","""Purchase Invoice-currency_price_list-idx""","DocField","Purchase Invoice","idx","18","currency_price_list","Int",""
-"","""Purchase Invoice-currency-idx""","DocField","Purchase Invoice","idx","19","currency","Int",""
-"","""Purchase Invoice-conversion_rate-idx""","DocField","Purchase Invoice","idx","20","conversion_rate","Int",""
-"","""Purchase Invoice-column_break2-idx""","DocField","Purchase Invoice","idx","21","column_break2","Int",""
-"","""Purchase Invoice-buying_price_list-idx""","DocField","Purchase Invoice","idx","22","buying_price_list","Int",""
-"","""Purchase Invoice-price_list_currency-idx""","DocField","Purchase Invoice","idx","23","price_list_currency","Int",""
-"","""Purchase Invoice-plc_conversion_rate-idx""","DocField","Purchase Invoice","idx","24","plc_conversion_rate","Int",""
-"","""Purchase Invoice-ignore_pricing_rule-idx""","DocField","Purchase Invoice","idx","25","ignore_pricing_rule","Int",""
-"","""Purchase Invoice-items-idx""","DocField","Purchase Invoice","idx","26","items","Int",""
-"","""Purchase Invoice-entries-idx""","DocField","Purchase Invoice","idx","27","entries","Int",""
-"","""Purchase Invoice-section_break_26-idx""","DocField","Purchase Invoice","idx","28","section_break_26","Int",""
-"","""Purchase Invoice-net_total-idx""","DocField","Purchase Invoice","idx","29","net_total","Int",""
-"","""Purchase Invoice-column_break_28-idx""","DocField","Purchase Invoice","idx","30","column_break_28","Int",""
-"","""Purchase Invoice-net_total_import-idx""","DocField","Purchase Invoice","idx","31","net_total_import","Int",""
-"","""Purchase Invoice-taxes-idx""","DocField","Purchase Invoice","idx","32","taxes","Int",""
-"","""Purchase Invoice-taxes_and_charges-idx""","DocField","Purchase Invoice","idx","33","taxes_and_charges","Int",""
-"","""Purchase Invoice-other_charges-idx""","DocField","Purchase Invoice","idx","34","other_charges","Int",""
-"","""Purchase Invoice-other_charges_calculation-idx""","DocField","Purchase Invoice","idx","35","other_charges_calculation","Int",""
-"","""Purchase Invoice-totals-idx""","DocField","Purchase Invoice","idx","36","totals","Int",""
-"","""Purchase Invoice-other_charges_added-idx""","DocField","Purchase Invoice","idx","37","other_charges_added","Int",""
-"","""Purchase Invoice-other_charges_deducted-idx""","DocField","Purchase Invoice","idx","38","other_charges_deducted","Int",""
-"","""Purchase Invoice-grand_total-idx""","DocField","Purchase Invoice","idx","39","grand_total","Int",""
-"","""Purchase Invoice-in_words-idx""","DocField","Purchase Invoice","idx","40","in_words","Int",""
-"","""Purchase Invoice-column_break8-idx""","DocField","Purchase Invoice","idx","41","column_break8","Int",""
-"","""Purchase Invoice-other_charges_added_import-idx""","DocField","Purchase Invoice","idx","42","other_charges_added_import","Int",""
-"","""Purchase Invoice-other_charges_deducted_import-idx""","DocField","Purchase Invoice","idx","43","other_charges_deducted_import","Int",""
-"","""Purchase Invoice-grand_total_import-idx""","DocField","Purchase Invoice","idx","44","grand_total_import","Int",""
-"","""Purchase Invoice-in_words_import-idx""","DocField","Purchase Invoice","idx","45","in_words_import","Int",""
-"","""Purchase Invoice-total_amount_to_pay-idx""","DocField","Purchase Invoice","idx","46","total_amount_to_pay","Int",""
-"","""Purchase Invoice-total_advance-idx""","DocField","Purchase Invoice","idx","47","total_advance","Int",""
-"","""Purchase Invoice-total_tax-idx""","DocField","Purchase Invoice","idx","48","total_tax","Int",""
-"","""Purchase Invoice-outstanding_amount-idx""","DocField","Purchase Invoice","idx","49","outstanding_amount","Int",""
-"","""Purchase Invoice-write_off_amount-idx""","DocField","Purchase Invoice","idx","50","write_off_amount","Int",""
-"","""Purchase Invoice-write_off_account-idx""","DocField","Purchase Invoice","idx","51","write_off_account","Int",""
-"","""Purchase Invoice-write_off_cost_center-idx""","DocField","Purchase Invoice","idx","52","write_off_cost_center","Int",""
-"","""Purchase Invoice-against_expense_account-idx""","DocField","Purchase Invoice","idx","53","against_expense_account","Int",""
-"","""Purchase Invoice-fold-idx""","DocField","Purchase Invoice","idx","54","fold","Int",""
-"","""Purchase Invoice-advances-idx""","DocField","Purchase Invoice","idx","55","advances","Int",""
-"","""Purchase Invoice-get_advances_paid-idx""","DocField","Purchase Invoice","idx","56","get_advances_paid","Int",""
-"","""Purchase Invoice-advance_allocation_details-idx""","DocField","Purchase Invoice","idx","57","advance_allocation_details","Int",""
-"","""Purchase Invoice-terms_section_break-idx""","DocField","Purchase Invoice","idx","58","terms_section_break","Int",""
-"","""Purchase Invoice-tc_name-idx""","DocField","Purchase Invoice","idx","59","tc_name","Int",""
-"","""Purchase Invoice-terms-idx""","DocField","Purchase Invoice","idx","60","terms","Int",""
-"","""Purchase Invoice-contact_section-idx""","DocField","Purchase Invoice","idx","61","contact_section","Int",""
-"","""Purchase Invoice-supplier_address-idx""","DocField","Purchase Invoice","idx","62","supplier_address","Int",""
-"","""Purchase Invoice-col_break23-idx""","DocField","Purchase Invoice","idx","63","col_break23","Int",""
-"","""Purchase Invoice-contact_person-idx""","DocField","Purchase Invoice","idx","64","contact_person","Int",""
-"","""Purchase Invoice-more_info-idx""","DocField","Purchase Invoice","idx","65","more_info","Int",""
-"","""Purchase Invoice-credit_to-idx""","DocField","Purchase Invoice","idx","66","credit_to","Int",""
-"","""Purchase Invoice-is_opening-idx""","DocField","Purchase Invoice","idx","67","is_opening","Int",""
-"","""Purchase Invoice-aging_date-idx""","DocField","Purchase Invoice","idx","68","aging_date","Int",""
-"","""Purchase Invoice-select_print_heading-idx""","DocField","Purchase Invoice","idx","69","select_print_heading","Int",""
-"","""Purchase Invoice-branch-previous_field""","DocField","Purchase Invoice","previous_field","supplier_name","branch","Data",""
-"","""Purchase Invoice-_idx""","DocType","Purchase Invoice","_idx","[""supplier_section"", ""column_break0"", ""naming_series"", ""supplier"", ""supplier_name"", ""branch"", ""address_display"", ""contact_display"", ""contact_mobile"", ""contact_email"", ""column_break1"", ""posting_date"", ""due_date"", ""bill_no"", ""bill_date"", ""amended_from"", ""company"", ""currency_price_list"", ""currency"", ""conversion_rate"", ""column_break2"", ""buying_price_list"", ""price_list_currency"", ""plc_conversion_rate"", ""ignore_pricing_rule"", ""items"", ""entries"", ""section_break_26"", ""net_total"", ""column_break_28"", ""net_total_import"", ""taxes"", ""taxes_and_charges"", ""other_charges"", ""other_charges_calculation"", ""totals"", ""other_charges_added"", ""other_charges_deducted"", ""grand_total"", ""in_words"", ""column_break8"", ""other_charges_added_import"", ""other_charges_deducted_import"", ""grand_total_import"", ""in_words_import"", ""total_amount_to_pay"", ""total_advance"", ""total_tax"", ""outstanding_amount"", ""write_off_amount"", ""write_off_account"", ""write_off_cost_center"", ""against_expense_account"", ""fold"", ""advances"", ""get_advances_paid"", ""advance_allocation_details"", ""terms_section_break"", ""tc_name"", ""terms"", ""contact_section"", ""supplier_address"", ""col_break23"", ""contact_person"", ""more_info"", ""credit_to"", ""is_opening"", ""aging_date"", ""select_print_heading"", ""mode_of_payment"", ""column_break_63"", ""letter_head"", ""fiscal_year"", ""remarks""]","","Text",""
-"","""Material Request Item-invoice_no-previous_field""","DocField","Material Request Item","previous_field","schedule_date","invoice_no","Data",""
-"","""Material Request Item-co-previous_field""","DocField","Material Request Item","previous_field","invoice_no","co","Data",""
-"","""Purchase Order Item-supplier_part_no-idx""","DocField","Purchase Order Item","idx","3","supplier_part_no","Int",""
-"","""Purchase Order Item-item_name-idx""","DocField","Purchase Order Item","idx","4","item_name","Int",""
-"","""Purchase Order Item-schedule_date-idx""","DocField","Purchase Order Item","idx","5","schedule_date","Int",""
-"","""Purchase Order Item-col_break1-idx""","DocField","Purchase Order Item","idx","6","col_break1","Int",""
-"","""Purchase Order Item-description-idx""","DocField","Purchase Order Item","idx","7","description","Int",""
-"","""Purchase Order Item-quantity_and_rate-idx""","DocField","Purchase Order Item","idx","8","quantity_and_rate","Int",""
-"","""Purchase Order Item-qty-idx""","DocField","Purchase Order Item","idx","9","qty","Int",""
-"","""Purchase Order Item-uom-idx""","DocField","Purchase Order Item","idx","10","uom","Int",""
-"","""Purchase Order Item-col_break2-idx""","DocField","Purchase Order Item","idx","11","col_break2","Int",""
-"","""Purchase Order Item-stock_uom-idx""","DocField","Purchase Order Item","idx","12","stock_uom","Int",""
-"","""Purchase Order Item-conversion_factor-idx""","DocField","Purchase Order Item","idx","13","conversion_factor","Int",""
-"","""Purchase Order Item-sec_break1-idx""","DocField","Purchase Order Item","idx","14","sec_break1","Int",""
-"","""Purchase Order Item-price_list_rate-idx""","DocField","Purchase Order Item","idx","15","price_list_rate","Int",""
-"","""Purchase Order Item-discount_percentage-idx""","DocField","Purchase Order Item","idx","16","discount_percentage","Int",""
-"","""Purchase Order Item-col_break3-idx""","DocField","Purchase Order Item","idx","17","col_break3","Int",""
-"","""Purchase Order Item-base_price_list_rate-idx""","DocField","Purchase Order Item","idx","18","base_price_list_rate","Int",""
-"","""Purchase Order Item-sec_break2-idx""","DocField","Purchase Order Item","idx","19","sec_break2","Int",""
-"","""Purchase Order Item-rate-idx""","DocField","Purchase Order Item","idx","20","rate","Int",""
-"","""Purchase Order Item-amount-idx""","DocField","Purchase Order Item","idx","21","amount","Int",""
-"","""Purchase Order Item-col_break4-idx""","DocField","Purchase Order Item","idx","22","col_break4","Int",""
-"","""Purchase Order Item-base_rate-idx""","DocField","Purchase Order Item","idx","23","base_rate","Int",""
-"","""Purchase Order Item-base_amount-idx""","DocField","Purchase Order Item","idx","24","base_amount","Int",""
-"","""Purchase Order Item-pricing_rule-idx""","DocField","Purchase Order Item","idx","25","pricing_rule","Int",""
-"","""Purchase Order Item-warehouse_and_reference-idx""","DocField","Purchase Order Item","idx","26","warehouse_and_reference","Int",""
-"","""Purchase Order Item-warehouse-idx""","DocField","Purchase Order Item","idx","27","warehouse","Int",""
-"","""Purchase Order Item-project_name-idx""","DocField","Purchase Order Item","idx","28","project_name","Int",""
-"","""Purchase Order Item-prevdoc_doctype-idx""","DocField","Purchase Order Item","idx","29","prevdoc_doctype","Int",""
-"","""Purchase Order Item-prevdoc_docname-idx""","DocField","Purchase Order Item","idx","30","prevdoc_docname","Int",""
-"","""Purchase Order Item-prevdoc_detail_docname-idx""","DocField","Purchase Order Item","idx","31","prevdoc_detail_docname","Int",""
-"","""Purchase Order Item-supplier_quotation-idx""","DocField","Purchase Order Item","idx","32","supplier_quotation","Int",""
-"","""Purchase Order Item-supplier_quotation_item-idx""","DocField","Purchase Order Item","idx","33","supplier_quotation_item","Int",""
-"","""Purchase Order Item-col_break5-idx""","DocField","Purchase Order Item","idx","34","col_break5","Int",""
-"","""Purchase Order Item-item_group-idx""","DocField","Purchase Order Item","idx","35","item_group","Int",""
-"","""Purchase Order Item-brand-idx""","DocField","Purchase Order Item","idx","36","brand","Int",""
-"","""Purchase Order Item-stock_qty-idx""","DocField","Purchase Order Item","idx","37","stock_qty","Int",""
-"","""Purchase Order Item-received_qty-idx""","DocField","Purchase Order Item","idx","38","received_qty","Int",""
-"","""Purchase Order Item-billed_amt-idx""","DocField","Purchase Order Item","idx","39","billed_amt","Int",""
-"","""Purchase Order Item-item_tax_rate-idx""","DocField","Purchase Order Item","idx","40","item_tax_rate","Int",""
-"","""Purchase Order Item-page_break-idx""","DocField","Purchase Order Item","idx","41","page_break","Int",""
-"","""Purchase Order Item-_idx""","DocType","Purchase Order Item","_idx","[""item_code"", ""supplier_item_code"", ""supplier_part_no"", ""item_name"", ""schedule_date"", ""col_break1"", ""description"", ""quantity_and_rate"", ""qty"", ""uom"", ""col_break2"", ""stock_uom"", ""conversion_factor"", ""sec_break1"", ""price_list_rate"", ""discount_percentage"", ""col_break3"", ""base_price_list_rate"", ""sec_break2"", ""rate"", ""amount"", ""col_break4"", ""base_rate"", ""base_amount"", ""pricing_rule"", ""warehouse_and_reference"", ""warehouse"", ""project_name"", ""prevdoc_doctype"", ""prevdoc_docname"", ""prevdoc_detail_docname"", ""supplier_quotation"", ""supplier_quotation_item"", ""col_break5"", ""item_group"", ""brand"", ""stock_qty"", ""received_qty"", ""billed_amt"", ""item_tax_rate"", ""page_break""]","","Text",""
-"","""Supplier-naming_series-default""","DocField","Supplier","default","SUPP-","naming_series","Text",""
-"","""Supplier-naming_series-options""","DocField","Supplier","options","SUPP-
-RAY-.#####","naming_series","Text",""
-"","""Item-sort_order""","DocType","Item","sort_order","#","","Data",""
-"","""Item-barcode-hidden""","DocField","Item","hidden","1","barcode","Check",""
-"","""Item-description_html-hidden""","DocField","Item","hidden","1","description_html","Check",""
-"","""Serial No-finished_trial_no-previous_field""","DocField","Serial No","previous_field","warehouse","finished_trial_no","Data",""
-"","""Serial No-process_status-previous_field""","DocField","Serial No","previous_field","process","process_status","Data",""
-"","""Serial No-process-previous_field""","DocField","Serial No","previous_field","work_order","process","Data",""
-"","""Serial No-work_order-previous_field""","DocField","Serial No","previous_field","finished_trial_no","work_order","Data",""
-"","""Serial No-serial_no_detail-previous_field""","DocField","Serial No","previous_field","process_status","serial_no_detail","Data",""
-"","""Serial No-quality_check-previous_field""","DocField","Serial No","previous_field","serial_no","quality_check","Data",""
-"","""Quality Inspection-pdd-previous_field""","DocField","Quality Inspection","previous_field","qty","pdd","Data",""
-"","""Item Quality Inspection Parameter-qi_process-previous_field""","DocField","Item Quality Inspection Parameter","previous_field","value","qi_process","Data",""
-"","""Sales Invoice Item-serial_no-idx""","DocField","Sales Invoice Item","idx","27","serial_no","Int",""
-"","""Sales Invoice Item-warehouse-idx""","DocField","Sales Invoice Item","idx","28","warehouse","Int",""
-"","""Serial No-completed-previous_field""","DocField","Serial No","previous_field","serial_no_detail","completed","Data",""
-"","""Event-type_of_event-previous_field""","DocField","Event","previous_field","branch","type_of_event","Data",""
-"","""Global Defaults-hardware_configuration-previous_field""","DocField","Global Defaults","previous_field","currency_conversion_rate","hardware_configuration","Data",""
-"","""Global Defaults-hardware_validation_required-previous_field""","DocField","Global Defaults","previous_field","hardware_configuration","hardware_validation_required","Data",""
-"","""User-allowed_ip_address-previous_field""","DocField","User","previous_field","last_ip","allowed_ip_address","Data",""
-"","""Serial No-sales_invoice-previous_field""","DocField","Serial No","previous_field","barcode_image","sales_invoice","Data",""
-"","""Global Defaults-choose_code_generator-previous_field""","DocField","Global Defaults","previous_field","hardware_validation_required","choose_code_generator","Data",""
-"","""Global Defaults-barcode-previous_field""","DocField","Global Defaults","previous_field","choose_code_generator","barcode","Data",""
-"","""Global Defaults-qrcode-previous_field""","DocField","Global Defaults","previous_field","barcode","qrcode","Data",""
-"","""Serial No-qrcode-previous_field""","DocField","Serial No","previous_field","barcode_image","qrcode","Data",""
-"","""Global Defaults-_choose_code_generator-previous_field""","DocField","Global Defaults","previous_field","hardware_validation_required","_choose_code_generator","Data",""
-"","""Item-fabric_color-previous_field""","DocField","Item","previous_field","barcode_image","fabric_color","Data",""
-"","""Item-process_details-previous_field""","DocField","Item","previous_field","fabric_costing","process_details","Data",""
+FAB-","naming_series","Text",
+,"""Item-naming_series-default""","DocField","Item","default","TRO-","naming_series","Text",
+,"""Item-item_group-idx""","DocField","Item","idx","3","item_group","Int",
+,"""DocField-in_list_view-width""","DocField","DocField","width","223","in_list_view",,
+,"""Branch-branch-idx""","DocField","Branch","idx","2","branch","Int",
+,"""Employee-col_break_22-idx""","DocField","Employee","idx","20","col_break_22","Int",
+,"""Employee-scheduled_confirmation_date-idx""","DocField","Employee","idx","21","scheduled_confirmation_date","Int",
+,"""Employee-final_confirmation_date-idx""","DocField","Employee","idx","22","final_confirmation_date","Int",
+,"""Employee-contract_end_date-idx""","DocField","Employee","idx","23","contract_end_date","Int",
+,"""Employee-date_of_retirement-idx""","DocField","Employee","idx","24","date_of_retirement","Int",
+,"""Employee-job_profile-idx""","DocField","Employee","idx","25","job_profile","Int",
+,"""Employee-column_break2-idx""","DocField","Employee","idx","26","column_break2","Int",
+,"""Employee-branch-idx""","DocField","Employee","idx","27","branch","Int",
+,"""Employee-department-idx""","DocField","Employee","idx","28","department","Int",
+,"""Employee-designation-idx""","DocField","Employee","idx","29","designation","Int",
+,"""Employee-company_email-idx""","DocField","Employee","idx","30","company_email","Int",
+,"""Employee-notice_number_of_days-idx""","DocField","Employee","idx","31","notice_number_of_days","Int",
+,"""Employee-salary_information-idx""","DocField","Employee","idx","32","salary_information","Int",
+,"""Employee-salary_mode-idx""","DocField","Employee","idx","33","salary_mode","Int",
+,"""Company-registration_info-idx""","DocField","Company","idx","46","registration_info","Int",
+,"""Company-registration_details-idx""","DocField","Company","idx","47","registration_details","Int",
+,"""Sales Invoice Item-warehouse_and_reference-hidden""","DocField","Sales Invoice Item","hidden","0","warehouse_and_reference","Check",
+,"""Employee-employeeskills-previous_field""","DocField","Employee","previous_field","skills_assigned_to_employee","employeeskills","Data",
+,"""Task-item_code-previous_field""","DocField","Task","previous_field","process_name","item_code","Data",
+,"""Task-sales_order_number-previous_field""","DocField","Task","previous_field","priority","sales_order_number","Data",
+,"""Event-appointment_list-previous_field""","DocField","Event","previous_field","individuals","appointment_list","Data",
+,"""Company-website2-previous_field""","DocField","Company","previous_field","business_id_","website2","Data",
+,"""Company-business_id_-previous_field""","DocField","Company","previous_field","fax_no","business_id_","Data",
+,"""Company-fax_no-previous_field""","DocField","Company","previous_field","mobile_number","fax_no","Data",
+,"""Company-mobile_number-previous_field""","DocField","Company","previous_field","phone_number_2","mobile_number","Data",
+,"""Company-phone_number_2-previous_field""","DocField","Company","previous_field","phone_number_1","phone_number_2","Data",
+,"""Company-phone_number_1-previous_field""","DocField","Company","previous_field","columbrk","phone_number_1","Data",
+,"""Company-columbrk-previous_field""","DocField","Company","previous_field","country2","columbrk","Data",
+,"""Company-section-previous_field""","DocField","Company","previous_field","company_logo","section","Data",
+,"""Company-correspondence_email_id-previous_field""","DocField","Company","previous_field","registered_email_id","correspondence_email_id","Data",
+,"""Company-country2-previous_field""","DocField","Company","previous_field","state","country2","Data",
+,"""Company-pincode-previous_field""","DocField","Company","previous_field","state","pincode","Data",
+,"""Company-state-previous_field""","DocField","Company","previous_field","city","state","Data",
+,"""Company-city-previous_field""","DocField","Company","previous_field","address_line_3","city","Data",
+,"""Company-company_logo-previous_field""","DocField","Company","previous_field","info","company_logo","Data",
+,"""Company-info-previous_field""","DocField","Company","previous_field","address_line_3","info","Data",
+,"""Company-address_line_3-previous_field""","DocField","Company","previous_field","address_line_2","address_line_3","Data",
+,"""Company-address_line_2-previous_field""","DocField","Company","previous_field","address_line_1","address_line_2","Data",
+,"""Company-address_line_1-previous_field""","DocField","Company","previous_field","business_owner_name","address_line_1","Data",
+,"""Company-business_owner_name-previous_field""","DocField","Company","previous_field","company_profie","business_owner_name","Data",
+,"""Company-company_profie-previous_field""","DocField","Company","previous_field","website","company_profie","Data",
+,"""Task-item_name-previous_field""","DocField","Task","previous_field","process_name","item_name","Data",
+,"""Stock Entry-delivery_note_no-depends_on""","DocField","Stock Entry","depends_on","eval:doc.purpose_type==""Sales Return""","delivery_note_no","Data",
+,"""Stock Entry-sales_invoice_no-depends_on""","DocField","Stock Entry","depends_on","eval:doc.purpose_type==""Sales Return""","sales_invoice_no","Data",
+,"""Stock Entry-purchase_receipt_no-depends_on""","DocField","Stock Entry","depends_on","eval:doc.purpose_type==""Purchase Return""","purchase_receipt_no","Data",
+,"""Item Price-customer_rate_details-previous_field""","DocField","Item Price","previous_field","item_description","customer_rate_details","Data",
+,"""Item Price-customer_rate-previous_field""","DocField","Item Price","previous_field","customer_rate_details","customer_rate","Data",
+,"""Sales BOM Item-description-hidden""","DocField","Sales BOM Item","hidden","1","description","Check",
+,"""Sales BOM Item-uom-hidden""","DocField","Sales BOM Item","hidden","1","uom","Check",
+,"""Item-default_warehouse-hidden""","DocField","Item","hidden","1","default_warehouse","Check",
+,"""Pricing Rule-for_price_list-label""","DocField","Pricing Rule","label","For Services","for_price_list","Data",
+,"""Purchase Invoice Item-invoice_branch-previous_field""","DocField","Purchase Invoice Item","previous_field","description","invoice_branch","Data",
+,"""Material Request Item-warehouse-idx""","DocField","Material Request Item","idx","9","warehouse","Int",
+,"""Material Request Item-_idx""","DocType","Material Request Item","_idx","[""item_code"", ""item_name"", ""col_break1"", ""description"", ""quantity_and_warehouse"", ""qty"", ""uom"", ""for_branch"", ""warehouse"", ""from_branch"", ""from_warehouse"", ""col_break2"", ""schedule_date"", ""more_info"", ""item_group"", ""brand"", ""lead_time_date"", ""sales_order_no"", ""col_break3"", ""min_order_qty"", ""projected_qty"", ""ordered_qty"", ""page_break""]",,"Text",
+,"""Material Request Item-from_branch-previous_field""","DocField","Material Request Item","previous_field","for_branch","from_branch","Data",
+,"""Material Request Item-for_branch-previous_field""","DocField","Material Request Item","previous_field","uom","for_branch","Data",
+,"""Material Request Item-warehouse-in_list_view""","DocField","Material Request Item","in_list_view","0","warehouse","Check",
+,"""Material Request Item-warehouse-hidden""","DocField","Material Request Item","hidden","1","warehouse","Check",
+,"""Material Request Item-from_warehouse-previous_field""","DocField","Material Request Item","previous_field","warehouse","from_warehouse","Data",
+,"""Event-branch-previous_field""","DocField","Event","previous_field","ref_name","branch","Data",
+,"""Purchase Order-branch-previous_field""","DocField","Purchase Order","previous_field","supplier_name","branch","Data",
+,"""Purchase Receipt-branch-previous_field""","DocField","Purchase Receipt","previous_field","supplier_section","branch","Data",
+,"""Attendance-branch-previous_field""","DocField","Attendance","previous_field","company","branch","Data",
+,"""Journal Voucher-branch-previous_field""","DocField","Journal Voucher","previous_field","posting_date","branch","Data",
+,"""Supplier-naming_series-hidden""","DocField","Supplier","hidden","0","naming_series","Check",
+,"""Supplier-naming_series-reqd""","DocField","Supplier","reqd","1","naming_series","Check",
+,"""Purchase Invoice-read_only_onload""","DocType","Purchase Invoice","read_only_onload",,,"Check",
+,"""Purchase Invoice-due_date-idx""","DocField","Purchase Invoice","idx","13","due_date","Int",
+,"""Purchase Invoice-bill_no-idx""","DocField","Purchase Invoice","idx","14","bill_no","Int",
+,"""Purchase Invoice-bill_date-idx""","DocField","Purchase Invoice","idx","15","bill_date","Int",
+,"""Purchase Invoice-amended_from-idx""","DocField","Purchase Invoice","idx","16","amended_from","Int",
+,"""Purchase Invoice-company-idx""","DocField","Purchase Invoice","idx","17","company","Int",
+,"""Purchase Invoice-currency_price_list-idx""","DocField","Purchase Invoice","idx","18","currency_price_list","Int",
+,"""Purchase Invoice-currency-idx""","DocField","Purchase Invoice","idx","19","currency","Int",
+,"""Purchase Invoice-conversion_rate-idx""","DocField","Purchase Invoice","idx","20","conversion_rate","Int",
+,"""Purchase Invoice-column_break2-idx""","DocField","Purchase Invoice","idx","21","column_break2","Int",
+,"""Purchase Invoice-buying_price_list-idx""","DocField","Purchase Invoice","idx","22","buying_price_list","Int",
+,"""Purchase Invoice-price_list_currency-idx""","DocField","Purchase Invoice","idx","23","price_list_currency","Int",
+,"""Purchase Invoice-plc_conversion_rate-idx""","DocField","Purchase Invoice","idx","24","plc_conversion_rate","Int",
+,"""Purchase Invoice-ignore_pricing_rule-idx""","DocField","Purchase Invoice","idx","25","ignore_pricing_rule","Int",
+,"""Purchase Invoice-items-idx""","DocField","Purchase Invoice","idx","26","items","Int",
+,"""Purchase Invoice-entries-idx""","DocField","Purchase Invoice","idx","27","entries","Int",
+,"""Purchase Invoice-section_break_26-idx""","DocField","Purchase Invoice","idx","28","section_break_26","Int",
+,"""Purchase Invoice-net_total-idx""","DocField","Purchase Invoice","idx","29","net_total","Int",
+,"""Purchase Invoice-column_break_28-idx""","DocField","Purchase Invoice","idx","30","column_break_28","Int",
+,"""Purchase Invoice-net_total_import-idx""","DocField","Purchase Invoice","idx","31","net_total_import","Int",
+,"""Purchase Invoice-taxes-idx""","DocField","Purchase Invoice","idx","32","taxes","Int",
+,"""Purchase Invoice-taxes_and_charges-idx""","DocField","Purchase Invoice","idx","33","taxes_and_charges","Int",
+,"""Purchase Invoice-other_charges-idx""","DocField","Purchase Invoice","idx","34","other_charges","Int",
+,"""Purchase Invoice-other_charges_calculation-idx""","DocField","Purchase Invoice","idx","35","other_charges_calculation","Int",
+,"""Purchase Invoice-totals-idx""","DocField","Purchase Invoice","idx","36","totals","Int",
+,"""Purchase Invoice-other_charges_added-idx""","DocField","Purchase Invoice","idx","37","other_charges_added","Int",
+,"""Purchase Invoice-other_charges_deducted-idx""","DocField","Purchase Invoice","idx","38","other_charges_deducted","Int",
+,"""Purchase Invoice-grand_total-idx""","DocField","Purchase Invoice","idx","39","grand_total","Int",
+,"""Purchase Invoice-in_words-idx""","DocField","Purchase Invoice","idx","40","in_words","Int",
+,"""Purchase Invoice-column_break8-idx""","DocField","Purchase Invoice","idx","41","column_break8","Int",
+,"""Purchase Invoice-other_charges_added_import-idx""","DocField","Purchase Invoice","idx","42","other_charges_added_import","Int",
+,"""Purchase Invoice-other_charges_deducted_import-idx""","DocField","Purchase Invoice","idx","43","other_charges_deducted_import","Int",
+,"""Purchase Invoice-grand_total_import-idx""","DocField","Purchase Invoice","idx","44","grand_total_import","Int",
+,"""Purchase Invoice-in_words_import-idx""","DocField","Purchase Invoice","idx","45","in_words_import","Int",
+,"""Purchase Invoice-total_amount_to_pay-idx""","DocField","Purchase Invoice","idx","46","total_amount_to_pay","Int",
+,"""Purchase Invoice-total_advance-idx""","DocField","Purchase Invoice","idx","47","total_advance","Int",
+,"""Purchase Invoice-total_tax-idx""","DocField","Purchase Invoice","idx","48","total_tax","Int",
+,"""Purchase Invoice-outstanding_amount-idx""","DocField","Purchase Invoice","idx","49","outstanding_amount","Int",
+,"""Purchase Invoice-write_off_amount-idx""","DocField","Purchase Invoice","idx","50","write_off_amount","Int",
+,"""Purchase Invoice-write_off_account-idx""","DocField","Purchase Invoice","idx","51","write_off_account","Int",
+,"""Purchase Invoice-write_off_cost_center-idx""","DocField","Purchase Invoice","idx","52","write_off_cost_center","Int",
+,"""Purchase Invoice-against_expense_account-idx""","DocField","Purchase Invoice","idx","53","against_expense_account","Int",
+,"""Purchase Invoice-fold-idx""","DocField","Purchase Invoice","idx","54","fold","Int",
+,"""Purchase Invoice-advances-idx""","DocField","Purchase Invoice","idx","55","advances","Int",
+,"""Purchase Invoice-get_advances_paid-idx""","DocField","Purchase Invoice","idx","56","get_advances_paid","Int",
+,"""Purchase Invoice-advance_allocation_details-idx""","DocField","Purchase Invoice","idx","57","advance_allocation_details","Int",
+,"""Purchase Invoice-terms_section_break-idx""","DocField","Purchase Invoice","idx","58","terms_section_break","Int",
+,"""Purchase Invoice-tc_name-idx""","DocField","Purchase Invoice","idx","59","tc_name","Int",
+,"""Purchase Invoice-terms-idx""","DocField","Purchase Invoice","idx","60","terms","Int",
+,"""Purchase Invoice-contact_section-idx""","DocField","Purchase Invoice","idx","61","contact_section","Int",
+,"""Purchase Invoice-supplier_address-idx""","DocField","Purchase Invoice","idx","62","supplier_address","Int",
+,"""Purchase Invoice-col_break23-idx""","DocField","Purchase Invoice","idx","63","col_break23","Int",
+,"""Purchase Invoice-contact_person-idx""","DocField","Purchase Invoice","idx","64","contact_person","Int",
+,"""Purchase Invoice-more_info-idx""","DocField","Purchase Invoice","idx","65","more_info","Int",
+,"""Purchase Invoice-credit_to-idx""","DocField","Purchase Invoice","idx","66","credit_to","Int",
+,"""Purchase Invoice-is_opening-idx""","DocField","Purchase Invoice","idx","67","is_opening","Int",
+,"""Purchase Invoice-aging_date-idx""","DocField","Purchase Invoice","idx","68","aging_date","Int",
+,"""Purchase Invoice-select_print_heading-idx""","DocField","Purchase Invoice","idx","69","select_print_heading","Int",
+,"""Purchase Invoice-branch-previous_field""","DocField","Purchase Invoice","previous_field","supplier_name","branch","Data",
+,"""Purchase Invoice-_idx""","DocType","Purchase Invoice","_idx","[""supplier_section"", ""column_break0"", ""naming_series"", ""supplier"", ""supplier_name"", ""branch"", ""address_display"", ""contact_display"", ""contact_mobile"", ""contact_email"", ""column_break1"", ""posting_date"", ""due_date"", ""bill_no"", ""bill_date"", ""amended_from"", ""company"", ""currency_price_list"", ""currency"", ""conversion_rate"", ""column_break2"", ""buying_price_list"", ""price_list_currency"", ""plc_conversion_rate"", ""ignore_pricing_rule"", ""items"", ""entries"", ""section_break_26"", ""net_total"", ""column_break_28"", ""net_total_import"", ""taxes"", ""taxes_and_charges"", ""other_charges"", ""other_charges_calculation"", ""totals"", ""other_charges_added"", ""other_charges_deducted"", ""grand_total"", ""in_words"", ""column_break8"", ""other_charges_added_import"", ""other_charges_deducted_import"", ""grand_total_import"", ""in_words_import"", ""total_amount_to_pay"", ""total_advance"", ""total_tax"", ""outstanding_amount"", ""write_off_amount"", ""write_off_account"", ""write_off_cost_center"", ""against_expense_account"", ""fold"", ""advances"", ""get_advances_paid"", ""advance_allocation_details"", ""terms_section_break"", ""tc_name"", ""terms"", ""contact_section"", ""supplier_address"", ""col_break23"", ""contact_person"", ""more_info"", ""credit_to"", ""is_opening"", ""aging_date"", ""select_print_heading"", ""mode_of_payment"", ""column_break_63"", ""letter_head"", ""fiscal_year"", ""remarks""]",,"Text",
+,"""Material Request Item-invoice_no-previous_field""","DocField","Material Request Item","previous_field","schedule_date","invoice_no","Data",
+,"""Material Request Item-co-previous_field""","DocField","Material Request Item","previous_field","invoice_no","co","Data",
+,"""Purchase Order Item-supplier_part_no-idx""","DocField","Purchase Order Item","idx","3","supplier_part_no","Int",
+,"""Purchase Order Item-item_name-idx""","DocField","Purchase Order Item","idx","4","item_name","Int",
+,"""Purchase Order Item-schedule_date-idx""","DocField","Purchase Order Item","idx","5","schedule_date","Int",
+,"""Purchase Order Item-col_break1-idx""","DocField","Purchase Order Item","idx","6","col_break1","Int",
+,"""Purchase Order Item-description-idx""","DocField","Purchase Order Item","idx","7","description","Int",
+,"""Purchase Order Item-quantity_and_rate-idx""","DocField","Purchase Order Item","idx","8","quantity_and_rate","Int",
+,"""Purchase Order Item-qty-idx""","DocField","Purchase Order Item","idx","9","qty","Int",
+,"""Purchase Order Item-uom-idx""","DocField","Purchase Order Item","idx","10","uom","Int",
+,"""Purchase Order Item-col_break2-idx""","DocField","Purchase Order Item","idx","11","col_break2","Int",
+,"""Purchase Order Item-stock_uom-idx""","DocField","Purchase Order Item","idx","12","stock_uom","Int",
+,"""Purchase Order Item-conversion_factor-idx""","DocField","Purchase Order Item","idx","13","conversion_factor","Int",
+,"""Purchase Order Item-sec_break1-idx""","DocField","Purchase Order Item","idx","14","sec_break1","Int",
+,"""Purchase Order Item-price_list_rate-idx""","DocField","Purchase Order Item","idx","15","price_list_rate","Int",
+,"""Purchase Order Item-discount_percentage-idx""","DocField","Purchase Order Item","idx","16","discount_percentage","Int",
+,"""Purchase Order Item-col_break3-idx""","DocField","Purchase Order Item","idx","17","col_break3","Int",
+,"""Purchase Order Item-base_price_list_rate-idx""","DocField","Purchase Order Item","idx","18","base_price_list_rate","Int",
+,"""Purchase Order Item-sec_break2-idx""","DocField","Purchase Order Item","idx","19","sec_break2","Int",
+,"""Purchase Order Item-rate-idx""","DocField","Purchase Order Item","idx","20","rate","Int",
+,"""Purchase Order Item-amount-idx""","DocField","Purchase Order Item","idx","21","amount","Int",
+,"""Purchase Order Item-col_break4-idx""","DocField","Purchase Order Item","idx","22","col_break4","Int",
+,"""Purchase Order Item-base_rate-idx""","DocField","Purchase Order Item","idx","23","base_rate","Int",
+,"""Purchase Order Item-base_amount-idx""","DocField","Purchase Order Item","idx","24","base_amount","Int",
+,"""Purchase Order Item-pricing_rule-idx""","DocField","Purchase Order Item","idx","25","pricing_rule","Int",
+,"""Purchase Order Item-warehouse_and_reference-idx""","DocField","Purchase Order Item","idx","26","warehouse_and_reference","Int",
+,"""Purchase Order Item-warehouse-idx""","DocField","Purchase Order Item","idx","27","warehouse","Int",
+,"""Purchase Order Item-project_name-idx""","DocField","Purchase Order Item","idx","28","project_name","Int",
+,"""Purchase Order Item-prevdoc_doctype-idx""","DocField","Purchase Order Item","idx","29","prevdoc_doctype","Int",
+,"""Purchase Order Item-prevdoc_docname-idx""","DocField","Purchase Order Item","idx","30","prevdoc_docname","Int",
+,"""Purchase Order Item-prevdoc_detail_docname-idx""","DocField","Purchase Order Item","idx","31","prevdoc_detail_docname","Int",
+,"""Purchase Order Item-supplier_quotation-idx""","DocField","Purchase Order Item","idx","32","supplier_quotation","Int",
+,"""Purchase Order Item-supplier_quotation_item-idx""","DocField","Purchase Order Item","idx","33","supplier_quotation_item","Int",
+,"""Purchase Order Item-col_break5-idx""","DocField","Purchase Order Item","idx","34","col_break5","Int",
+,"""Purchase Order Item-item_group-idx""","DocField","Purchase Order Item","idx","35","item_group","Int",
+,"""Purchase Order Item-brand-idx""","DocField","Purchase Order Item","idx","36","brand","Int",
+,"""Purchase Order Item-stock_qty-idx""","DocField","Purchase Order Item","idx","37","stock_qty","Int",
+,"""Purchase Order Item-received_qty-idx""","DocField","Purchase Order Item","idx","38","received_qty","Int",
+,"""Purchase Order Item-billed_amt-idx""","DocField","Purchase Order Item","idx","39","billed_amt","Int",
+,"""Purchase Order Item-item_tax_rate-idx""","DocField","Purchase Order Item","idx","40","item_tax_rate","Int",
+,"""Purchase Order Item-page_break-idx""","DocField","Purchase Order Item","idx","41","page_break","Int",
+,"""Purchase Order Item-_idx""","DocType","Purchase Order Item","_idx","[""item_code"", ""supplier_item_code"", ""supplier_part_no"", ""item_name"", ""schedule_date"", ""col_break1"", ""description"", ""quantity_and_rate"", ""qty"", ""uom"", ""col_break2"", ""stock_uom"", ""conversion_factor"", ""sec_break1"", ""price_list_rate"", ""discount_percentage"", ""col_break3"", ""base_price_list_rate"", ""sec_break2"", ""rate"", ""amount"", ""col_break4"", ""base_rate"", ""base_amount"", ""pricing_rule"", ""warehouse_and_reference"", ""warehouse"", ""project_name"", ""prevdoc_doctype"", ""prevdoc_docname"", ""prevdoc_detail_docname"", ""supplier_quotation"", ""supplier_quotation_item"", ""col_break5"", ""item_group"", ""brand"", ""stock_qty"", ""received_qty"", ""billed_amt"", ""item_tax_rate"", ""page_break""]",,"Text",
+,"""Supplier-naming_series-default""","DocField","Supplier","default","SUPP-","naming_series","Text",
+,"""Supplier-naming_series-options""","DocField","Supplier","options","SUPP-
+RAY-.#####","naming_series","Text",
+,"""Item-sort_order""","DocType","Item","sort_order","#",,"Data",
+,"""Item-barcode-hidden""","DocField","Item","hidden","1","barcode","Check",
+,"""Item-description_html-hidden""","DocField","Item","hidden","1","description_html","Check",
+,"""Serial No-finished_trial_no-previous_field""","DocField","Serial No","previous_field","warehouse","finished_trial_no","Data",
+,"""Serial No-process_status-previous_field""","DocField","Serial No","previous_field","process","process_status","Data",
+,"""Serial No-process-previous_field""","DocField","Serial No","previous_field","work_order","process","Data",
+,"""Serial No-work_order-previous_field""","DocField","Serial No","previous_field","finished_trial_no","work_order","Data",
+,"""Serial No-serial_no_detail-previous_field""","DocField","Serial No","previous_field","process_status","serial_no_detail","Data",
+,"""Serial No-quality_check-previous_field""","DocField","Serial No","previous_field","serial_no","quality_check","Data",
+,"""Quality Inspection-pdd-previous_field""","DocField","Quality Inspection","previous_field","qty","pdd","Data",
+,"""Item Quality Inspection Parameter-qi_process-previous_field""","DocField","Item Quality Inspection Parameter","previous_field","value","qi_process","Data",
+,"""Sales Invoice Item-serial_no-idx""","DocField","Sales Invoice Item","idx","27","serial_no","Int",
+,"""Sales Invoice Item-warehouse-idx""","DocField","Sales Invoice Item","idx","28","warehouse","Int",
+,"""Serial No-completed-previous_field""","DocField","Serial No","previous_field","serial_no_detail","completed","Data",
+,"""Event-type_of_event-previous_field""","DocField","Event","previous_field","branch","type_of_event","Data",
+,"""Global Defaults-hardware_configuration-previous_field""","DocField","Global Defaults","previous_field","currency_conversion_rate","hardware_configuration","Data",
+,"""Global Defaults-hardware_validation_required-previous_field""","DocField","Global Defaults","previous_field","hardware_configuration","hardware_validation_required","Data",
+,"""User-allowed_ip_address-previous_field""","DocField","User","previous_field","last_ip","allowed_ip_address","Data",
+,"""Serial No-sales_invoice-previous_field""","DocField","Serial No","previous_field","barcode_image","sales_invoice","Data",
+,"""Global Defaults-choose_code_generator-previous_field""","DocField","Global Defaults","previous_field","hardware_validation_required","choose_code_generator","Data",
+,"""Global Defaults-barcode-previous_field""","DocField","Global Defaults","previous_field","choose_code_generator","barcode","Data",
+,"""Global Defaults-qrcode-previous_field""","DocField","Global Defaults","previous_field","barcode","qrcode","Data",
+,"""Serial No-qrcode-previous_field""","DocField","Serial No","previous_field","barcode_image","qrcode","Data",
+,"""Global Defaults-_choose_code_generator-previous_field""","DocField","Global Defaults","previous_field","hardware_validation_required","_choose_code_generator","Data",
+,"""Item-fabric_color-previous_field""","DocField","Item","previous_field","barcode_image","fabric_color","Data",
+,"""Item-process_details-previous_field""","DocField","Item","previous_field","fabric_costing","process_details","Data",
